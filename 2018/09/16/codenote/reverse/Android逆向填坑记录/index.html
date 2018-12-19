@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Android,填坑记录,Reverse,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/w-16x16.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Android逆向零零碎碎">
+<meta name="keywords" content="Android,填坑记录,Reverse">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android逆向填坑记录">
+<meta property="og:url" content="http://yoursite.com/2018/09/16/codenote/reverse/Android逆向填坑记录/index.html">
+<meta property="og:site_name" content="amlloc&#39;s blog">
+<meta property="og:description" content="Android逆向零零碎碎">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-11T10:52:43.003Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android逆向填坑记录">
+<meta name="twitter:description" content="Android逆向零零碎碎">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/16/codenote/reverse/Android逆向填坑记录/">
+
+
+
+
+
+  <title>Android逆向填坑记录 | amlloc's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">amlloc's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Just a Space</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/reverse/Android逆向填坑记录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android逆向填坑记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:36:24+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Android逆向零零碎碎<br><a id="more"></a></p>
+<h2 id="动态调试步骤"><a href="#动态调试步骤" class="headerlink" title="动态调试步骤"></a>动态调试步骤</h2><ul>
+<li><p>打开monitor</p>
+<p><code>cd ${SDK_PATH}/tools/</code></p>
+<p><code>./monitor</code></p>
+<p>备注：没有开没法附加，具体原因暂时不明</p>
+</li>
+<li><p>将android_server push进可执行文件夹</p>
+<p><code>adb push /home/IDA/dbgsrv/android_server</code> </p>
+<p><code>/data/local/tmp/andser</code></p>
+<p><code>adb shell</code></p>
+<p><code>su</code></p>
+<p><code>cd /data/local/tmp</code></p>
+<p><code>chmod 777 andser</code></p>
+<p><code>./andser -p12345</code></p>
+</li>
+<li><p>open terminal</p>
+<p><code>ctrl + t</code></p>
+</li>
+<li><p>转发端口</p>
+<p><code>adb forward tcp:12345 tcp:12345</code></p>
+</li>
+<li><p>以启动模式启动,停在加载so文件之前</p>
+<p><code>adb shell am start -D -n packagename/clasdx    sname</code></p>
+</li>
+<li><p>IDA附加进程</p>
+<p><code>Debuger</code>-&gt;<code>Process option</code>-&gt;<code>Hostname:localhost Port:1234</code>-&gt;<code>attach...</code></p>
+</li>
+<li><p>jdb附加<br><code>jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8700</code></p>
+</li>
+</ul>
+<h2 id="IDA-dump脚本"><a href="#IDA-dump脚本" class="headerlink" title="IDA dump脚本"></a>IDA dump脚本</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> fp, begin, end, dexbyte;</span><br><span class="line">  fp = fopen(<span class="string">"/home/amlloc/dump_shell.dex"</span>, <span class="string">"wb"</span>);</span><br><span class="line">  begin = <span class="number">0x761a1000</span>;</span><br><span class="line">  end = <span class="number">0x763b6000</span>;</span><br><span class="line">  <span class="keyword">for</span> ( dexbyte = begin; dexbyte &lt; end; dexbyte ++ )</span><br><span class="line">      fputc(Byte(dexbyte), fp);</span><br></pre></td></tr></table></figure>
+<h2 id="smali注入代码库"><a href="#smali注入代码库" class="headerlink" title="smali注入代码库"></a>smali注入代码库</h2><p>利用Android Killer的插入代码管理器可以很方便地组织管理自己的代码库，这里我列出几个用处较大的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#LoadLibrary</span><br><span class="line">const-string v0, &quot;so name&quot;</span><br><span class="line"></span><br><span class="line">invoke-static &#123;v0&#125;, Ljava/lang/System;-&gt;loadLibrary(Ljava/lang/String;)V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#Log</span><br><span class="line">const-string v0, &quot;you message&quot;</span><br><span class="line"></span><br><span class="line">invoke-static &#123;v0&#125;, Lcom/android/killer/Log;-&gt;LogStr(Ljava/lang/String;)V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#LogUtils</span><br><span class="line">#打印int，String，Intent ,HashMap ,List ,null</span><br><span class="line">invoke-static &#123;vx&#125;, Lcom/mtools/logutils/LogUtils;-&gt;d(Ljava/lang/Object;)V</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#打印float</span><br><span class="line"></span><br><span class="line">invoke-static &#123;vx&#125;, Ljava/lang/Float;-&gt;valueOf(F)Ljava/lang/Float;</span><br><span class="line"></span><br><span class="line">move-result-object v1</span><br><span class="line"></span><br><span class="line">invoke-static &#123;v1&#125;, Lcom/mtools/logutils/LogUtils;-&gt;d(Ljava/lang/Object;)V</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#打印double,如传入v0,则需要写成invoke-static &#123;v0, v1&#125;</span><br><span class="line"></span><br><span class="line">invoke-static &#123;vx, vx+1&#125;, Ljava/lang/Double;-&gt;valueOf(D)Ljava/lang/Double;</span><br><span class="line"></span><br><span class="line"> move-result-object v1</span><br><span class="line"></span><br><span class="line"> invoke-static &#123;v1&#125;, Lcom/mtools/logutils/LogUtils;-&gt;d(Ljava/lang/Object;)V</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#打印long,如传入v0,则需要写成invoke-static &#123;v0, v1&#125;</span><br><span class="line">invoke-static &#123;vx, vx+1&#125;, Ljava/lang/Long;-&gt;valueOf(J)Ljava/lang/Long;</span><br><span class="line"></span><br><span class="line">move-result-object v1</span><br><span class="line"></span><br><span class="line">invoke-static &#123;v1&#125;, Lcom/mtools/logutils/LogUtils;-&gt;d(Ljava/lang/Object;)V</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#打印json</span><br><span class="line">invoke-static &#123;vx&#125;, Lcom/mtools/logutils/LogUtils;-&gt;json(Ljava/lang/Object;)V</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#打印xml</span><br><span class="line">invoke-static &#123;vx&#125;, Lcom/mtools/logutils/LogUtils;-&gt;xml(Ljava/lang/Object;)V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#mothodTrace 用于追踪函数也可用来性能测试，需要读写权限</span><br><span class="line">#mothodTraceStart</span><br><span class="line">invoke-static &#123;&#125;, Landroid/os/Debug;-&gt;startMethodTracing()V</span><br><span class="line">#mothodTraceStop</span><br><span class="line">invoke-static &#123;&#125;, Landroid/os/Debug;-&gt;stopMethodTracing()V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#dump出函数堆栈， Thread.dumpStack();</span><br><span class="line">invoke-static&#123;&#125;, Ljava/lang/Thread;-&gt;dumpStack()V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#Toast</span><br><span class="line">const-string v0, &quot;you message&quot;</span><br><span class="line"></span><br><span class="line">const/4 v1, 0x1</span><br><span class="line"></span><br><span class="line">invoke-static &#123;p0, v0, v1&#125;, Landroid/widget/Toast;-&gt;makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;</span><br><span class="line"></span><br><span class="line">move-result-object v0</span><br><span class="line"></span><br><span class="line">invoke-virtual &#123;v0&#125;, Landroid/widget/Toast;-&gt;show()V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#等待调试</span><br><span class="line">invoke-static &#123;&#125;, Landroid/os/Debug;-&gt;waitForDebugger()V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#写权限auto fp, begin, end, dexbyte;</span><br><span class="line">  fp = fopen(&quot;/home/amlloc/dump_shell.dex&quot;, &quot;wb&quot;);</span><br><span class="line">  begin = 0x761a1000;</span><br><span class="line">  end = 0x763b6000;</span><br><span class="line">  for ( dexbyte = begin; dexbyte &lt; end; dexbyte ++ )</span><br><span class="line">      fputc(Byte(dexbyte), fp);</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&gt;</span><br><span class="line">#读权限</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>如果还有其他需要，详见github:<br><a href="https://github.com/bingghost/SmaliLibrary" target="_blank" rel="noopener">https://github.com/bingghost/SmaliLibrary</a><br>把里面的代码抠出来用即可。</p>
+<h2 id="Arm-nop"><a href="#Arm-nop" class="headerlink" title="Arm nop"></a>Arm nop</h2><p><code>00 00 A0 E1</code></p>
+<h2 id="apk无法调试的问题"><a href="#apk无法调试的问题" class="headerlink" title="apk无法调试的问题"></a>apk无法调试的问题</h2><p>参考链接：</p>
+<p><a href="https://blog.csdn.net/feibabeibei_beibei/article/details/52744231" target="_blank" rel="noopener">雪一梦：Android So动态调试之反jdb附加的解决大法</a></p>
+<p>如果需要判断一个apk是否为可调试的，则必须满足以下两个要求中任意一个</p>
+<ul>
+<li><code>AndroidManifest.xml</code>文件<code>Application</code>包含<code>android:debuggable=&quot;true&quot;</code></li>
+<li>文件<code>/default.prop</code>中的<code>ro.debuggable</code>的值为1</li>
+</ul>
+<p>目前有四种方式可以解决这个问题</p>
+<ul>
+<li>在<code>root</code>手机中安装<code>Xposed</code>与<code>xinstaller</code>插件<br>使用方法：<ul>
+<li>下载 Xposed 框架,并激活,再下载 xinstaller 插件安装;</li>
+<li>开启模块,点击 xinstall 插件设置专家模式,进入其他设置,开启调试应用,最后在 xposed 中激活重启</li>
+</ul>
+</li>
+</ul>
+<p>​        短处：apk中很有可能会有反<code>xposed</code>代码的存在，因此需要先过掉这个障碍才行。</p>
+<ul>
+<li><p>直接通过反编译改包的方法</p>
+<p>缺点多多，不解释</p>
+</li>
+<li><p>如果我们在真机,则可以修改根目录下的 default.prop 文件,将里<br>面的 ro.debuggable =1。</p>
+<ul>
+<li>从 Google 官方网站下载到 boot.img;</li>
+<li>使用工具(abootimg,gunzip, cpio)把 boot.img 完全解开,获取到 default.prop;</li>
+<li>修改 default.prop;</li>
+<li>把修改后的文件重新打包成 boot_new.img;</li>
+<li>使用 fastboot 工具把 boot_new.img 刷入设备(fastboot<br>flash boot boot_new.img);</li>
+</ul>
+</li>
+<li><p>ptrace 注入到 init 进程,然后修改内存中的<code>default.prop</code>文件属性值</p>
+<ul>
+<li>拷贝拷贝<code>mprop</code>到<code>/data/</code>目录下;</li>
+<li><code>./mprop ro.debuggable 1;</code></li>
+<li><code>getprop ro.debuggable;</code>(查看此时 ro.debuggable 在内存<br>中的值)</li>
+<li>stop;start(重启 adbd 进程);</li>
+</ul>
+<p>我们在上面的第三步的时候查看好像没有改过来,分析原因为:该工具是通过 ptrace 修改 init 进程中的内存,然而 4.X 系统强制开启了 selinux;因此这个时候我们需要设置 Selinux 的状态.</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/填坑记录/" rel="tag"># 填坑记录</a>
+          
+            <a href="/tags/Reverse/" rel="tag"># Reverse</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/16/codenote/PL/c-cplus-mode/" rel="next" title="c-cplus-mode">
+                <i class="fa fa-chevron-left"></i> c-cplus-mode
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/16/codenote/OS/syscall/" rel="prev" title="Unix系统调用">
+                Unix系统调用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="amlloc">
+          <p class="site-author-name" itemprop="name">amlloc</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态调试步骤"><span class="nav-number">1.</span> <span class="nav-text">动态调试步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA-dump脚本"><span class="nav-number">2.</span> <span class="nav-text">IDA dump脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#smali注入代码库"><span class="nav-number">3.</span> <span class="nav-text">smali注入代码库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Arm-nop"><span class="nav-number">4.</span> <span class="nav-text">Arm nop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apk无法调试的问题"><span class="nav-number">5.</span> <span class="nav-text">apk无法调试的问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">amlloc</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

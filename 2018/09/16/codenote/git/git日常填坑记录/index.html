@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="填坑记录,git,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/w-16x16.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="使用git的零零碎碎">
+<meta name="keywords" content="填坑记录,git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git日常填坑记录">
+<meta property="og:url" content="http://yoursite.com/2018/09/16/codenote/git/git日常填坑记录/index.html">
+<meta property="og:site_name" content="amlloc&#39;s blog">
+<meta property="og:description" content="使用git的零零碎碎">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-11T10:52:43.003Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git日常填坑记录">
+<meta name="twitter:description" content="使用git的零零碎碎">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/16/codenote/git/git日常填坑记录/">
+
+
+
+
+
+  <title>git日常填坑记录 | amlloc's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">amlloc's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Just a Space</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/git/git日常填坑记录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">git日常填坑记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:35:07+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>使用git的零零碎碎<br><a id="more"></a></p>
+<h3 id="每次将代码push到github时都需要输入用户和密码环境"><a href="#每次将代码push到github时都需要输入用户和密码环境" class="headerlink" title="每次将代码push到github时都需要输入用户和密码环境"></a>每次将代码push到github时都需要输入用户和密码环境</h3><ul>
+<li>操作系统：Ubuntu 17.10</li>
+<li>备注：已配置好gitlab和github双账号 </li>
+<li>原因：<code>clone/remote add</code>项目时使用了<code>http/https</code></li>
+<li>解决：<code>clone/remote add</code>项目时使用了<code>ssh</code>方式，尽量不使用<code>http/https</code>方式</li>
+</ul>
+<h3 id="git-log-git-lg"><a href="#git-log-git-lg" class="headerlink" title="git log (git lg)"></a>git log (git lg)</h3><ul>
+<li><p>通过commit号的一部分模糊查找完整的commit号</p>
+<p><code>git log | grep &lt;part of commitid&gt;</code></p>
+</li>
+<li><p>查看某文件在哪些commit之中被修改了</p>
+<p><code>git log filename</code></p>
+</li>
+<li><p>彩色log(git lg)</p>
+<p><code>git config --global alias.lg &quot;log --color --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit&quot;</code></p>
+</li>
+</ul>
+<h3 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h3><ul>
+<li>将本地分支push到指定远程分支 ，如远程没有该分支，则创建<br><code>git push origin &lt;localbranchName&gt;:&lt;remotebranchName&gt;</code></li>
+<li>将本地分支push到指定远程分支，并对该远程分支进行跟踪<br><code>git push --set-upstream origin &lt;branchName&gt;</code></li>
+</ul>
+<h3 id="git-merge"><a href="#git-merge" class="headerlink" title="git merge"></a>git merge</h3><ul>
+<li><p>强行关闭fast-forward方式，保留分支提交历史（建议每次合并的时候都使用这个参数,因为默认会使用fast-forward模式，此时的分支提交历史不会保留）</p>
+<p><code>git merge --no-ff &lt;branch name&gt;</code></p>
+</li>
+</ul>
+<h3 id="git-checkout-git-co"><a href="#git-checkout-git-co" class="headerlink" title="git checkout(git co)"></a>git checkout(git co)</h3><ul>
+<li><p>切换分支</p>
+<p><code>git checkout &lt;branch name&gt;</code></p>
+</li>
+<li><p>新建本地分支并将远程对应分支提出<br><code>git checkout -t origin/2.0.0</code></p>
+</li>
+<li><p>新建本地分支</p>
+<p><code>git checkout -b &lt;branch name&gt;</code></p>
+</li>
+</ul>
+<h3 id="git-add"><a href="#git-add" class="headerlink" title="git add "></a>git add <filename></filename></h3><ul>
+<li><p>将特定文件/文件夹放置到暂存区</p>
+<p><code>git add &lt;filename/document&gt;</code></p>
+</li>
+</ul>
+<h3 id="git-commit-git-ci"><a href="#git-commit-git-ci" class="headerlink" title="git commit(git ci)"></a>git commit(git ci)</h3><ul>
+<li><p>提交暂存区内的所有改动，并附加说明</p>
+<p><code>git commit -m &lt;msg&gt;</code></p>
+</li>
+<li><p>在vim中添加附加说明，回车两次则第一行为msg的title</p>
+<p><code>git commit</code></p>
+</li>
+<li><p>对暂存区的文件commit后显示文件差异</p>
+<p><code>git commit -v</code></p>
+</li>
+</ul>
+<h3 id="git-status-git-st"><a href="#git-status-git-st" class="headerlink" title="git status( git st)"></a>git status( git st)</h3><ul>
+<li><p>查看暂存区，工作区，以及未跟踪文件的情况</p>
+<p><code>git status</code></p>
+</li>
+</ul>
+<h3 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h3><ul>
+<li><p>取消暂存区某个文件</p>
+<p><code>git reset HEAD &lt;filename&gt;</code> 或 <code>git unstage &lt;filename&gt;</code></p>
+</li>
+<li><p>取消整个暂存区</p>
+<p><code>git reset</code></p>
+</li>
+</ul>
+<h3 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a>git tag</h3><ul>
+<li><p>列出tag</p>
+<p><code>git tag</code></p>
+</li>
+<li><p>给某个特定的commit打tag</p>
+<p><code>git tag -a &quot;tag&quot; &lt;commitid&gt; -m &quot;msg&quot;</code></p>
+</li>
+<li><p>提交tags</p>
+<p><code>git push origin --tags</code></p>
+</li>
+<li><p>移除tag</p>
+<p>本地：<code>git tag -d V1.2</code></p>
+<p>线上：<code>git push origin :refs/tags/v1.4.5</code> (这个需要一定的权限才能做到)</p>
+</li>
+</ul>
+<h3 id="git-config"><a href="#git-config" class="headerlink" title="git config"></a>git config</h3><ul>
+<li><p>查看用户名和邮箱</p>
+<p><code>git config user.name</code><br><code>git config user.email</code></p>
+</li>
+<li><p>修改用户名和邮箱地址</p>
+<p><code>git config --global user.name &quot;username&quot;</code></p>
+<p><code>git config --global user.email &quot;email&quot;</code></p>
+</li>
+<li><p>取消用户名和邮箱地址</p>
+<p><code>git config --global --unset user.name</code></p>
+<p><code>git config --global --unset user.email</code></p>
+</li>
+</ul>
+<h3 id="gitconfig"><a href="#gitconfig" class="headerlink" title="~/.gitconfig"></a>~/.gitconfig</h3><ul>
+<li>可以直接在这里修改global的name和email</li>
+<li>可修改git使用时用到的editor</li>
+</ul>
+<h3 id="git-branch"><a href="#git-branch" class="headerlink" title="git branch"></a>git branch</h3><ul>
+<li><p>查看本地+远程分支</p>
+<p><code>git branch -va</code></p>
+</li>
+</ul>
+<h3 id="gitignore"><a href="#gitignore" class="headerlink" title=".gitignore"></a>.gitignore</h3><ul>
+<li><p>过滤文件夹</p>
+<p><code>/builds/</code></p>
+</li>
+<li><p>过滤某种类型文件</p>
+<p><code>*.java</code>、<code>*.c</code></p>
+</li>
+<li><p>指定过滤某个文件</p>
+<p><code>/local.properties</code></p>
+</li>
+<li><p>保守模式设置哪些文件不被过滤，也就是设置跟踪哪些文件夹</p>
+<p><code>!/local.properties</code></p>
+<p><code>!*.java</code>、<code>!*.c</code></p>
+<p><code>!/builds/</code></p>
+</li>
+</ul>
+<h3 id="git-branch-git-br"><a href="#git-branch-git-br" class="headerlink" title="git branch(git br)"></a>git branch(git br)</h3><ul>
+<li><p>查看分支</p>
+<p><code>git branch</code></p>
+</li>
+<li><p>重命名分支</p>
+<p><code>git branch -m &lt;old-branchname&gt; &lt;new-branchname&gt;</code></p>
+<h3 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h3></li>
+<li><p>保护工作现场</p>
+<p><code>git stash</code></p>
+</li>
+<li><p>恢复工作现场</p>
+<p><code>git stash apply</code></p>
+</li>
+<li><p>恢复的同时把stash内容也删</p>
+<p><code>git stash pop</code></p>
+</li>
+<li><p>查看stash列表</p>
+<p><code>git stash list</code></p>
+</li>
+<li><p>恢复指定的stash</p>
+<p><code>git stash apply stash@{0}</code></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/填坑记录/" rel="tag"># 填坑记录</a>
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/16/others/Hexo/" rel="next" title="Hexo">
+                <i class="fa fa-chevron-left"></i> Hexo
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/16/codenote/PL/c-cplus-mode/" rel="prev" title="c-cplus-mode">
+                c-cplus-mode <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="amlloc">
+          <p class="site-author-name" itemprop="name">amlloc</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#每次将代码push到github时都需要输入用户和密码环境"><span class="nav-number">1.</span> <span class="nav-text">每次将代码push到github时都需要输入用户和密码环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-log-git-lg"><span class="nav-number">2.</span> <span class="nav-text">git log (git lg)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-push"><span class="nav-number">3.</span> <span class="nav-text">git push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-merge"><span class="nav-number">4.</span> <span class="nav-text">git merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-checkout-git-co"><span class="nav-number">5.</span> <span class="nav-text">git checkout(git co)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-add"><span class="nav-number">6.</span> <span class="nav-text">git add </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit-git-ci"><span class="nav-number">7.</span> <span class="nav-text">git commit(git ci)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-status-git-st"><span class="nav-number">8.</span> <span class="nav-text">git status( git st)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-reset"><span class="nav-number">9.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-tag"><span class="nav-number">10.</span> <span class="nav-text">git tag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-config"><span class="nav-number">11.</span> <span class="nav-text">git config</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitconfig"><span class="nav-number">12.</span> <span class="nav-text">~/.gitconfig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-branch"><span class="nav-number">13.</span> <span class="nav-text">git branch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitignore"><span class="nav-number">14.</span> <span class="nav-text">.gitignore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-branch-git-br"><span class="nav-number">15.</span> <span class="nav-text">git branch(git br)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-stash"><span class="nav-number">16.</span> <span class="nav-text">git stash</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">amlloc</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

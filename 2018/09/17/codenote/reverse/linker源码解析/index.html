@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Android,Reverse,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/w-16x16.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="linker是Android系统动态库so的加载器和链接器，也是Android脱壳一重要脱壳点，这里介绍一下此部分的Android源码，并介绍几个脱壳点，及分析过程中产生的反调试手段，学习Linker的加载和启动原理，又需要介绍so的加载和启动。">
+<meta name="keywords" content="Android,Reverse">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linker源码解析">
+<meta property="og:url" content="http://yoursite.com/2018/09/17/codenote/reverse/linker源码解析/index.html">
+<meta property="og:site_name" content="amlloc&#39;s blog">
+<meta property="og:description" content="linker是Android系统动态库so的加载器和链接器，也是Android脱壳一重要脱壳点，这里介绍一下此部分的Android源码，并介绍几个脱壳点，及分析过程中产生的反调试手段，学习Linker的加载和启动原理，又需要介绍so的加载和启动。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/09/17/codenote/reverse/linker源码解析/1.png">
+<meta property="og:updated_time" content="2018-12-11T10:52:43.003Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linker源码解析">
+<meta name="twitter:description" content="linker是Android系统动态库so的加载器和链接器，也是Android脱壳一重要脱壳点，这里介绍一下此部分的Android源码，并介绍几个脱壳点，及分析过程中产生的反调试手段，学习Linker的加载和启动原理，又需要介绍so的加载和启动。">
+<meta name="twitter:image" content="http://yoursite.com/2018/09/17/codenote/reverse/linker源码解析/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/17/codenote/reverse/linker源码解析/">
+
+
+
+
+
+  <title>linker源码解析 | amlloc's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">amlloc's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Just a Space</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/17/codenote/reverse/linker源码解析/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linker源码解析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-17T00:55:53+08:00">
+                2018-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>linker是Android系统动态库so的加载器和链接器，也是Android脱壳一重要脱壳点，这里介绍一下此部分的Android源码，并介绍几个脱壳点，及分析过程中产生的反调试手段，学习Linker的加载和启动原理，又需要介绍so的加载和启动。</p>
+<a id="more"></a>
+<p><strong>系统</strong> :Android4.4-r1<br><strong>linker源码的位置</strong> : Android/bionic/linker</p>
+<h2 id="0x00-加载与启动so"><a href="#0x00-加载与启动so" class="headerlink" title="0x00 加载与启动so"></a>0x00 加载与启动so</h2><p>1、Java层中声明加载某个so文件以共享，则可在Java层声明代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static&#123;</span><br><span class="line">    System.loadLibrary(&quot;libhello.so&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其对应的执行流程如下：<br>1、 定位到文件Dalvik/vm/native/java_lang_Runtime.cpp<br>2、 调用Dalvik_java_lang_Runtime_nativeLoad -&gt; Dalvik/vm/Native.cpp:dvmLoadNativeCode<br>具体代码如下，我略过一些错误判断代码，这段代码以/<strong><em>  说明  </em></strong>/的形式省略</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">bool dvmLoadNativeCode(const char* pathName, Object* classLoader,</span><br><span class="line">        char** detail)</span><br><span class="line">&#123;</span><br><span class="line">    SharedLib* pEntry;</span><br><span class="line">    void* handle;</span><br><span class="line">    bool verbose;</span><br><span class="line"></span><br><span class="line">    /*********根据path查找so文件**********/</span><br><span class="line">    pEntry = findSharedLibEntry(pathName);</span><br><span class="line"></span><br><span class="line">    /*********加载指定so文件，并延迟加载*******/</span><br><span class="line">    handle = dlopen(pathName, RTLD_LAZY);</span><br><span class="line">    dvmChangeStatus(self, oldStatus);</span><br><span class="line"></span><br><span class="line">    /* create a new entry */</span><br><span class="line">    SharedLib* pNewEntry;</span><br><span class="line">    /*.......*/</span><br><span class="line"></span><br><span class="line">    /* try to add it to the list */</span><br><span class="line">    /***当执行addShareLibEntry()方法的时候，如果还有线程B同时在加载该so，***/</span><br><span class="line">    /***并且B线程先执行到了这里，那么就说明该so的信息已经添加过了，我们就不需要再执行添加pNewEntry的操作***/</span><br><span class="line">    SharedLib* pActualEntry = addSharedLibEntry(pNewEntry);</span><br><span class="line">         if (pNewEntry != pActualEntry) &#123;</span><br><span class="line">        ALOGI(&quot;WOW: we lost a race to add a shared lib (%s CL=%p)&quot;,</span><br><span class="line">            pathName, classLoader);</span><br><span class="line">        freeSharedLibEntry(pNewEntry);</span><br><span class="line">        return checkOnLoadResult(pActualEntry);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        if (verbose)</span><br><span class="line">            ALOGD(&quot;Added shared lib %s %p&quot;, pathName, classLoader);</span><br><span class="line"></span><br><span class="line">        bool result = false;</span><br><span class="line">        void* vonLoad;</span><br><span class="line">        int version;</span><br><span class="line">       /***定位JNI_OnLoad()方法***/</span><br><span class="line">        vonLoad = dlsym(handle, &quot;JNI_OnLoad&quot;);//</span><br><span class="line">        /***如果找不到则延迟加载，说明是用javah风格的代码**/</span><br><span class="line">        if (vonLoad == NULL) &#123;</span><br><span class="line">            ALOGD(&quot;No JNI_OnLoad found in %s %p, skipping init&quot;, pathName, classLoader);</span><br><span class="line">            result = true;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            /*</span><br><span class="line">             * Call JNI_OnLoad.  We have to override the current class</span><br><span class="line">             * loader, which will always be &quot;null&quot; since the stuff at the</span><br><span class="line">             * top of the stack is around Runtime.loadLibrary().  (See</span><br><span class="line">             * the comments in the JNI FindClass function.)</span><br><span class="line">             */</span><br><span class="line">            /***这里省略了重写相应类加载器的代码，如上面鸡肠文所示功能,不重要**/</span><br><span class="line">            /***gDvm是一个全局变量，功能后面再补***/</span><br><span class="line">            if (gDvm.verboseJni) &#123;</span><br><span class="line">                ALOGI(&quot;[Calling JNI_OnLoad for \&quot;%s\&quot;]&quot;, pathName);</span><br><span class="line">            &#125;</span><br><span class="line">            /***执行JNI_OnLoad***/</span><br><span class="line">            version = (*func)(gDvmJni.jniVm, NULL);</span><br><span class="line">            </span><br><span class="line">           /***省略一大段代码。。。***/</span><br><span class="line">        dvmUnlockMutex(&amp;pNewEntry-&gt;onLoadLock);</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面的代码我们可看出<br>1、Android系统加载so文件时使用了dlopen函数；<br>2、定位JNI_OnLoad()方法，则dlsym(handle, “JNI_OnLoad”)；<br>3、执行JNI_OnLoad()方法：(*func)(gDvmJni.jniVm, NULL)<br>我们查找加载so文件的函数dlopen在bionic/linker/dlfcn.c中，而此函数有主要调用了do_dlopen函数，这里对dlopen函数不详细赘述，主要解析一下do_dlopen函数，而此关键函数正是在Linker中。接下来详细分析Linker源码。</p>
+<h2 id="0x01-Linker源码总览"><a href="#0x01-Linker源码总览" class="headerlink" title="0x01  Linker源码总览"></a>0x01  Linker源码总览</h2><p><img src="/2018/09/17/codenote/reverse/linker源码解析/1.png" alt="这里写图片描述"></p>
+<h2 id="0x02-do-dlopen"><a href="#0x02-do-dlopen" class="headerlink" title="0x02  do_dlopen"></a>0x02  do_dlopen</h2><p>先贴上代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">soinfo* si = find_library(name);//**完成so的加载到内存的工作</span><br><span class="line">  if (si != NULL) &#123;</span><br><span class="line">    si-&gt;CallConstructors();//**完成so及本身的构造函数的调用。完成so文件的加载</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>嗯，注释简单明了，接下来解析find_library(name)与si-&gt;CallConstructors()。</p>
+<h2 id="0x03-续0-find-library"><a href="#0x03-续0-find-library" class="headerlink" title="0x03 续0 find_library"></a>0x03 续0 find_library</h2><p>作用：完成so的加载到内存的工作,成为是否加载过该so的重要依据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">static soinfo* find_library(const char* name) &#123;//成为是否加载过该so的重要依据</span><br><span class="line">  soinfo* si = find_library_internal(name);//寻找相应的so信息</span><br><span class="line">  if (si != NULL) &#123;</span><br><span class="line">    si-&gt;ref_count++;</span><br><span class="line">  &#125;</span><br><span class="line">  return si;</span><br></pre></td></tr></table></figure>
+<p>嗯，还是很清晰，里面的调用的方法先放下先，我们现分析如下方法。</p>
+<h2 id="0x04-si-gt-CallConstructors"><a href="#0x04-si-gt-CallConstructors" class="headerlink" title="0x04 si-&gt;CallConstructors()"></a>0x04 si-&gt;CallConstructors()</h2><p>完成so及本身的构造函数的调用。完成so文件的加载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/***省略一大堆代码,下面是主要函数****/</span><br><span class="line"> if (dynamic != NULL) &#123;</span><br><span class="line">    for (Elf32_Dyn* d = dynamic; d-&gt;d_tag != DT_NULL; ++d) &#123;</span><br><span class="line">      if (d-&gt;d_tag == DT_NEEDED) &#123;//调动依赖库的构造函数</span><br><span class="line">        const char* library_name = strtab + d-&gt;d_un.d_val;</span><br><span class="line">        TRACE(&quot;\&quot;%s\&quot;: calling constructors in DT_NEEDED \&quot;%s\&quot;&quot;, name, library_name);</span><br><span class="line">        find_loaded_library(library_name)-&gt;CallConstructors();</span><br><span class="line">      &#125;</span><br><span class="line">       // DT_INIT should be called before DT_INIT_ARRAY if both are present.</span><br><span class="line">  TRACE(&quot;\&quot;%s\&quot;: calling constructors&quot;, name);</span><br><span class="line">  CallFunction(&quot;DT_INIT&quot;, init_func);//调用自己的一系列构造函数后返回,这里是so文件加壳的脱壳点</span><br><span class="line">  CallArray(&quot;DT_INIT_ARRAY&quot;, init_array, init_array_count, false);//dex文件的脱壳点</span><br></pre></td></tr></table></figure>
+<p>这主要是完成so文件的加载，然后遍历所有动态节，再根据标签d_tag ==DT_NEEDED调用依赖库的构造函数，再调用自己的一系列构造函数，以及init_arry函数，其中后面两个函数分别是so文件和dex文件的脱壳点，这样就结束了so文件的加载，但分析远远没有结束，我们需要回过头来解析find_library方法。</p>
+<h2 id="0x05-find-library-之find-library-internal"><a href="#0x05-find-library-之find-library-internal" class="headerlink" title="0x05  find_library  之find_library_internal()"></a>0x05  find_library  之find_library_internal()</h2><p>操作：寻找相应的so信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">static soinfo* find_library_internal(const char* name) &#123;</span><br><span class="line">  if (name == NULL) &#123;</span><br><span class="line">    return somain;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  soinfo* si = find_loaded_library(name);</span><br><span class="line">  if (si != NULL) &#123;</span><br><span class="line">    if (si-&gt;flags &amp; FLAG_LINKED) &#123;</span><br><span class="line">      return si;</span><br><span class="line">    &#125;</span><br><span class="line">    DL_ERR(&quot;OOPS: recursive link to \&quot;%s\&quot;&quot;, si-&gt;name);</span><br><span class="line">    return NULL;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  TRACE(&quot;[ &apos;%s&apos; has not been loaded yet.  Locating...]&quot;, name);</span><br><span class="line">  si = load_library(name);//真正加载so文件的函数</span><br><span class="line">  if (si == NULL) &#123;</span><br><span class="line">    return NULL;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  // At this point we know that whatever is loaded @ base is a valid ELF</span><br><span class="line">  // shared library whose segments are properly mapped in.</span><br><span class="line">  TRACE(&quot;[ init_library base=0x%08x sz=0x%08x name=&apos;%s&apos; ]&quot;,</span><br><span class="line">        si-&gt;base, si-&gt;size, si-&gt;name);</span><br><span class="line"> </span><br><span class="line">  if (!soinfo_link_image(si)) &#123;//进行重定位</span><br><span class="line">    munmap(reinterpret_cast&lt;void*&gt;(si-&gt;base), si-&gt;size);</span><br><span class="line">    soinfo_free(si);</span><br><span class="line">    return NULL;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>注释很明白，整理一下基本流程：<br>1、find_loaded_library()：寻找相应的so信息<br>2、load_library()：真正加载so文件的函数<br>3、soinfo_link_image():处理动态节dynamic section,初始化动态节dynamic section的属性</p>
+<h2 id="0x06-find-library-internal-之-find-loaded-library"><a href="#0x06-find-library-internal-之-find-loaded-library" class="headerlink" title="0x06 find_library_internal() 之 find_loaded_library()"></a>0x06 find_library_internal() 之 find_loaded_library()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//寻找相应的so信息 </span><br><span class="line"> static soinfo *find_loaded_library(const char *name)</span><br><span class="line">&#123;</span><br><span class="line">    soinfo *si;</span><br><span class="line">    const char *bname;</span><br><span class="line"> </span><br><span class="line">    // TODO: don&apos;t use basename only for determining libraries</span><br><span class="line">    // http://code.google.com/p/android/issues/detail?id=6670</span><br><span class="line"> </span><br><span class="line">    bname = strrchr(name, &apos;/&apos;);//查找一个字符&quot;/&quot;在另一个字符串name中末次出现的位置并返回这个位置的地址</span><br><span class="line">    bname = bname ? bname + 1 : name;</span><br><span class="line"> </span><br><span class="line">    for (si = solist; si != NULL; si = si-&gt;next) &#123;//判断是否有加载这个so</span><br><span class="line">        if (!strcmp(bname, si-&gt;name)) &#123;</span><br><span class="line">            return si;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return NULL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="0x07-find-library-internal-之load-library"><a href="#0x07-find-library-internal-之load-library" class="headerlink" title="0x07  find_library_internal() 之load_library()"></a>0x07  find_library_internal() 之load_library()</h2><p>操作：真正加载so文件的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">static soinfo* load_library(const char* name) &#123;</span><br><span class="line">    // Open the file.</span><br><span class="line">    int fd = open_library(name);</span><br><span class="line">    if (fd == -1) &#123;</span><br><span class="line">        DL_ERR(&quot;library \&quot;%s\&quot; not found&quot;, name);</span><br><span class="line">        return NULL;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    // Read the ELF header and load the segments.</span><br><span class="line">    ElfReader elf_reader(name, fd);</span><br><span class="line">    if (!elf_reader.Load()) &#123;//读取elf的操作，源码中看出只读取了Program 段</span><br><span class="line">        return NULL;</span><br><span class="line">    &#125;</span><br><span class="line">     const char* bname = strrchr(name, &apos;/&apos;);</span><br><span class="line">     //在so文件加载完以后，接着就会调用soinfo_alloc函数为so分配soinfo</span><br><span class="line">    soinfo* si = soinfo_alloc(bname ? bname + 1 : name);</span><br><span class="line">    if (si == NULL) &#123;</span><br><span class="line">        return NULL;</span><br><span class="line">    &#125;//利用装载结果初始化soinfo对象</span><br><span class="line">    si-&gt;base = elf_reader.load_start();</span><br><span class="line">    si-&gt;size = elf_reader.load_size();</span><br><span class="line">    si-&gt;load_bias = elf_reader.load_bias();</span><br><span class="line">    si-&gt;flags = 0;</span><br><span class="line">    si-&gt;entry = 0;</span><br><span class="line">    si-&gt;dynamic = NULL;</span><br><span class="line">    si-&gt;phnum = elf_reader.phdr_count();</span><br><span class="line">    si-&gt;phdr = elf_reader.loaded_phdr();</span><br><span class="line">    return si;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里着重强调一下elf_reader.Load()方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bool ElfReader::Load() &#123;</span><br><span class="line">  return ReadElfHeader() &amp;&amp;</span><br><span class="line">         VerifyElfHeader() &amp;&amp;</span><br><span class="line">         ReadProgramHeader() &amp;&amp;</span><br><span class="line">         ReserveAddressSpace() &amp;&amp;</span><br><span class="line">         LoadSegments() &amp;&amp;</span><br><span class="line">         FindPhdr();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出读取elf的操作，源码中看出只读取了Program 段，这也是很多加固进行抹头操作的原因：IDA只通过加载section Header段，来读取so文件，而实际上源码只读取了Program段，如果只是将section Header段抹头了，IDA便无法正常解析so文件，而Android系统却可以正常解析so文件，这也是一种反调试手段。<br>再后来就进行一系列对so文件的初始化操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">si-&gt;base = elf_reader.load_start();</span><br><span class="line">    si-&gt;size = elf_reader.load_size();</span><br><span class="line">    si-&gt;load_bias = elf_reader.load_bias();</span><br><span class="line">    si-&gt;flags = 0;</span><br><span class="line">    si-&gt;entry = 0;</span><br><span class="line">    si-&gt;dynamic = NULL;</span><br><span class="line">    si-&gt;phnum = elf_reader.phdr_count();</span><br><span class="line">    si-&gt;phdr = elf_reader.loaded_phdr();</span><br><span class="line">    return si;</span><br></pre></td></tr></table></figure>
+<p>其中si结构体如下（可略）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">struct soinfo &#123;</span><br><span class="line"> public:</span><br><span class="line">  char name[SOINFO_NAME_LEN];</span><br><span class="line">  const Elf32_Phdr* phdr;</span><br><span class="line">  size_t phnum;</span><br><span class="line">  Elf32_Addr entry;</span><br><span class="line">  Elf32_Addr base;</span><br><span class="line">  unsigned size;</span><br><span class="line"></span><br><span class="line">  uint32_t unused1;  // DO NOT USE, maintained for compatibility.</span><br><span class="line"></span><br><span class="line">  Elf32_Dyn* dynamic;</span><br><span class="line"></span><br><span class="line">  uint32_t unused2; // DO NOT USE, maintained for compatibility</span><br><span class="line">  uint32_t unused3; // DO NOT USE, maintained for compatibility</span><br><span class="line"></span><br><span class="line">  soinfo* next;</span><br><span class="line">  unsigned flags;</span><br><span class="line"></span><br><span class="line">  const char* strtab;</span><br><span class="line">  Elf32_Sym* symtab;</span><br><span class="line"></span><br><span class="line">  size_t nbucket;</span><br><span class="line">  size_t nchain;</span><br><span class="line">  unsigned* bucket;</span><br><span class="line">  unsigned* chain;</span><br><span class="line"></span><br><span class="line">  unsigned* plt_got;</span><br><span class="line"></span><br><span class="line">  Elf32_Rel* plt_rel;</span><br><span class="line">  size_t plt_rel_count;</span><br><span class="line"></span><br><span class="line">  Elf32_Rel* rel;</span><br><span class="line">  size_t rel_count;</span><br><span class="line"></span><br><span class="line">  linker_function_t* preinit_array;</span><br><span class="line">  size_t preinit_array_count;</span><br><span class="line"></span><br><span class="line">  linker_function_t* init_array;</span><br><span class="line">  size_t init_array_count;</span><br><span class="line">  linker_function_t* fini_array;</span><br><span class="line">  size_t fini_array_count;</span><br><span class="line"></span><br><span class="line">  linker_function_t init_func;</span><br><span class="line">  linker_function_t fini_func;</span><br><span class="line"></span><br><span class="line">#if defined(ANDROID_ARM_LINKER)</span><br><span class="line">  // ARM EABI section used for stack unwinding.</span><br><span class="line">  unsigned* ARM_exidx;</span><br><span class="line">  size_t ARM_exidx_count;</span><br><span class="line">#elif defined(ANDROID_MIPS_LINKER)</span><br><span class="line">  unsigned mips_symtabno;</span><br><span class="line">  unsigned mips_local_gotno;</span><br><span class="line">  unsigned mips_gotsym;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">  size_t ref_count;</span><br><span class="line">  link_map_t link_map;</span><br><span class="line"></span><br><span class="line">  bool constructors_called;</span><br><span class="line"></span><br><span class="line">  // When you read a virtual address from the ELF file, add this</span><br><span class="line">  // value to get the corresponding address in the process&apos; address space.</span><br><span class="line">  Elf32_Addr load_bias;</span><br><span class="line"></span><br><span class="line">  bool has_text_relocations;</span><br><span class="line">  bool has_DT_SYMBOLIC;</span><br><span class="line"></span><br><span class="line">  void CallConstructors();</span><br><span class="line">  void CallDestructors();</span><br><span class="line">  void CallPreInitConstructors();</span><br><span class="line"></span><br><span class="line"> private:</span><br><span class="line">  void CallArray(const char* array_name, linker_function_t* functions, size_t count, bool reverse);//dex文件脱壳点</span><br><span class="line">  void CallFunction(const char* function_name, linker_function_t function);//so文件脱壳点</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="0x08-find-library-internal-之soinfo-link-image-si"><a href="#0x08-find-library-internal-之soinfo-link-image-si" class="headerlink" title="0x08  find_library_internal() 之soinfo_link_image(si)"></a>0x08  find_library_internal() 之soinfo_link_image(si)</h2><p>在si = load_library(name)获得了so文件的info之后，就开始进行一系列操作：<br>1、定位动态节；<br>2、解析动态节；<br>3、加载动态节<br>4、重定位</p>
+<p>1、定位动态节：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">phdr_table_get_dynamic_section(const Elf32_Phdr* phdr_table,</span><br><span class="line">                               int               phdr_count,</span><br><span class="line">                               Elf32_Addr        load_bias,</span><br><span class="line">                               Elf32_Dyn**       dynamic,</span><br><span class="line">                               size_t*           dynamic_count,</span><br><span class="line">                               Elf32_Word*       dynamic_flags)</span><br><span class="line">&#123;</span><br><span class="line">    const Elf32_Phdr* phdr = phdr_table;</span><br><span class="line">    const Elf32_Phdr* phdr_limit = phdr + phdr_count;</span><br><span class="line"> </span><br><span class="line">    for (phdr = phdr_table; phdr &lt; phdr_limit; phdr++) &#123;</span><br><span class="line">        if (phdr-&gt;p_type != PT_DYNAMIC) &#123;//遍历phdr寻找DYNAMIC段，存放了字符串，方法等偏移地址</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        *dynamic = reinterpret_cast&lt;Elf32_Dyn*&gt;(load_bias + phdr-&gt;p_vaddr);</span><br><span class="line">        if (dynamic_count) &#123;</span><br><span class="line">            *dynamic_count = (unsigned)(phdr-&gt;p_memsz / 8);</span><br><span class="line">        &#125;</span><br><span class="line">        if (dynamic_flags) &#123;</span><br><span class="line">            *dynamic_flags = phdr-&gt;p_flags;</span><br><span class="line">        &#125;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    *dynamic = NULL;</span><br><span class="line">    if (dynamic_count) &#123;</span><br><span class="line">        *dynamic_count = 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>值得注意的是，这里源码加载动态节的时候只加载了第一个动态节，后面的动态节都没有加载，因此我们可以自己自定义多个programm段中的动态节区，然后在section header中也改变相应的数据，这样IDA解析的信息是有所偏差的，因为Android系统实际上只读取了第一个动态节。<br>2、解析动态节。<br>解析代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line">for (Elf32_Dyn* d = si-&gt;dynamic; d-&gt;d_tag != DT_NULL; ++d) &#123;</span><br><span class="line">        DEBUG(&quot;d = %p, d[0](tag) = 0x%08x d[1](val) = 0x%08x&quot;, d, d-&gt;d_tag, d-&gt;d_un.d_val);</span><br><span class="line">        switch(d-&gt;d_tag)&#123;/初始化动态节dynamic section的属性</span><br><span class="line">        case DT_HASH:</span><br><span class="line">            si-&gt;nbucket = ((unsigned *) (base + d-&gt;d_un.d_ptr))[0];</span><br><span class="line">            si-&gt;nchain = ((unsigned *) (base + d-&gt;d_un.d_ptr))[1];</span><br><span class="line">            si-&gt;bucket = (unsigned *) (base + d-&gt;d_un.d_ptr + 8);</span><br><span class="line">            si-&gt;chain = (unsigned *) (base + d-&gt;d_un.d_ptr + 8 + si-&gt;nbucket * 4);</span><br><span class="line">            break;</span><br><span class="line">        case DT_STRTAB:</span><br><span class="line">            si-&gt;strtab = (const char *) (base + d-&gt;d_un.d_ptr);</span><br><span class="line">            break;</span><br><span class="line">        case DT_SYMTAB:</span><br><span class="line">            si-&gt;symtab = (Elf32_Sym *) (base + d-&gt;d_un.d_ptr);</span><br><span class="line">            break;</span><br><span class="line">        case DT_PLTREL:</span><br><span class="line">            if (d-&gt;d_un.d_val != DT_REL) &#123;</span><br><span class="line">                DL_ERR(&quot;unsupported DT_RELA in \&quot;%s\&quot;&quot;, si-&gt;name);</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line">            break;</span><br><span class="line">        case DT_JMPREL:</span><br><span class="line">            si-&gt;plt_rel = (Elf32_Rel*) (base + d-&gt;d_un.d_ptr);</span><br><span class="line">            break;</span><br><span class="line">        case DT_PLTRELSZ:</span><br><span class="line">            si-&gt;plt_rel_count = d-&gt;d_un.d_val / sizeof(Elf32_Rel);</span><br><span class="line">            break;</span><br><span class="line">        case DT_REL:</span><br><span class="line">            si-&gt;rel = (Elf32_Rel*) (base + d-&gt;d_un.d_ptr);</span><br><span class="line">            break;</span><br><span class="line">        case DT_RELSZ:</span><br><span class="line">            si-&gt;rel_count = d-&gt;d_un.d_val / sizeof(Elf32_Rel);</span><br><span class="line">            break;</span><br><span class="line">        case DT_PLTGOT:</span><br><span class="line">            /* Save this in case we decide to do lazy binding. We don&apos;t yet. */</span><br><span class="line">            si-&gt;plt_got = (unsigned *)(base + d-&gt;d_un.d_ptr);</span><br><span class="line">            break;</span><br><span class="line">        case DT_DEBUG:</span><br><span class="line">            // Set the DT_DEBUG entry to the address of _r_debug for GDB</span><br><span class="line">            // if the dynamic table is writable</span><br><span class="line">            if ((dynamic_flags &amp; PF_W) != 0) &#123;</span><br><span class="line">                d-&gt;d_un.d_val = (int) &amp;_r_debug;</span><br><span class="line">            &#125;</span><br><span class="line">            break;</span><br><span class="line">         case DT_RELA:</span><br><span class="line">            DL_ERR(&quot;unsupported DT_RELA in \&quot;%s\&quot;&quot;, si-&gt;name);</span><br><span class="line">            return false;</span><br><span class="line">        case DT_INIT:</span><br><span class="line">            si-&gt;init_func = reinterpret_cast&lt;linker_function_t&gt;(base + d-&gt;d_un.d_ptr);</span><br><span class="line">            DEBUG(&quot;%s constructors (DT_INIT) found at %p&quot;, si-&gt;name, si-&gt;init_func);</span><br><span class="line">            break;</span><br><span class="line">        case DT_FINI:</span><br><span class="line">            si-&gt;fini_func = reinterpret_cast&lt;linker_function_t&gt;(base + d-&gt;d_un.d_ptr);</span><br><span class="line">            DEBUG(&quot;%s destructors (DT_FINI) found at %p&quot;, si-&gt;name, si-&gt;fini_func);</span><br><span class="line">            break;</span><br><span class="line">        case DT_INIT_ARRAY:</span><br><span class="line">            si-&gt;init_array = reinterpret_cast&lt;linker_function_t*&gt;(base + d-&gt;d_un.d_ptr);</span><br><span class="line">            DEBUG(&quot;%s constructors (DT_INIT_ARRAY) found at %p&quot;, si-&gt;name, si-&gt;init_array);</span><br><span class="line">            break;</span><br><span class="line">        case DT_INIT_ARRAYSZ:</span><br><span class="line">            si-&gt;init_array_count = ((unsigned)d-&gt;d_un.d_val) / sizeof(Elf32_Addr);</span><br><span class="line">            break;</span><br><span class="line">        case DT_FINI_ARRAY:</span><br><span class="line">            si-&gt;fini_array = reinterpret_cast&lt;linker_function_t*&gt;(base + d-&gt;d_un.d_ptr);</span><br><span class="line">            DEBUG(&quot;%s destructors (DT_FINI_ARRAY) found at %p&quot;, si-&gt;name, si-&gt;fini_array);</span><br><span class="line">            break;</span><br><span class="line">        case DT_FINI_ARRAYSZ:</span><br><span class="line">            si-&gt;fini_array_count = ((unsigned)d-&gt;d_un.d_val) / sizeof(Elf32_Addr);</span><br><span class="line">            break;</span><br><span class="line">        case DT_PREINIT_ARRAY:</span><br><span class="line">            si-&gt;preinit_array = reinterpret_cast&lt;linker_function_t*&gt;(base + d-&gt;d_un.d_ptr);</span><br><span class="line">            DEBUG(&quot;%s constructors (DT_PREINIT_ARRAY) found at %p&quot;, si-&gt;name, si-&gt;preinit_array);</span><br><span class="line">            break;</span><br><span class="line">        case DT_PREINIT_ARRAYSZ:</span><br><span class="line">            si-&gt;preinit_array_count = ((unsigned)d-&gt;d_un.d_val) / sizeof(Elf32_Addr);</span><br><span class="line">            break;</span><br><span class="line">        case DT_TEXTREL:</span><br><span class="line">            si-&gt;has_text_relocations = true;</span><br><span class="line">            break;</span><br><span class="line">        case DT_SYMBOLIC:</span><br><span class="line">            si-&gt;has_DT_SYMBOLIC = true;</span><br><span class="line">            break;</span><br><span class="line">        case DT_NEEDED:</span><br><span class="line">            ++needed_count;</span><br><span class="line">            break;</span><br><span class="line">#if defined DT_FLAGS</span><br><span class="line">        // TODO: why is DT_FLAGS not defined?</span><br><span class="line">        case DT_FLAGS:</span><br><span class="line">            if (d-&gt;d_un.d_val &amp; DF_TEXTREL) &#123;</span><br><span class="line">                si-&gt;has_text_relocations = true;</span><br><span class="line">            &#125;</span><br><span class="line">            if (d-&gt;d_un.d_val &amp; DF_SYMBOLIC) &#123;</span><br><span class="line">                si-&gt;has_DT_SYMBOLIC = true;</span><br><span class="line">            &#125;</span><br><span class="line">            break;</span><br><span class="line">#endif</span><br><span class="line">#if defined(ANDROID_MIPS_LINKER)</span><br><span class="line">        case DT_STRSZ:</span><br><span class="line">        case DT_SYMENT:</span><br><span class="line">        case DT_RELENT:</span><br><span class="line">             break;</span><br><span class="line">        case DT_MIPS_RLD_MAP:</span><br><span class="line">            // Set the DT_MIPS_RLD_MAP entry to the address of _r_debug for GDB.</span><br><span class="line">            &#123;</span><br><span class="line">              r_debug** dp = (r_debug**) d-&gt;d_un.d_ptr;</span><br><span class="line">              *dp = &amp;_r_debug;</span><br><span class="line">            &#125;</span><br><span class="line">            break;</span><br><span class="line">        case DT_MIPS_RLD_VERSION:</span><br><span class="line">        case DT_MIPS_FLAGS:</span><br><span class="line">        case DT_MIPS_BASE_ADDRESS:</span><br><span class="line">        case DT_MIPS_UNREFEXTNO:</span><br><span class="line">            break;</span><br><span class="line"></span><br><span class="line">        case DT_MIPS_SYMTABNO:</span><br><span class="line">            si-&gt;mips_symtabno = d-&gt;d_un.d_val;</span><br><span class="line">            break;</span><br><span class="line"></span><br><span class="line">        case DT_MIPS_LOCAL_GOTNO:</span><br><span class="line">            si-&gt;mips_local_gotno = d-&gt;d_un.d_val;</span><br><span class="line">            break;</span><br><span class="line"></span><br><span class="line">        case DT_MIPS_GOTSYM:</span><br><span class="line">            si-&gt;mips_gotsym = d-&gt;d_un.d_val;</span><br><span class="line">            break;</span><br><span class="line"></span><br><span class="line">        default:</span><br><span class="line">            DEBUG(&quot;Unused DT entry: type 0x%08x arg 0x%08x&quot;, d-&gt;d_tag, d-&gt;d_un.d_val);</span><br><span class="line">            break;</span><br><span class="line">#endif</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>3、加载依赖库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//********加载依赖库 (NEEDED)       Shared library: [liblog.so]</span><br><span class="line">   for (Elf32_Dyn* d = si-&gt;dynamic; d-&gt;d_tag != DT_NULL; ++d) &#123;</span><br><span class="line">       if (d-&gt;d_tag == DT_NEEDED) &#123;</span><br><span class="line">           const char* library_name = si-&gt;strtab + d-&gt;d_un.d_val;</span><br><span class="line">           DEBUG(&quot;%s needs %s&quot;, si-&gt;name, library_name);</span><br><span class="line">           soinfo* lsi = find_library(library_name);</span><br><span class="line">           if (lsi == NULL) &#123;</span><br><span class="line">               strlcpy(tmp_err_buf, linker_get_error_buffer(), sizeof(tmp_err_buf));</span><br><span class="line">               DL_ERR(&quot;could not load library \&quot;%s\&quot; needed by \&quot;%s\&quot;; caused by %s&quot;,</span><br><span class="line">                      library_name, si-&gt;name, tmp_err_buf);</span><br><span class="line">               return false;</span><br><span class="line">           &#125;</span><br><span class="line">           *pneeded++ = lsi;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>4、重定位操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">if (si-&gt;has_text_relocations) &#123;//重定位操作</span><br><span class="line">        /* Unprotect the segments, i.e. make them writable, to allow</span><br><span class="line">         * text relocations to work properly. We will later call</span><br><span class="line">         * phdr_table_protect_segments() after all of them are applied</span><br><span class="line">         * and all constructors are run.</span><br><span class="line">         */</span><br><span class="line">        DL_WARN(&quot;%s has text relocations. This is wasting memory and is &quot;</span><br><span class="line">                &quot;a security risk. Please fix.&quot;, si-&gt;name);</span><br><span class="line">        if (phdr_table_unprotect_segments(si-&gt;phdr, si-&gt;phnum, si-&gt;load_bias) &lt; 0) &#123;</span><br><span class="line">            DL_ERR(&quot;can&apos;t unprotect loadable segments for \&quot;%s\&quot;: %s&quot;,</span><br><span class="line">                   si-&gt;name, strerror(errno));</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (si-&gt;plt_rel != NULL) &#123;//修改数据达到重定位的目的</span><br><span class="line">        DEBUG(&quot;[ relocating %s plt ]&quot;, si-&gt;name );</span><br><span class="line">        if (soinfo_relocate(si, si-&gt;plt_rel, si-&gt;plt_rel_count, needed)) &#123;</span><br><span class="line">            return false;//修改数据达到重定位的目的</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    if (si-&gt;rel != NULL) &#123;</span><br><span class="line">        DEBUG(&quot;[ relocating %s ]&quot;, si-&gt;name );</span><br><span class="line">        if (soinfo_relocate(si, si-&gt;rel, si-&gt;rel_count, needed)) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>其中具体的意义参见以下博客<br><a href="http://blog.csdn.net/feibabeibei_beibei/article/details/53004525" target="_blank" rel="noopener">http://blog.csdn.net/feibabeibei_beibei/article/details/53004525</a></p>
+<h2 id="0xFF-收尾"><a href="#0xFF-收尾" class="headerlink" title="0xFF 收尾"></a>0xFF 收尾</h2><p>1、dlopen执行完毕后<br>2、调用 vonLoad = dlsym(handle, “JNI_OnLoad”)定位JNI_Onload<br>3、再执行version = (*func)(gDvmJni.jniVm, NULL);执行JNI_Onload<br>期间可以有三个断点：<br>.init-&gt;.init_array-&gt;JNI_Onload-&gt;java_com_XX.<br>反调试思路：<br>1、section Header的抹头操作<br>2、自定义多个动态节</p>
+<p>这里留个坑，就是未进行对全局变量gDvm的解析，师傅们多多指教哇~<br>参考链接：</p>
+<p><a href="http://blog.csdn.net/feibabeibei_beibei/article/details/53004525" target="_blank" rel="noopener">http://blog.csdn.net/feibabeibei_beibei/article/details/53004525</a><br><a href="https://xianzhi.aliyun.com/forum/read/316.html" target="_blank" rel="noopener">https://xianzhi.aliyun.com/forum/read/316.html</a><br><a href="http://blog.csdn.net/maspchen/article/details/50568693" target="_blank" rel="noopener">http://blog.csdn.net/maspchen/article/details/50568693</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Reverse/" rel="tag"># Reverse</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/16/codenote/Android/Android开发日常填坑记录/" rel="next" title="Android开发日常填坑记录">
+                <i class="fa fa-chevron-left"></i> Android开发日常填坑记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/10/codenote/Android/Android-sample/" rel="prev" title="Android Easy Sample">
+                Android Easy Sample <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="amlloc">
+          <p class="site-author-name" itemprop="name">amlloc</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-加载与启动so"><span class="nav-number">1.</span> <span class="nav-text">0x00 加载与启动so</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-Linker源码总览"><span class="nav-number">2.</span> <span class="nav-text">0x01  Linker源码总览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-do-dlopen"><span class="nav-number">3.</span> <span class="nav-text">0x02  do_dlopen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-续0-find-library"><span class="nav-number">4.</span> <span class="nav-text">0x03 续0 find_library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-si-gt-CallConstructors"><span class="nav-number">5.</span> <span class="nav-text">0x04 si-&gt;CallConstructors()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-find-library-之find-library-internal"><span class="nav-number">6.</span> <span class="nav-text">0x05  find_library  之find_library_internal()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-find-library-internal-之-find-loaded-library"><span class="nav-number">7.</span> <span class="nav-text">0x06 find_library_internal() 之 find_loaded_library()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x07-find-library-internal-之load-library"><span class="nav-number">8.</span> <span class="nav-text">0x07  find_library_internal() 之load_library()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x08-find-library-internal-之soinfo-link-image-si"><span class="nav-number">9.</span> <span class="nav-text">0x08  find_library_internal() 之soinfo_link_image(si)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0xFF-收尾"><span class="nav-number">10.</span> <span class="nav-text">0xFF 收尾</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">amlloc</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
