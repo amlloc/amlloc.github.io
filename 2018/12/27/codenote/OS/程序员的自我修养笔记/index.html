@@ -104,7 +104,12 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1545926648771.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1545927294296.png">
-<meta property="og:updated_time" content="2018-12-27T16:49:30.266Z">
+<meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439014195.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439221303.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439234732.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439338068.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1546444190583.png">
+<meta property="og:updated_time" content="2019-01-02T15:50:05.084Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序员的自我修养笔记">
 <meta name="twitter:description" content="《程序员的自我修养笔记》 1">
@@ -432,6 +437,44 @@
 <p><code>__attribute__((section(&quot;BAR&quot;))) void foo()</code></p>
 </li>
 </ul>
+<h3 id="第四章静态链接"><a href="#第四章静态链接" class="headerlink" title="第四章静态链接"></a>第四章静态链接</h3><h4 id="空间与地址分配"><a href="#空间与地址分配" class="headerlink" title="空间与地址分配"></a>空间与地址分配</h4><ul>
+<li><p>相似段合并</p>
+<ul>
+<li><p>空间与地址分配</p>
+<p>扫描所有输入目标文件，并获得他们各个段的长度、属性和位置，并将输入目标文件中的符号表所有的符号定义和符号引用收集起来，放到全局符号表中。于是，链接器将获取所有输入目标文件的段长度，并将他们合并，计算输出文件中各个段合并后的长度和位置，建立映射关系。</p>
+</li>
+<li><p>符号解析与重定位</p>
+<p>利用上一步的信息进行段的数据，读取段数据，重定位信息，进行符号解析与重定位、调整代码中的地址等。</p>
+</li>
+</ul>
+<p>如下图：</p>
+<p><img src="/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439014195.png" alt="1546439014195"></p>
+</li>
+</ul>
+<p>编写程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*a.c*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> shared;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">100</span>;</span><br><span class="line">	swap(&amp;a, &amp;shared);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* b.c */</span></span><br><span class="line"><span class="keyword">int</span> shared = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> *b)</span></span>&#123;</span><br><span class="line">	*a ^= *b  ^= *a ^=*b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>objdump -h a.o</code></p>
+<p><img src="/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439221303.png" alt="1546439221303"></p>
+</li>
+<li><p><code>objdump -h b.o</code></p>
+<p><img src="/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439234732.png" alt="1546439234732"></p>
+</li>
+<li><p>链接两个文件<code>ld a.o b.o -e main -o ab -lc</code></p>
+<blockquote>
+<p>在我的机器上面需要加上-lc参数才能链接成功，不然报a.c:(.text+0x4b): undefined reference to `__stack_chk_fail错误，具体原因不明，</p>
+<p>-c:                从指定的命令文件读取命令</p>
+<p>-l:                把指定的存档文件添加到要连接的文件清单</p>
+<p>得到的可执行文件不只是简单的链接过程，跟书中的内容有差异，有大神知道麻烦赐教</p>
+</blockquote>
+</li>
+<li><p><code>objdump -h ab</code></p>
+<p><img src="/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439338068.png" alt="1546439338068"></p>
+<p>可以看出，合并后得到的ab文件的<code>.text</code>段和<code>.data</code>段的长度分别是9c和4，正好等于两个.o文件相应段的长度之和。</p>
+<p><img src="/2018/12/27/codenote/OS/程序员的自我修养笔记/1546444190583.png" alt="1546444190583"></p>
+</li>
+</ul>
 
       
     </div>
@@ -604,7 +647,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第二章"><span class="nav-number">1.</span> <span class="nav-text">第二章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三章"><span class="nav-number">2.</span> <span class="nav-text">第三章</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#目标文件格式"><span class="nav-number">2.1.</span> <span class="nav-text">目标文件格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目标文件与程序之间的关系"><span class="nav-number">2.2.</span> <span class="nav-text">目标文件与程序之间的关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他段内容"><span class="nav-number">2.3.</span> <span class="nav-text">其他段内容</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第二章"><span class="nav-number">1.</span> <span class="nav-text">第二章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三章"><span class="nav-number">2.</span> <span class="nav-text">第三章</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#目标文件格式"><span class="nav-number">2.1.</span> <span class="nav-text">目标文件格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目标文件与程序之间的关系"><span class="nav-number">2.2.</span> <span class="nav-text">目标文件与程序之间的关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他段内容"><span class="nav-number">2.3.</span> <span class="nav-text">其他段内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四章静态链接"><span class="nav-number">3.</span> <span class="nav-text">第四章静态链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#空间与地址分配"><span class="nav-number">3.1.</span> <span class="nav-text">空间与地址分配</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -627,7 +670,7 @@
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
