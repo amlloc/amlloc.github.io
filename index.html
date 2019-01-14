@@ -1286,240 +1286,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/ cmake命令总结/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="amlloc">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="amlloc's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/16/codenote/Android/ cmake命令总结/" itemprop="url">cmake命令总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:37:38+08:00">
-                2018-09-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/codenote/" itemprop="url" rel="index">
-                    <span itemprop="name">codenote</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<h2 id="Android-cmake命令总结"><a href="#Android-cmake命令总结" class="headerlink" title="Android cmake命令总结"></a>Android cmake命令总结</h2><p>指令总结方面可以直接查看这个官方链接：<a href="https://cmake.org/cmake/help/v3.3/manual/cmake-commands.7.html" target="_blank" rel="noopener">https://cmake.org/cmake/help/v3.3/manual/cmake-commands.7.html</a></p>
-<p>这里总结一些常用的命令及使用示例：</p>
-<ul>
-<li><p>set</p>
-<ul>
-<li><p><code>set (&lt;variable&gt; &lt;value&gt;... [PARENT_SCOPE])</code></p>
-<p>设置某个变量的值，作用域为当前函数或者当前文件夹，<code>[PARENT_SCOPE]</code>这个参数没用过，参照官方文档可知似乎是将此变量设置在上一级作用域中（也就是父目录或者调用函数）</p>
-<blockquote>
-<p>使用变量的方法：${<variable>}</variable></p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>file</p>
-<ul>
-<li><p><code>file(WRITE &lt;filename&gt; &lt;content&gt;...)</code></p>
-<p>将content写入指定文件，如果文件不存在则创建文件；如果文件存在则覆盖该文件</p>
-<p>示例：<code>file(WRITE src/hello.txt &quot;hello world&quot;)</code></p>
-</li>
-<li><p><code>file(APPEND &lt;filename&gt; &lt;content&gt;...)</code></p>
-<p>示例：<code>file(APPEND src/hello.txt &quot;hello world 2&quot;)</code></p>
-<p>将content以追加的形式写入指定文件</p>
-</li>
-<li><p><code>file(READ &lt;filename&gt; &lt;variable&gt; [OFFSET &lt;offset&gt;][LIMIT &lt;max-in&gt;] [HEX])</code></p>
-<p>将<code>&lt;filename&gt;</code>文件里面的内容从偏移为<code>&lt;offset&gt;</code>的地方最多读取<code>&lt;max-in&gt;</code>个内容，并放入<code>&lt;variable&gt;</code>进行保存，HEX选项为16进制读取。</p>
-<p>示例：<code>file(READ src/hello.txt context LIMIT 5)</code></p>
-</li>
-<li><p><code>file(GLOB &lt;variable&gt; [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [&lt;globbing-expressions&gt;...])</code><br>生成<code>&lt;globbing-expressions&gt;</code>与之匹配的文件列表并将其存储到<code>&lt;variable&gt;</code>。Globbing表达式与正则表达式类似，但更简单。如果RELATIVE指定了flag，则结果将作为给定路径的相对路径返回。</p>
-<p>默认情况下列出GLOB目录 - 如果LIST_DIRECTORIES设置为false，则在结果中省略目录 。</p>
-<p>示例：<code>file(GLOB utils_src_cc src/utils/*.cc)</code></p>
-</li>
-</ul>
-</li>
-<li><p>find_library()</p>
-<ul>
-<li><p><code>find_library (&lt;VAR&gt; name1 [path1 path2 ...])</code></p>
-<p>此命令用于查找库。创建名为<code>&lt;VAR&gt;</code>的缓存条目以存储此命令的结果。如果找到库，则结果存储在变量中，除非清除变量，否则不会重复搜索。如果找不到任何结果，结果将是<code>&lt;VAR&gt;-NOTFOUND</code>，并在下次使用相同变量调用<code>find_library</code>时再次尝试搜索。搜索的库的名称由name1指定(值为库的名称，如<code>libz.a</code>，则<code>name</code>值为<code>z</code>)。可以在PATHS参数之后指定其他搜索位置。</p>
-<p>示例：<code>find_library( log-lib log)</code></p>
-</li>
-</ul>
-</li>
-<li><p>add_library()</p>
-<p>使用指定的源文件将库添加到项目中。</p>
-<ul>
-<li><p><code>add_library(&lt;name&gt; [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL] source1 [source2 ...])</code></p>
-<p>添加一个根据命令调用中列出的源文件,构建名为<code>&lt;name&gt;</code>的库目标。它<code>&lt;name&gt;</code>对应于逻辑目标名称，并且在项目中必须是全局唯一的。构建的库的实际文件名是基于本机平台（例如lib<name>.a or <name>.lib）的约定构造的。</name></name></p>
-<p>示例：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(</span><br><span class="line">        <span class="variable">$&#123;PROJECT_NAME&#125;</span></span><br><span class="line"></span><br><span class="line">        SHARED</span><br><span class="line"></span><br><span class="line">        <span class="variable">$&#123;src1&#125;</span> //可以配合<span class="keyword">file</span>命令，但官方不建议这么做，理由是cmake无法知晓有新的文件加入</span><br><span class="line">        <span class="variable">$&#123;src2&#125;</span></span><br><span class="line">        <span class="variable">$&#123;src3&#125;</span></span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>add_library(&lt;name&gt; &lt;SHARED|STATIC|MODULE|UNKNOWN&gt; IMPORTED [GLOBAL])</code></p>
-<p>导入名字为<code>&lt;name&gt;</code>的库</p>
-<p>示例：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(myz SHARED IMPORTED)</span><br><span class="line"><span class="keyword">add_library</span>(myz SHARED IMPORTED)</span><br><span class="line"><span class="comment">#设置库文件所在路径</span></span><br><span class="line"><span class="keyword">set_target_properties</span>(myz PROPERTIES IMPORTED_LOCATION <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/libs/<span class="variable">$&#123;ANDROID_ABI&#125;</span>/libnative-static.a)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>target_link_libraries()</p>
-<ul>
-<li><p>target_link_libraries(<target> … <item>… …)</item></target></p>
-<p>默认情况下，使用此签名，库依赖项是可传递的。当此目标链接到另一个目标时，链接到此目标的库也将出现在另一个目标的链接行上。这个传递性的“链接接口”存储在<code>INTERFACE_LINK_LIBRARIES</code>目标属性，可以通过直接设置属性来覆盖。</p>
-<p>示例：<code>target_link_libraries(${PROJECT_NAME}  ${log-lib} ${z-lib})</code></p>
-</li>
-</ul>
-</li>
-<li><p>include_directories(）</p>
-<ul>
-<li><p><code>include_directories([AFTER|BEFORE] [SYSTEM] dir1 [dir2 ...])</code></p>
-<p>将给定目录添加到编译器用于搜索包含文件的目录中。相对路径被解释为相对于当前源目录。include目录被添加到当前CMakeLists文件的目录属性 INCLUDE_DIRECTORIES 之中。他们对当前CMakeLists文件中INCLUDE_DIRECTORIES属性中也加入了每个目标的目标属性。目标属性值是生成器使用的值。</p>
-</li>
-</ul>
-<p>示例：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include_directories</span>(</span><br><span class="line">        src/dir1</span><br><span class="line">        src/dir2</span><br><span class="line">        src/dir3</span><br><span class="line">        src/dir4</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>两个Cmakelists.txt的例子：</p>
-<ul>
-<li><p>第一个</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.4</span>.<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(PROJECT_NAME AMLLOC)</span><br><span class="line"></span><br><span class="line"><span class="keyword">file</span>(WRITE amlloc/hello.txt <span class="string">"asdasda"</span>)</span><br><span class="line"><span class="keyword">file</span>(READ amlloc/hello.txt context LIMIT <span class="number">5</span>)</span><br><span class="line"><span class="keyword">file</span>(APPEND amlloc/hello.txt <span class="variable">$&#123;context&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">file</span>(GLOB amlloc_src amlloc/src/*.cpp)</span><br><span class="line"><span class="keyword">file</span>(GLOB utils1_src_cc amlloc/src/utils/*.cc)</span><br><span class="line"><span class="keyword">file</span>(GLOB utils2_src amlloc/src/utils2/*.cpp)</span><br><span class="line"><span class="keyword">file</span>(GLOB utils3_src_cc amlloc/src/utils3/*/*.cc)</span><br><span class="line"><span class="keyword">file</span>(GLOB utils3_src_c amlloc/src/utils4/*/*.c)</span><br><span class="line"><span class="keyword">file</span>(GLOB utils4_src amlloc/src/utils5/*.c)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">find_library</span>( log-lib log)</span><br><span class="line"><span class="keyword">find_library</span>( z-lib z)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(</span><br><span class="line">        amlloc/src/utils/<span class="keyword">include</span></span><br><span class="line">        amlloc/src/<span class="keyword">include</span></span><br><span class="line">        amlloc/src/utils1</span><br><span class="line">        amlloc/src/utils2/md5</span><br><span class="line">        amlloc/src/utils2</span><br><span class="line">        amlloc/src/utils3</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">add_library</span>(</span><br><span class="line">        <span class="variable">$&#123;PROJECT_NAME&#125;</span></span><br><span class="line"></span><br><span class="line">        SHARED</span><br><span class="line"></span><br><span class="line">        <span class="variable">$&#123;amlloc_src&#125;</span></span><br><span class="line">        <span class="variable">$&#123;utils1_src_cc&#125;</span></span><br><span class="line">        <span class="variable">$&#123;utils2_src&#125;</span></span><br><span class="line">        <span class="variable">$&#123;utils3_src_cc&#125;</span></span><br><span class="line">        <span class="variable">$&#123;utils3_src_c&#125;</span></span><br><span class="line">        <span class="variable">$&#123;utils4_src&#125;</span></span><br><span class="line">        )</span><br><span class="line"><span class="keyword">target_link_libraries</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span>  <span class="variable">$&#123;log-lib&#125;</span> <span class="variable">$&#123;z-lib&#125;</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>第二个</p>
-<p>首先看Project的目录结构</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">├── CMakeLists.txt</span><br><span class="line">├── main.cpp</span><br><span class="line">└── module</span><br><span class="line">    ├── CMakeLists.txt</span><br><span class="line">    ├── GameSave.h</span><br><span class="line">    ├── s_utils.cc</span><br><span class="line">    ├── s_utils.h</span><br><span class="line">    ├── log.cc</span><br><span class="line">    ├── log.h</span><br><span class="line">    ├── utils.cc</span><br><span class="line">    └── utils.h</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<pre><code>子目录：
-
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(PROJECT_NAME module_demo)</span><br><span class="line"><span class="keyword">file</span>(GLOB module_src ./*.cc)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_library</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span> SHARED <span class="variable">$&#123;module_src&#125;</span>)</span><br><span class="line"><span class="keyword">find_library</span>(log-lib log)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span>  <span class="variable">$&#123;log-lib&#125;</span>)</span><br></pre></td></tr></table></figure>
-
-父目录：
-
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.4</span>.<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#find library log and the result is stored</span></span><br><span class="line"><span class="comment">#in the var log-lib</span></span><br><span class="line"><span class="keyword">find_library</span>(log-lib log)</span><br><span class="line"></span><br><span class="line"><span class="comment">#get the .so directory</span></span><br><span class="line"><span class="keyword">set</span>(DISTRIBUTION_DIR <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/../../../libs)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_library</span>(gamesavesaty_module SHARED IMPORTED)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set_target_properties</span>(gamesavesaty_module</span><br><span class="line">                      PROPERTIES IMPORTED_LOCATION</span><br><span class="line">                      <span class="variable">$&#123;DISTRIBUTION_DIR&#125;</span>/armeabi/libmodule.so</span><br><span class="line">                      )</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_library</span>(gamesavety SHARED IMPORTED)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set_target_properties</span>(gamesavety</span><br><span class="line">                      PROPERTIES IMPORTED_LOCATION</span><br><span class="line">                      <span class="variable">$&#123;DISTRIBUTION_DIR&#125;</span>/armeabi/libgamesavety.so</span><br><span class="line">                      )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#set c++ compiler</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_FLAGS <span class="string">"$&#123;CMAKE_CXX_FLAGS&#125; -std=c++11"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(PROJECT_NAME demo)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#include the module header file</span></span><br><span class="line"><span class="keyword">include_directories</span>(./module)</span><br><span class="line"></span><br><span class="line"><span class="comment">#add source file in module</span></span><br><span class="line"><span class="keyword">add_subdirectory</span>(module)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Adds a library target called PROJECT_NAME to be built</span></span><br><span class="line"><span class="comment">#from the source file main.cpp and files in module.</span></span><br><span class="line"><span class="keyword">add_library</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span> SHARED main.cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;DISTRIBUTION_DIR&#125;</span>/armeabi)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Specify libraries module_demo and log-lib to</span></span><br><span class="line"><span class="comment">#use when linking project demo.</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span> module_demo gamesavety gamesavesaty_module <span class="variable">$&#123;log-lib&#125;</span>)</span><br></pre></td></tr></table></figure>
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/AndroidStudio运行错误集合/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1612,15 +1378,14 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="Android-Studio运行app时提示-Please-select-Android-SDK-‘"><a href="#Android-Studio运行app时提示-Please-select-Android-SDK-‘" class="headerlink" title="Android Studio运行app时提示`Please select Android SDK ‘."></a>Android Studio运行app时提示`Please select Android SDK ‘.</h2><p>报错<code>Error:Please select Android SDK</code></p>
-<p><img src="/2018/09/16/codenote/Android/AndroidStudio运行错误集合/ AndroidStudio运行错误集合/1.png"></p>
-<p>有两个方法：</p>
-<p><em>1. 在File-&gt;Project Structure中将Build tools version修改，问题解决.</em> </p>
-<p><em>2. 注释掉build.gradle中“buildToolsVersion ‘26.0.0’”。较新的AS创建的工程，已经默认去掉了该行</em></p>
-
-          
+          <p>AndroidStudio错误记录（持续更新）<br></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/16/codenote/Android/AndroidStudio运行错误集合/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1759,20 +1524,160 @@
 
       
         
+          <p>当官方脚本失效时使用这里的方法脚本<br></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/16/codenote/Android/Android刷机脚本/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/adb命令总结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/codenote/Android/adb命令总结/" itemprop="url">adb命令总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:37:38+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-            <a id="more"></a>
-<h2 id="Android刷机脚本"><a href="#Android刷机脚本" class="headerlink" title="Android刷机脚本"></a>Android刷机脚本</h2><p>当进行Nexus 5的<code>hammerhead-ktu84p</code>刷机时，发现使用<code>flash-all.sh</code>脚本会失效，内容如下：</p>
-<p><img src="/2018/09/16/codenote/Android/Android刷机脚本/1546841186489.png" alt="1546841186489"></p>
-<p>解决办法及脚本如下：</p>
-<ul>
-<li>解压<code>image-hammerhead-ktu84p.zip</code>文件，得到如下文件</li>
-</ul>
-<p><img src="/2018/09/16/codenote/Android/Android刷机脚本/1546841519946.png" alt="1546841519946"></p>
-<ul>
-<li>刷机脚本</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> Copyright 2012 The Android Open Source Project</span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="meta">#</span> Licensed under the Apache License, Version 2.0 (the "License");</span><br><span class="line"><span class="meta">#</span> you may not use this file except in compliance with the License.</span><br><span class="line"><span class="meta">#</span> You may obtain a copy of the License at</span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="meta">#</span>      http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="meta">#</span> Unless required by applicable law or agreed to in writing, software</span><br><span class="line"><span class="meta">#</span> distributed under the License is distributed on an "AS IS" BASIS,</span><br><span class="line"><span class="meta">#</span> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line"><span class="meta">#</span> See the License for the specific language governing permissions and</span><br><span class="line"><span class="meta">#</span> limitations under the License.</span><br><span class="line"></span><br><span class="line">fastboot flash bootloader bootloader-hammerhead-hhz11k.img</span><br><span class="line">fastboot reboot-bootloader</span><br><span class="line">sleep 5</span><br><span class="line">fastboot flash radio radio-hammerhead-m8974a-2.0.50.1.16.img</span><br><span class="line">fastboot reboot-bootloader</span><br><span class="line">sleep 5</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>官方刷机</span><br><span class="line"><span class="meta">#</span> fastboot -w update image-hammerhead-ktu84p.zip</span><br><span class="line"><span class="meta">#</span>done</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>*********** 如果官方刷机方式失败，可以尝试下面的方法 *******#</span><br><span class="line">fastboot flash recovery recovery.img</span><br><span class="line">fastboot reboot-bootloader</span><br><span class="line">sleep 5</span><br><span class="line"></span><br><span class="line">fastboot flash boot boot.img</span><br><span class="line">fastboot reboot-bootloader</span><br><span class="line">sleep 5</span><br><span class="line"></span><br><span class="line">fastboot flash system system.img</span><br><span class="line">fastboot reboot-bootloader</span><br><span class="line">sleep 5</span><br><span class="line"></span><br><span class="line">fastboot flash cache cache.img</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>if you update the user date</span><br><span class="line">fastboot flash userdata userdata.img</span><br><span class="line"></span><br><span class="line">echo 刷机成功</span><br><span class="line"></span><br><span class="line">fastboot reboot</span><br><span class="line">exit</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>*********** done *******</span><br></pre></td></tr></table></figure>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>adb的命令总结<br></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/16/codenote/Android/adb命令总结/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

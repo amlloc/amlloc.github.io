@@ -280,7 +280,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/adb命令总结/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/maps解读/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="amlloc">
@@ -299,7 +299,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/16/codenote/Android/adb命令总结/" itemprop="url">adb命令总结</a></h1>
+                <a class="post-title-link" href="/2018/09/16/codenote/Android/maps解读/" itemprop="url">/proc/{pid}/maps解读</a></h1>
         
 
         <div class="post-meta">
@@ -372,47 +372,14 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="adb命令总结"><a href="#adb命令总结" class="headerlink" title="adb命令总结"></a>adb命令总结</h2><ul>
-<li><p>启动apk</p>
-<p><code>adb shell am start -n 包名 /. 类名</code></p>
-</li>
-<li><p>关闭APK</p>
-<p><code>adb shell am force-stop 包名</code></p>
-</li>
-<li><p>对某一台设备进行操作</p>
-<ul>
-<li><p>获取连接电脑的手机设备号:<code>adb devices</code></p>
-</li>
-<li><p>对特定设备进行操作<code>adb -s &lt;device id&gt; &lt;other&gt;</code></p>
-<p>如：<code>adb -s &lt;device id&gt; shell am start -n 包名 /.类名</code></p>
-</li>
-</ul>
-</li>
-<li><p>查看log</p>
-<ul>
-<li><p>清空log</p>
-<p><code>adb logcat -c</code></p>
-</li>
-<li><p>以二进制形式输出日志</p>
-<p><code>adb logcat -B</code></p>
-</li>
-<li><p>过滤项解析</p>
-<ul>
-<li><p><code>&lt;tag&gt;[:priority]</code>, 标签:日志等级, 默认的日志过滤项是 “ <code>*:I</code>“</p>
-<p><code>adb logcat WifiHW:D *:S</code></p>
-</li>
-<li><p>可以同时设置多个过滤器</p>
-<p><code>adb logcat WifiHW:D dalvikvm:I *:S</code></p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-          
+          <p>非常常用的系统文件<br></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/16/codenote/Android/maps解读/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -551,31 +518,14 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="使用命令行的方式对AndroidStudio进行打包与清除"><a href="#使用命令行的方式对AndroidStudio进行打包与清除" class="headerlink" title="使用命令行的方式对AndroidStudio进行打包与清除"></a>使用命令行的方式对AndroidStudio进行打包与清除</h2><p>有时候启动Android Studio的时候会嫌弃它很重，懒得打开，所以特意整理了一下在命令行里面的命令</p>
-<ul>
-<li><p>打包所有渠道的release</p>
-<p><code>cd ${project_root}</code></p>
-<p><code>./gradlew assembleRelease</code></p>
-</li>
-<li><p>清除项目</p>
-<p><code>cd ${projece_root}</code></p>
-<p><code>./gradlew clean</code></p>
-</li>
-<li><p>打包某个特定渠道的release</p>
-<p><code>cd ${project_root}</code></p>
-<p><code>./gradlew assembleBaiduRelease</code>或<code>./gradlew aR</code></p>
-</li>
-<li><p>打包debug版本的包</p>
-<p><code>./gradlew assembleDebug</code>或<code>./gradkew aD</code></p>
-</li>
-<li><p>打包特定module</p>
-<p><code>./gradlew :${modulename}:assembleRelease</code></p>
-</li>
-</ul>
-
-          
+          <p>方便的编译方法<br></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/16/codenote/Android/使用命令行的方式对AndroidStudio进行打包与清除/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -622,7 +572,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/maps解读/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/cmake命令总结/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="amlloc">
@@ -641,7 +591,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/16/codenote/Android/maps解读/" itemprop="url">/proc/{pid}/maps解读</a></h1>
+                <a class="post-title-link" href="/2018/09/16/codenote/Android/cmake命令总结/" itemprop="url">cmake命令总结</a></h1>
         
 
         <div class="post-meta">
@@ -714,33 +664,14 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="proc-pid-maps解读"><a href="#proc-pid-maps解读" class="headerlink" title="/proc/{pid}/maps解读"></a>/proc/{pid}/maps解读</h2><p>总共6列，如</p>
-<p><code>76093000-76096000 r-xp 00000000 b3:19 941        /system/lib/libmemalloc.so</code></p>
-<ol>
-<li><p>所处虚拟内存地址(VMA)范围：<code></code>76093000-76096000`</p>
-<ul>
-<li>在Linux中将进程虚拟空间中的一个段叫做虚拟内存区域VMA（Virtual Memory Area)。</li>
-<li>VMA对应ELF文件中的segment。</li>
-<li>ELF文件有section和segment的概念。从链接的角度看，ELF是按照section存储的，事实也的确如此；从装载的角度看，ELF文件又按照segment进行划分，这是为了防止按照section装载时造成的内部碎片。segment相当与是将多个属性（读写执行）相同的section合并在一起进行。program headers 存放segment的信息;section table存放section的信息.</li>
-</ul>
-</li>
-<li><p>VMA权限：<code>r-xp</code></p>
-<p><code>r=读，w=写,x=,s=共享,p=私有</code></p>
-</li>
-<li><p>偏移量：<code>00000000</code></p>
-<p>表示VMA对应的segment在映像文件中的偏移。</p>
-</li>
-<li><p>主设备号和次设备号（大雾）：<code>b3:19</code></p>
-</li>
-<li><p>映像文件的节点号inode：<code>941</code></p>
-</li>
-<li><p>映像文件的路径：<code>/system/lib/libmemalloc.so</code></p>
-</li>
-</ol>
-
-          
+          <p>常用cmake命令记录</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/16/codenote/Android/cmake命令总结/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -879,174 +810,14 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="在AndroidStudio下使用cmake编译出静态链接库的方法"><a href="#在AndroidStudio下使用cmake编译出静态链接库的方法" class="headerlink" title="在AndroidStudio下使用cmake编译出静态链接库的方法"></a>在AndroidStudio下使用cmake编译出静态链接库的方法</h2><p>这个是个巨坑，目前还没有找到真正有效的方法利用cmake的途径获取适用于Android平台下的<code>.a</code>文件，但找到一个比较讨巧的方法，是在<a href="https://stackoverflow.com/questions/52952226/how-to-create-a-static-library-a-file-in-android-studio-3-2-with-cmake" target="_blank" rel="noopener">stackoverflow</a>上面看到的一位外国人自问自答。</p>
-<p>环境：</p>
-<ul>
-<li><p>Android Studio 3.2.1</p>
-</li>
-<li><p>cmake3.6.4111459</p>
-</li>
-</ul>
-<p>首先得到的是默认的CMakeLists.txt如下：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.4</span>.<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_library</span>( </span><br><span class="line">        native-lib</span><br><span class="line">        SHARED</span><br><span class="line">        src/main/cpp/native-lib.cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">find_library</span>( </span><br><span class="line">        log-lib</span><br><span class="line">        log)</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_link_libraries</span>( </span><br><span class="line">        native-lib</span><br><span class="line">        <span class="variable">$&#123;log-lib&#125;</span>)</span><br></pre></td></tr></table></figure>
-<p>如果我们将<code>SHARED</code>变为<code>STATIC</code>，事实上我们将不会得到任何的库文件(不仅仅<code>.a</code>，连<code>.so</code>文件都没有)，个人认为出现这么不方便的问题应该是AndroiStudio或Gradle的问题。</p>
-<p>解决问题的方法如下：</p>
-<p>使用上面的代码我们已经可以得到<code>.so</code>文件了，然后我们加入以下代码获得<code>.a</code>文件，并使用和获得<code>.so</code>文件时使用的源文件一样：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(</span><br><span class="line">        native-lib-static</span><br><span class="line">        STATIC</span><br><span class="line">        src/main/cpp/native-lib.cpp</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><code>native-lib-static</code>可以换成任何你想要的名称，但是不可以是和动态链接库的名称一样。</p>
-<p>然后再修改你的<code>target_link_libraries</code>如下</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(</span><br><span class="line">        native-lib</span><br><span class="line">        native-lib-static</span><br><span class="line">        <span class="variable">$&#123;log-lib&#125;</span>)</span><br></pre></td></tr></table></figure>
-<p>再构建项目：</p>
-<p><code>Gradle-&gt;app-&gt;build-&gt;assembleDebug/assembleRelease</code></p>
-<p>最后你就可以在<code>app\.externalNativeBuild\cmake\debug(release)\&lt;abi&gt;\libnative-lib-static.a</code>获得你想要的<code>.a</code>文件了。</p>
-<p><img src="/2018/09/16/codenote/Android/在AndroidStudio下cmake编译静态链接库的方法/在AndroidStudio下使用cmake编译出静态链接库的方法/1547193544148.png" alt="1547193544148"></p>
-<p>期待谷歌能对这块改善一下吧，over</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/给AndroidStudio项目添加依赖/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="amlloc">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="amlloc's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/16/codenote/Android/给AndroidStudio项目添加依赖/" itemprop="url">给AndroidStudio项目添加依赖</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:37:38+08:00">
-                2018-09-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/codenote/" itemprop="url" rel="index">
-                    <span itemprop="name">codenote</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<h2 id="给Android-Studio项目添加依赖"><a href="#给Android-Studio项目添加依赖" class="headerlink" title="给Android Studio项目添加依赖"></a>给Android Studio项目添加依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">    repositories&#123;</span><br><span class="line">        flatDir&#123;</span><br><span class="line">            dirs &apos;libs&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    implementation fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</span><br><span class="line">    implementation (name:&apos;aar-name&apos;, ext:&apos;aar&apos;)</span><br><span class="line">    implementation (name:&apos;aar-name&apos;, ext:&apos;aar&apos;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <p>cmake静态库编译记录<br></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/16/codenote/Android/在AndroidStudio下cmake编译静态链接库的方法/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1185,21 +956,160 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="在Android-Studio项目中使用build-gradle进行签名"><a href="#在Android-Studio项目中使用build-gradle进行签名" class="headerlink" title="在Android Studio项目中使用build.gradle进行签名"></a>在Android Studio项目中使用build.gradle进行签名</h2><ul>
-<li>将<code>.jks</code>签名文件放在项目模块文件夹下(签名文件可在<code>Build-&gt;Generte signed apk-&gt;Create new...</code>新建`)</li>
-</ul>
-<p><img src="/2018/09/16/codenote/Android/在AndroidStudio项目中使用build.gradle进行签名/2.png" alt="2"></p>
-<ul>
-<li><p>在模块下的<code>build.gradle</code>添加如下配置</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            storeFile file(<span class="string">"sign_amlloc.jks"</span>)</span><br><span class="line">            storePassword <span class="string">'xxxxxxx'</span></span><br><span class="line">            keyAlias <span class="string">'yyyyyyyyy'</span></span><br><span class="line">            keyPassword <span class="string">'xxxxxxxxx'</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        debug &#123;</span><br><span class="line">            storeFile file(<span class="string">"sign_amlloc.jks"</span>)</span><br><span class="line">            storePassword <span class="string">'xxxxxxx'</span></span><br><span class="line">            keyAlias <span class="string">'yyyyyyy'</span></span><br><span class="line">            keyPassword <span class="string">'xxxxxxxxx'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled <span class="literal">false</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">            signingConfig signingConfigs.release</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        debug &#123;</span><br><span class="line">            signingConfig signingConfigs.debug</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>此后编译出来的<code>release</code>和<code>debug</code>版本的app便会使用对应的签名文件进行签名</p>
-</li>
-</ul>
+          <p>签名脚本记录<br></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/16/codenote/Android/在AndroidStudio项目中使用build.gradle进行签名/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/给AndroidStudio项目添加依赖/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/codenote/Android/给AndroidStudio项目添加依赖/" itemprop="url">给AndroidStudio项目添加依赖</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:37:38+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>依赖脚本<br></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/16/codenote/Android/给AndroidStudio项目添加依赖/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

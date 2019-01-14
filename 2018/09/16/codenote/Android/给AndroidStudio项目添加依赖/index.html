@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="给Android Studio项目添加依赖123456789101112131415android &amp;#123;    ...    repositories&amp;#123;        flatDir&amp;#123;            dirs &amp;apos;libs&amp;apos;        &amp;#125;    &amp;#125;    ...&amp;#125;dependencies &amp;#123;">
+<meta name="description" content="依赖脚本">
 <meta name="keywords" content="Android,填坑记录">
 <meta property="og:type" content="article">
 <meta property="og:title" content="给AndroidStudio项目添加依赖">
 <meta property="og:url" content="http://yoursite.com/2018/09/16/codenote/Android/给AndroidStudio项目添加依赖/index.html">
 <meta property="og:site_name" content="amlloc&#39;s blog">
-<meta property="og:description" content="给Android Studio项目添加依赖123456789101112131415android &amp;#123;    ...    repositories&amp;#123;        flatDir&amp;#123;            dirs &amp;apos;libs&amp;apos;        &amp;#125;    &amp;#125;    ...&amp;#125;dependencies &amp;#123;">
+<meta property="og:description" content="依赖脚本">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-14T14:48:55.765Z">
+<meta property="og:updated_time" content="2019-01-14T14:57:53.242Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="给AndroidStudio项目添加依赖">
-<meta name="twitter:description" content="给Android Studio项目添加依赖123456789101112131415android &amp;#123;    ...    repositories&amp;#123;        flatDir&amp;#123;            dirs &amp;apos;libs&amp;apos;        &amp;#125;    &amp;#125;    ...&amp;#125;dependencies &amp;#123;">
+<meta name="twitter:description" content="依赖脚本">
 
 
 
@@ -372,7 +372,7 @@
       
 
       
-        <a id="more"></a>
+        <p>依赖脚本<br><a id="more"></a></p>
 <h2 id="给Android-Studio项目添加依赖"><a href="#给Android-Studio项目添加依赖" class="headerlink" title="给Android Studio项目添加依赖"></a>给Android Studio项目添加依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">    repositories&#123;</span><br><span class="line">        flatDir&#123;</span><br><span class="line">            dirs &apos;libs&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    implementation fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</span><br><span class="line">    implementation (name:&apos;aar-name&apos;, ext:&apos;aar&apos;)</span><br><span class="line">    implementation (name:&apos;aar-name&apos;, ext:&apos;aar&apos;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -405,8 +405,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/16/codenote/Android/在AndroidStudio项目中使用build.gradle进行签名/" rel="next" title="在AndroidStudio项目中使用build.gradle进行签名">
-                <i class="fa fa-chevron-left"></i> 在AndroidStudio项目中使用build.gradle进行签名
+              <a href="/2018/09/16/codenote/OS/syscall/" rel="next" title="Unix系统调用">
+                <i class="fa fa-chevron-left"></i> Unix系统调用
               </a>
             
           </div>
@@ -415,8 +415,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/16/codenote/Android/在AndroidStudio下cmake编译静态链接库的方法/" rel="prev" title="在Android Studio下使用cmake编译出静态链接库的方法">
-                在Android Studio下使用cmake编译出静态链接库的方法 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/16/codenote/Android/在AndroidStudio项目中使用build.gradle进行签名/" rel="prev" title="在AndroidStudio项目中使用build.gradle进行签名">
+                在AndroidStudio项目中使用build.gradle进行签名 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
