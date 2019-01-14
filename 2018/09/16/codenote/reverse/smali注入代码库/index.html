@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="smali注入代码库利用Android Killer的插入代码管理器可以很方便地组织管理自己的代码库，这里我列出几个用处较大的代码 1234#LoadLibraryconst-string v0, &amp;quot;so name&amp;quot;invoke-static &amp;#123;v0&amp;#125;, Ljava/lang/System;-&amp;gt;loadLibrary(Ljava/lang/Strin">
+<meta name="description" content="smali代码库">
 <meta name="keywords" content="Android,填坑记录,Reverse">
 <meta property="og:type" content="article">
 <meta property="og:title" content="smali注入代码库">
 <meta property="og:url" content="http://yoursite.com/2018/09/16/codenote/reverse/smali注入代码库/index.html">
 <meta property="og:site_name" content="amlloc&#39;s blog">
-<meta property="og:description" content="smali注入代码库利用Android Killer的插入代码管理器可以很方便地组织管理自己的代码库，这里我列出几个用处较大的代码 1234#LoadLibraryconst-string v0, &amp;quot;so name&amp;quot;invoke-static &amp;#123;v0&amp;#125;, Ljava/lang/System;-&amp;gt;loadLibrary(Ljava/lang/Strin">
+<meta property="og:description" content="smali代码库">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-14T13:41:24.629Z">
+<meta property="og:updated_time" content="2019-01-14T15:06:11.829Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="smali注入代码库">
-<meta name="twitter:description" content="smali注入代码库利用Android Killer的插入代码管理器可以很方便地组织管理自己的代码库，这里我列出几个用处较大的代码 1234#LoadLibraryconst-string v0, &amp;quot;so name&amp;quot;invoke-static &amp;#123;v0&amp;#125;, Ljava/lang/System;-&amp;gt;loadLibrary(Ljava/lang/Strin">
+<meta name="twitter:description" content="smali代码库">
 
 
 
@@ -372,7 +372,7 @@
       
 
       
-        <a id="more"></a>
+        <p>smali代码库<br><a id="more"></a></p>
 <h2 id="smali注入代码库"><a href="#smali注入代码库" class="headerlink" title="smali注入代码库"></a>smali注入代码库</h2><p>利用Android Killer的插入代码管理器可以很方便地组织管理自己的代码库，这里我列出几个用处较大的代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#LoadLibrary</span><br><span class="line">const-string v0, &quot;so name&quot;</span><br><span class="line"></span><br><span class="line">invoke-static &#123;v0&#125;, Ljava/lang/System;-&gt;loadLibrary(Ljava/lang/String;)V</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#Log</span><br><span class="line">const-string v0, &quot;you message&quot;</span><br><span class="line"></span><br><span class="line">invoke-static &#123;v0&#125;, Lcom/android/killer/Log;-&gt;LogStr(Ljava/lang/String;)V</span><br></pre></td></tr></table></figure>
@@ -417,8 +417,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/16/codenote/PL/c-cplus-mode/" rel="next" title="c-cplus-mode">
-                <i class="fa fa-chevron-left"></i> c-cplus-mode
+              <a href="/2018/09/16/codenote/reverse/apk无法调试的问题/" rel="next" title="apk无法调试的问题">
+                <i class="fa fa-chevron-left"></i> apk无法调试的问题
               </a>
             
           </div>
@@ -427,8 +427,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/16/codenote/reverse/apk无法调试的问题/" rel="prev" title="apk无法调试的问题">
-                apk无法调试的问题 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/16/codenote/reverse/IDA使用调试集锦/" rel="prev" title="IDA使用调试集锦">
+                IDA使用调试集锦 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
