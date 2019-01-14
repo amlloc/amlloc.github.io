@@ -280,7 +280,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/git/git日常填坑记录/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/adb命令总结/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="amlloc">
@@ -299,7 +299,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/16/codenote/git/git日常填坑记录/" itemprop="url">git日常填坑记录</a></h1>
+                <a class="post-title-link" href="/2018/09/16/codenote/Android/adb命令总结/" itemprop="url">adb命令总结</a></h1>
         
 
         <div class="post-meta">
@@ -311,7 +311,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:35:07+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:37:38+08:00">
                 2018-09-16
               </time>
             
@@ -372,10 +372,976 @@
 
       
         
-          <p>使用git的零零碎碎<br></p>
+          
+            <a id="more"></a>
+<h2 id="adb命令总结"><a href="#adb命令总结" class="headerlink" title="adb命令总结"></a>adb命令总结</h2><ul>
+<li><p>启动apk</p>
+<p><code>adb shell am start -n 包名 /. 类名</code></p>
+</li>
+<li><p>关闭APK</p>
+<p><code>adb shell am force-stop 包名</code></p>
+</li>
+<li><p>对某一台设备进行操作</p>
+<ul>
+<li><p>获取连接电脑的手机设备号:<code>adb devices</code></p>
+</li>
+<li><p>对特定设备进行操作<code>adb -s &lt;device id&gt; &lt;other&gt;</code></p>
+<p>如：<code>adb -s &lt;device id&gt; shell am start -n 包名 /.类名</code></p>
+</li>
+</ul>
+</li>
+<li><p>查看log</p>
+<ul>
+<li><p>清空log</p>
+<p><code>adb logcat -c</code></p>
+</li>
+<li><p>以二进制形式输出日志</p>
+<p><code>adb logcat -B</code></p>
+</li>
+<li><p>过滤项解析</p>
+<ul>
+<li><p><code>&lt;tag&gt;[:priority]</code>, 标签:日志等级, 默认的日志过滤项是 “ <code>*:I</code>“</p>
+<p><code>adb logcat WifiHW:D *:S</code></p>
+</li>
+<li><p>可以同时设置多个过滤器</p>
+<p><code>adb logcat WifiHW:D dalvikvm:I *:S</code></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/maps解读/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/codenote/Android/maps解读/" itemprop="url">/proc/{pid}/maps解读</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:37:38+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h2 id="proc-pid-maps解读"><a href="#proc-pid-maps解读" class="headerlink" title="/proc/{pid}/maps解读"></a>/proc/{pid}/maps解读</h2><p>总共6列，如</p>
+<p><code>76093000-76096000 r-xp 00000000 b3:19 941        /system/lib/libmemalloc.so</code></p>
+<ol>
+<li><p>所处虚拟内存地址(VMA)范围：<code></code>76093000-76096000`</p>
+<ul>
+<li>在Linux中将进程虚拟空间中的一个段叫做虚拟内存区域VMA（Virtual Memory Area)。</li>
+<li>VMA对应ELF文件中的segment。</li>
+<li>ELF文件有section和segment的概念。从链接的角度看，ELF是按照section存储的，事实也的确如此；从装载的角度看，ELF文件又按照segment进行划分，这是为了防止按照section装载时造成的内部碎片。segment相当与是将多个属性（读写执行）相同的section合并在一起进行。program headers 存放segment的信息;section table存放section的信息.</li>
+</ul>
+</li>
+<li><p>VMA权限：<code>r-xp</code></p>
+<p><code>r=读，w=写,x=,s=共享,p=私有</code></p>
+</li>
+<li><p>偏移量：<code>00000000</code></p>
+<p>表示VMA对应的segment在映像文件中的偏移。</p>
+</li>
+<li><p>主设备号和次设备号（大雾）：<code>b3:19</code></p>
+</li>
+<li><p>映像文件的节点号inode：<code>941</code></p>
+</li>
+<li><p>映像文件的路径：<code>/system/lib/libmemalloc.so</code></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/使用命令行的方式对AndroidStudio进行打包与清除/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/codenote/Android/使用命令行的方式对AndroidStudio进行打包与清除/" itemprop="url">使用命令行的方式对AndroidStudio进行打包与清除</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:37:38+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h2 id="使用命令行的方式对AndroidStudio进行打包与清除"><a href="#使用命令行的方式对AndroidStudio进行打包与清除" class="headerlink" title="使用命令行的方式对AndroidStudio进行打包与清除"></a>使用命令行的方式对AndroidStudio进行打包与清除</h2><p>有时候启动Android Studio的时候会嫌弃它很重，懒得打开，所以特意整理了一下在命令行里面的命令</p>
+<ul>
+<li><p>打包所有渠道的release</p>
+<p><code>cd ${project_root}</code></p>
+<p><code>./gradlew assembleRelease</code></p>
+</li>
+<li><p>清除项目</p>
+<p><code>cd ${projece_root}</code></p>
+<p><code>./gradlew clean</code></p>
+</li>
+<li><p>打包某个特定渠道的release</p>
+<p><code>cd ${project_root}</code></p>
+<p><code>./gradlew assembleBaiduRelease</code>或<code>./gradlew aR</code></p>
+</li>
+<li><p>打包debug版本的包</p>
+<p><code>./gradlew assembleDebug</code>或<code>./gradkew aD</code></p>
+</li>
+<li><p>打包特定module</p>
+<p><code>./gradlew :${modulename}:assembleRelease</code></p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/在Android Studio项目中使用build.gradle进行签名/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/codenote/Android/在Android Studio项目中使用build.gradle进行签名/" itemprop="url">在Android Studio项目中使用build.gradle进行签名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:37:38+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h2 id="在Android-Studio项目中使用build-gradle进行签名"><a href="#在Android-Studio项目中使用build-gradle进行签名" class="headerlink" title="在Android Studio项目中使用build.gradle进行签名"></a>在Android Studio项目中使用build.gradle进行签名</h2><ul>
+<li>将<code>.jks</code>签名文件放在项目模块文件夹下(签名文件可在<code>Build-&gt;Generte signed apk-&gt;Create new...</code>新建`)</li>
+</ul>
+<p><img src="/2018/09/16/codenote/Android/在Android Studio项目中使用build.gradle进行签名/Android开发日常填坑记录/2.png" alt="2"></p>
+<ul>
+<li><p>在模块下的<code>build.gradle</code>添加如下配置</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            storeFile file(<span class="string">"sign_amlloc.jks"</span>)</span><br><span class="line">            storePassword <span class="string">'xxxxxxx'</span></span><br><span class="line">            keyAlias <span class="string">'yyyyyyyyy'</span></span><br><span class="line">            keyPassword <span class="string">'xxxxxxxxx'</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        debug &#123;</span><br><span class="line">            storeFile file(<span class="string">"sign_amlloc.jks"</span>)</span><br><span class="line">            storePassword <span class="string">'xxxxxxx'</span></span><br><span class="line">            keyAlias <span class="string">'yyyyyyy'</span></span><br><span class="line">            keyPassword <span class="string">'xxxxxxxxx'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled <span class="literal">false</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">            signingConfig signingConfigs.release</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        debug &#123;</span><br><span class="line">            signingConfig signingConfigs.debug</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>此后编译出来的<code>release</code>和<code>debug</code>版本的app便会使用对应的签名文件进行签名</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/给Android Studio项目添加依赖/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/codenote/Android/给Android Studio项目添加依赖/" itemprop="url">给Android Studio项目添加依赖</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:37:38+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h2 id="给Android-Studio项目添加依赖"><a href="#给Android-Studio项目添加依赖" class="headerlink" title="给Android Studio项目添加依赖"></a>给Android Studio项目添加依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">    repositories&#123;</span><br><span class="line">        flatDir&#123;</span><br><span class="line">            dirs &apos;libs&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    implementation fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</span><br><span class="line">    implementation (name:&apos;aar-name&apos;, ext:&apos;aar&apos;)</span><br><span class="line">    implementation (name:&apos;aar-name&apos;, ext:&apos;aar&apos;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/Android/在AndroidStudio下cmake编译静态链接库的方法/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/codenote/Android/在AndroidStudio下cmake编译静态链接库的方法/" itemprop="url">在Android Studio下使用cmake编译出静态链接库的方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:37:38+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h2 id="在Android-Studio下使用cmake编译出静态链接库的方法"><a href="#在Android-Studio下使用cmake编译出静态链接库的方法" class="headerlink" title="在Android Studio下使用cmake编译出静态链接库的方法"></a>在Android Studio下使用cmake编译出静态链接库的方法</h2><p>这个是个巨坑，目前还没有找到真正有效的方法利用cmake的途径获取适用于Android平台下的<code>.a</code>文件，但找到一个比较讨巧的方法，是在<a href="https://stackoverflow.com/questions/52952226/how-to-create-a-static-library-a-file-in-android-studio-3-2-with-cmake" target="_blank" rel="noopener">stackoverflow</a>上面看到的一位外国人自问自答。</p>
+<p>环境：</p>
+<ul>
+<li><p>Android Studio 3.2.1</p>
+</li>
+<li><p>cmake3.6.4111459</p>
+</li>
+</ul>
+<p>首先得到的是默认的CMakeLists.txt如下：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.4</span>.<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_library</span>( </span><br><span class="line">        native-lib</span><br><span class="line">        SHARED</span><br><span class="line">        src/main/cpp/native-lib.cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">find_library</span>( </span><br><span class="line">        log-lib</span><br><span class="line">        log)</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_link_libraries</span>( </span><br><span class="line">        native-lib</span><br><span class="line">        <span class="variable">$&#123;log-lib&#125;</span>)</span><br></pre></td></tr></table></figure>
+<p>如果我们将<code>SHARED</code>变为<code>STATIC</code>，事实上我们将不会得到任何的库文件(不仅仅<code>.a</code>，连<code>.so</code>文件都没有)，个人认为出现这么不方便的问题应该是AndroiStudio或Gradle的问题。</p>
+<p>解决问题的方法如下：</p>
+<p>使用上面的代码我们已经可以得到<code>.so</code>文件了，然后我们加入以下代码获得<code>.a</code>文件，并使用和获得<code>.so</code>文件时使用的源文件一样：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(</span><br><span class="line">        native-lib-static</span><br><span class="line">        STATIC</span><br><span class="line">        src/main/cpp/native-lib.cpp</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><code>native-lib-static</code>可以换成任何你想要的名称，但是不可以是和动态链接库的名称一样。</p>
+<p>然后再修改你的<code>target_link_libraries</code>如下</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(</span><br><span class="line">        native-lib</span><br><span class="line">        native-lib-static</span><br><span class="line">        <span class="variable">$&#123;log-lib&#125;</span>)</span><br></pre></td></tr></table></figure>
+<p>再构建项目：</p>
+<p><code>Gradle-&gt;app-&gt;build-&gt;assembleDebug/assembleRelease</code></p>
+<p>最后你就可以在<code>app\.externalNativeBuild\cmake\debug(release)\&lt;abi&gt;\libnative-lib-static.a</code>获得你想要的<code>.a</code>文件了。</p>
+<p><img src="/2018/09/16/codenote/Android/在AndroidStudio下cmake编译静态链接库的方法/Android开发日常填坑记录/1547193544148.png" alt="1547193544148"></p>
+<p>期待谷歌能对这块改善一下吧，over</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/OS/syscall/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/codenote/OS/syscall/" itemprop="url">Unix系统调用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:37:10+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>《Unix高级编程学习笔记》 1</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/09/16/codenote/git/git日常填坑记录/#more" rel="contents">
+            <a class="btn" href="/2018/09/16/codenote/OS/syscall/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -426,7 +1392,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/others/Hexo/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/reverse/IDA使用调试集锦/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="amlloc">
@@ -445,7 +1411,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/16/others/Hexo/" itemprop="url">Hexo</a></h1>
+                <a class="post-title-link" href="/2018/09/16/codenote/reverse/IDA使用调试集锦/" itemprop="url">IDA使用调试集锦</a></h1>
         
 
         <div class="post-meta">
@@ -457,7 +1423,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T21:24:48+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:36:24+08:00">
                 2018-09-16
               </time>
             
@@ -480,8 +1446,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/others/" itemprop="url" rel="index">
-                    <span itemprop="name">others</span>
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
                   </a>
                 </span>
 
@@ -518,14 +1484,375 @@
 
       
         
-          <p>Hexo折腾记录<br></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/09/16/others/Hexo/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <a id="more"></a>
+<h2 id="动态调试步骤"><a href="#动态调试步骤" class="headerlink" title="动态调试步骤"></a>动态调试步骤</h2><ul>
+<li><p>打开monitor</p>
+<p><code>cd ${SDK_PATH}/tools/</code></p>
+<p><code>./monitor</code></p>
+<p>备注：没有开没法附加，具体原因暂时不明</p>
+</li>
+<li><p>将android_server push进可执行文件夹</p>
+<p><code>adb push /home/IDA/dbgsrv/android_server</code> </p>
+<p><code>/data/local/tmp/andser</code></p>
+<p><code>adb shell</code></p>
+<p><code>su</code></p>
+<p><code>cd /data/local/tmp</code></p>
+<p><code>chmod 777 andser</code></p>
+<p><code>./andser -p12345</code></p>
+</li>
+<li><p>open terminal</p>
+<p><code>ctrl + t</code></p>
+</li>
+<li><p>转发端口</p>
+<p><code>adb forward tcp:12345 tcp:12345</code></p>
+</li>
+<li><p>以启动模式启动,停在加载so文件之前</p>
+<p><code>adb shell am start -D -n packagename/clasdx    sname</code></p>
+</li>
+<li><p>IDA附加进程</p>
+<p><code>Debuger</code>-&gt;<code>Process option</code>-&gt;<code>Hostname:localhost Port:1234</code>-&gt;<code>attach...</code></p>
+</li>
+<li><p>jdb附加<br><code>jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8700</code></p>
+</li>
+</ul>
+<h2 id="IDA-dump脚本"><a href="#IDA-dump脚本" class="headerlink" title="IDA dump脚本"></a>IDA dump脚本</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> fp, begin, end, dexbyte;</span><br><span class="line">  fp = fopen(<span class="string">"/home/amlloc/dump_shell.dex"</span>, <span class="string">"wb"</span>);</span><br><span class="line">  begin = <span class="number">0x761a1000</span>;</span><br><span class="line">  end = <span class="number">0x763b6000</span>;</span><br><span class="line">  <span class="keyword">for</span> ( dexbyte = begin; dexbyte &lt; end; dexbyte ++ )</span><br><span class="line">      fputc(Byte(dexbyte), fp);</span><br></pre></td></tr></table></figure>
+<h2 id="Arm-nop"><a href="#Arm-nop" class="headerlink" title="Arm nop"></a>Arm nop</h2><p><code>00 00 A0 E1</code></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/reverse/apk无法调试的问题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/codenote/reverse/apk无法调试的问题/" itemprop="url">apk无法调试的问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:36:24+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h2 id="apk无法调试的问题"><a href="#apk无法调试的问题" class="headerlink" title="apk无法调试的问题"></a>apk无法调试的问题</h2><p>参考链接：</p>
+<p><a href="https://blog.csdn.net/feibabeibei_beibei/article/details/52744231" target="_blank" rel="noopener">雪一梦：Android So动态调试之反jdb附加的解决大法</a></p>
+<p>如果需要判断一个apk是否为可调试的，则必须满足以下两个要求中任意一个</p>
+<ul>
+<li><code>AndroidManifest.xml</code>文件<code>Application</code>包含<code>android:debuggable=&quot;true&quot;</code></li>
+<li>文件<code>/default.prop</code>中的<code>ro.debuggable</code>的值为1</li>
+</ul>
+<p>目前有四种方式可以解决这个问题</p>
+<ul>
+<li>在<code>root</code>手机中安装<code>Xposed</code>与<code>xinstaller</code>插件<br>使用方法：<ul>
+<li>下载 Xposed 框架,并激活,再下载 xinstaller 插件安装;</li>
+<li>开启模块,点击 xinstall 插件设置专家模式,进入其他设置,开启调试应用,最后在 xposed 中激活重启</li>
+</ul>
+</li>
+</ul>
+<p>​        短处：apk中很有可能会有反<code>xposed</code>代码的存在，因此需要先过掉这个障碍才行。</p>
+<ul>
+<li><p>直接通过反编译改包的方法</p>
+<p>缺点多多，不解释</p>
+</li>
+<li><p>如果我们在真机,则可以修改根目录下的 default.prop 文件,将里<br>面的 ro.debuggable =1。</p>
+<ul>
+<li>从 Google 官方网站下载到 boot.img;</li>
+<li>使用工具(abootimg,gunzip, cpio)把 boot.img 完全解开,获取到 default.prop;</li>
+<li>修改 default.prop;</li>
+<li>把修改后的文件重新打包成 boot_new.img;</li>
+<li>使用 fastboot 工具把 boot_new.img 刷入设备(fastboot<br>flash boot boot_new.img);</li>
+</ul>
+</li>
+<li><p>ptrace 注入到 init 进程,然后修改内存中的<code>default.prop</code>文件属性值</p>
+<ul>
+<li>拷贝拷贝<code>mprop</code>到<code>/data/</code>目录下;</li>
+<li><code>./mprop ro.debuggable 1;</code></li>
+<li><code>getprop ro.debuggable;</code>(查看此时 ro.debuggable 在内存<br>中的值)</li>
+<li>stop;start(重启 adbd 进程);</li>
+</ul>
+<p>我们在上面的第三步的时候查看好像没有改过来,分析原因为:该工具是通过 ptrace 修改 init 进程中的内存,然而 4.X 系统强制开启了 selinux;因此这个时候我们需要设置 Selinux 的状态.</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/reverse/smali注入代码库/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/codenote/reverse/smali注入代码库/" itemprop="url">smali注入代码库</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T22:36:24+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h2 id="smali注入代码库"><a href="#smali注入代码库" class="headerlink" title="smali注入代码库"></a>smali注入代码库</h2><p>利用Android Killer的插入代码管理器可以很方便地组织管理自己的代码库，这里我列出几个用处较大的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#LoadLibrary</span><br><span class="line">const-string v0, &quot;so name&quot;</span><br><span class="line"></span><br><span class="line">invoke-static &#123;v0&#125;, Ljava/lang/System;-&gt;loadLibrary(Ljava/lang/String;)V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#Log</span><br><span class="line">const-string v0, &quot;you message&quot;</span><br><span class="line"></span><br><span class="line">invoke-static &#123;v0&#125;, Lcom/android/killer/Log;-&gt;LogStr(Ljava/lang/String;)V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#LogUtils</span><br><span class="line">#打印int，String，Intent ,HashMap ,List ,null</span><br><span class="line">invoke-static &#123;vx&#125;, Lcom/mtools/logutils/LogUtils;-&gt;d(Ljava/lang/Object;)V</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#打印float</span><br><span class="line"></span><br><span class="line">invoke-static &#123;vx&#125;, Ljava/lang/Float;-&gt;valueOf(F)Ljava/lang/Float;</span><br><span class="line"></span><br><span class="line">move-result-object v1</span><br><span class="line"></span><br><span class="line">invoke-static &#123;v1&#125;, Lcom/mtools/logutils/LogUtils;-&gt;d(Ljava/lang/Object;)V</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#打印double,如传入v0,则需要写成invoke-static &#123;v0, v1&#125;</span><br><span class="line"></span><br><span class="line">invoke-static &#123;vx, vx+1&#125;, Ljava/lang/Double;-&gt;valueOf(D)Ljava/lang/Double;</span><br><span class="line"></span><br><span class="line"> move-result-object v1</span><br><span class="line"></span><br><span class="line"> invoke-static &#123;v1&#125;, Lcom/mtools/logutils/LogUtils;-&gt;d(Ljava/lang/Object;)V</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#打印long,如传入v0,则需要写成invoke-static &#123;v0, v1&#125;</span><br><span class="line">invoke-static &#123;vx, vx+1&#125;, Ljava/lang/Long;-&gt;valueOf(J)Ljava/lang/Long;</span><br><span class="line"></span><br><span class="line">move-result-object v1</span><br><span class="line"></span><br><span class="line">invoke-static &#123;v1&#125;, Lcom/mtools/logutils/LogUtils;-&gt;d(Ljava/lang/Object;)V</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#打印json</span><br><span class="line">invoke-static &#123;vx&#125;, Lcom/mtools/logutils/LogUtils;-&gt;json(Ljava/lang/Object;)V</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#打印xml</span><br><span class="line">invoke-static &#123;vx&#125;, Lcom/mtools/logutils/LogUtils;-&gt;xml(Ljava/lang/Object;)V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#mothodTrace 用于追踪函数也可用来性能测试，需要读写权限</span><br><span class="line">#mothodTraceStart</span><br><span class="line">invoke-static &#123;&#125;, Landroid/os/Debug;-&gt;startMethodTracing()V</span><br><span class="line">#mothodTraceStop</span><br><span class="line">invoke-static &#123;&#125;, Landroid/os/Debug;-&gt;stopMethodTracing()V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#dump出函数堆栈， Thread.dumpStack();</span><br><span class="line">invoke-static&#123;&#125;, Ljava/lang/Thread;-&gt;dumpStack()V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#Toast</span><br><span class="line">const-string v0, &quot;you message&quot;</span><br><span class="line"></span><br><span class="line">const/4 v1, 0x1</span><br><span class="line"></span><br><span class="line">invoke-static &#123;p0, v0, v1&#125;, Landroid/widget/Toast;-&gt;makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;</span><br><span class="line"></span><br><span class="line">move-result-object v0</span><br><span class="line"></span><br><span class="line">invoke-virtual &#123;v0&#125;, Landroid/widget/Toast;-&gt;show()V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#等待调试</span><br><span class="line">invoke-static &#123;&#125;, Landroid/os/Debug;-&gt;waitForDebugger()V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#写权限auto fp, begin, end, dexbyte;</span><br><span class="line">  fp = fopen(&quot;/home/amlloc/dump_shell.dex&quot;, &quot;wb&quot;);</span><br><span class="line">  begin = 0x761a1000;</span><br><span class="line">  end = 0x763b6000;</span><br><span class="line">  for ( dexbyte = begin; dexbyte &lt; end; dexbyte ++ )</span><br><span class="line">      fputc(Byte(dexbyte), fp);</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&gt;</span><br><span class="line">#读权限</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>如果还有其他需要，详见这里提供一个链接github:<br><a href="https://github.com/bingghost/SmaliLibrary" target="_blank" rel="noopener">https://github.com/bingghost/SmaliLibrary</a><br>把里面的代码抠出来用即可。</p>
+
+          
         
       
     </div>
@@ -563,7 +1890,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -607,7 +1934,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -629,7 +1956,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

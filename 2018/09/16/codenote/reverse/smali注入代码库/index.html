@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="Android逆向零零碎碎">
+<meta name="description" content="smali注入代码库利用Android Killer的插入代码管理器可以很方便地组织管理自己的代码库，这里我列出几个用处较大的代码 1234#LoadLibraryconst-string v0, &amp;quot;so name&amp;quot;invoke-static &amp;#123;v0&amp;#125;, Ljava/lang/System;-&amp;gt;loadLibrary(Ljava/lang/Strin">
 <meta name="keywords" content="Android,填坑记录,Reverse">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android逆向填坑记录">
-<meta property="og:url" content="http://yoursite.com/2018/09/16/codenote/reverse/Android逆向填坑记录/index.html">
+<meta property="og:title" content="smali注入代码库">
+<meta property="og:url" content="http://yoursite.com/2018/09/16/codenote/reverse/smali注入代码库/index.html">
 <meta property="og:site_name" content="amlloc&#39;s blog">
-<meta property="og:description" content="Android逆向零零碎碎">
+<meta property="og:description" content="smali注入代码库利用Android Killer的插入代码管理器可以很方便地组织管理自己的代码库，这里我列出几个用处较大的代码 1234#LoadLibraryconst-string v0, &amp;quot;so name&amp;quot;invoke-static &amp;#123;v0&amp;#125;, Ljava/lang/System;-&amp;gt;loadLibrary(Ljava/lang/Strin">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-11T10:52:43.003Z">
+<meta property="og:updated_time" content="2019-01-14T13:41:24.629Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android逆向填坑记录">
-<meta name="twitter:description" content="Android逆向零零碎碎">
+<meta name="twitter:title" content="smali注入代码库">
+<meta name="twitter:description" content="smali注入代码库利用Android Killer的插入代码管理器可以很方便地组织管理自己的代码库，这里我列出几个用处较大的代码 1234#LoadLibraryconst-string v0, &amp;quot;so name&amp;quot;invoke-static &amp;#123;v0&amp;#125;, Ljava/lang/System;-&amp;gt;loadLibrary(Ljava/lang/Strin">
 
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/09/16/codenote/reverse/Android逆向填坑记录/">
+  <link rel="canonical" href="http://yoursite.com/2018/09/16/codenote/reverse/smali注入代码库/">
 
 
 
 
 
-  <title>Android逆向填坑记录 | amlloc's blog</title>
+  <title>smali注入代码库 | amlloc's blog</title>
   
 
 
@@ -283,7 +283,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/reverse/Android逆向填坑记录/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/codenote/reverse/smali注入代码库/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="amlloc">
@@ -300,7 +300,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Android逆向填坑记录</h1>
+          <h1 class="post-title" itemprop="name headline">smali注入代码库</h1>
         
 
         <div class="post-meta">
@@ -372,38 +372,7 @@
       
 
       
-        <p>Android逆向零零碎碎<br><a id="more"></a></p>
-<h2 id="动态调试步骤"><a href="#动态调试步骤" class="headerlink" title="动态调试步骤"></a>动态调试步骤</h2><ul>
-<li><p>打开monitor</p>
-<p><code>cd ${SDK_PATH}/tools/</code></p>
-<p><code>./monitor</code></p>
-<p>备注：没有开没法附加，具体原因暂时不明</p>
-</li>
-<li><p>将android_server push进可执行文件夹</p>
-<p><code>adb push /home/IDA/dbgsrv/android_server</code> </p>
-<p><code>/data/local/tmp/andser</code></p>
-<p><code>adb shell</code></p>
-<p><code>su</code></p>
-<p><code>cd /data/local/tmp</code></p>
-<p><code>chmod 777 andser</code></p>
-<p><code>./andser -p12345</code></p>
-</li>
-<li><p>open terminal</p>
-<p><code>ctrl + t</code></p>
-</li>
-<li><p>转发端口</p>
-<p><code>adb forward tcp:12345 tcp:12345</code></p>
-</li>
-<li><p>以启动模式启动,停在加载so文件之前</p>
-<p><code>adb shell am start -D -n packagename/clasdx    sname</code></p>
-</li>
-<li><p>IDA附加进程</p>
-<p><code>Debuger</code>-&gt;<code>Process option</code>-&gt;<code>Hostname:localhost Port:1234</code>-&gt;<code>attach...</code></p>
-</li>
-<li><p>jdb附加<br><code>jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8700</code></p>
-</li>
-</ul>
-<h2 id="IDA-dump脚本"><a href="#IDA-dump脚本" class="headerlink" title="IDA dump脚本"></a>IDA dump脚本</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> fp, begin, end, dexbyte;</span><br><span class="line">  fp = fopen(<span class="string">"/home/amlloc/dump_shell.dex"</span>, <span class="string">"wb"</span>);</span><br><span class="line">  begin = <span class="number">0x761a1000</span>;</span><br><span class="line">  end = <span class="number">0x763b6000</span>;</span><br><span class="line">  <span class="keyword">for</span> ( dexbyte = begin; dexbyte &lt; end; dexbyte ++ )</span><br><span class="line">      fputc(Byte(dexbyte), fp);</span><br></pre></td></tr></table></figure>
+        <a id="more"></a>
 <h2 id="smali注入代码库"><a href="#smali注入代码库" class="headerlink" title="smali注入代码库"></a>smali注入代码库</h2><p>利用Android Killer的插入代码管理器可以很方便地组织管理自己的代码库，这里我列出几个用处较大的代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#LoadLibrary</span><br><span class="line">const-string v0, &quot;so name&quot;</span><br><span class="line"></span><br><span class="line">invoke-static &#123;v0&#125;, Ljava/lang/System;-&gt;loadLibrary(Ljava/lang/String;)V</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#Log</span><br><span class="line">const-string v0, &quot;you message&quot;</span><br><span class="line"></span><br><span class="line">invoke-static &#123;v0&#125;, Lcom/android/killer/Log;-&gt;LogStr(Ljava/lang/String;)V</span><br></pre></td></tr></table></figure>
@@ -413,47 +382,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#Toast</span><br><span class="line">const-string v0, &quot;you message&quot;</span><br><span class="line"></span><br><span class="line">const/4 v1, 0x1</span><br><span class="line"></span><br><span class="line">invoke-static &#123;p0, v0, v1&#125;, Landroid/widget/Toast;-&gt;makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;</span><br><span class="line"></span><br><span class="line">move-result-object v0</span><br><span class="line"></span><br><span class="line">invoke-virtual &#123;v0&#125;, Landroid/widget/Toast;-&gt;show()V</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#等待调试</span><br><span class="line">invoke-static &#123;&#125;, Landroid/os/Debug;-&gt;waitForDebugger()V</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#写权限auto fp, begin, end, dexbyte;</span><br><span class="line">  fp = fopen(&quot;/home/amlloc/dump_shell.dex&quot;, &quot;wb&quot;);</span><br><span class="line">  begin = 0x761a1000;</span><br><span class="line">  end = 0x763b6000;</span><br><span class="line">  for ( dexbyte = begin; dexbyte &lt; end; dexbyte ++ )</span><br><span class="line">      fputc(Byte(dexbyte), fp);</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&gt;</span><br><span class="line">#读权限</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot;/&gt;</span><br></pre></td></tr></table></figure>
-<p>如果还有其他需要，详见github:<br><a href="https://github.com/bingghost/SmaliLibrary" target="_blank" rel="noopener">https://github.com/bingghost/SmaliLibrary</a><br>把里面的代码抠出来用即可。</p>
-<h2 id="Arm-nop"><a href="#Arm-nop" class="headerlink" title="Arm nop"></a>Arm nop</h2><p><code>00 00 A0 E1</code></p>
-<h2 id="apk无法调试的问题"><a href="#apk无法调试的问题" class="headerlink" title="apk无法调试的问题"></a>apk无法调试的问题</h2><p>参考链接：</p>
-<p><a href="https://blog.csdn.net/feibabeibei_beibei/article/details/52744231" target="_blank" rel="noopener">雪一梦：Android So动态调试之反jdb附加的解决大法</a></p>
-<p>如果需要判断一个apk是否为可调试的，则必须满足以下两个要求中任意一个</p>
-<ul>
-<li><code>AndroidManifest.xml</code>文件<code>Application</code>包含<code>android:debuggable=&quot;true&quot;</code></li>
-<li>文件<code>/default.prop</code>中的<code>ro.debuggable</code>的值为1</li>
-</ul>
-<p>目前有四种方式可以解决这个问题</p>
-<ul>
-<li>在<code>root</code>手机中安装<code>Xposed</code>与<code>xinstaller</code>插件<br>使用方法：<ul>
-<li>下载 Xposed 框架,并激活,再下载 xinstaller 插件安装;</li>
-<li>开启模块,点击 xinstall 插件设置专家模式,进入其他设置,开启调试应用,最后在 xposed 中激活重启</li>
-</ul>
-</li>
-</ul>
-<p>​        短处：apk中很有可能会有反<code>xposed</code>代码的存在，因此需要先过掉这个障碍才行。</p>
-<ul>
-<li><p>直接通过反编译改包的方法</p>
-<p>缺点多多，不解释</p>
-</li>
-<li><p>如果我们在真机,则可以修改根目录下的 default.prop 文件,将里<br>面的 ro.debuggable =1。</p>
-<ul>
-<li>从 Google 官方网站下载到 boot.img;</li>
-<li>使用工具(abootimg,gunzip, cpio)把 boot.img 完全解开,获取到 default.prop;</li>
-<li>修改 default.prop;</li>
-<li>把修改后的文件重新打包成 boot_new.img;</li>
-<li>使用 fastboot 工具把 boot_new.img 刷入设备(fastboot<br>flash boot boot_new.img);</li>
-</ul>
-</li>
-<li><p>ptrace 注入到 init 进程,然后修改内存中的<code>default.prop</code>文件属性值</p>
-<ul>
-<li>拷贝拷贝<code>mprop</code>到<code>/data/</code>目录下;</li>
-<li><code>./mprop ro.debuggable 1;</code></li>
-<li><code>getprop ro.debuggable;</code>(查看此时 ro.debuggable 在内存<br>中的值)</li>
-<li>stop;start(重启 adbd 进程);</li>
-</ul>
-<p>我们在上面的第三步的时候查看好像没有改过来,分析原因为:该工具是通过 ptrace 修改 init 进程中的内存,然而 4.X 系统强制开启了 selinux;因此这个时候我们需要设置 Selinux 的状态.</p>
-</li>
-</ul>
+<p>如果还有其他需要，详见这里提供一个链接github:<br><a href="https://github.com/bingghost/SmaliLibrary" target="_blank" rel="noopener">https://github.com/bingghost/SmaliLibrary</a><br>把里面的代码抠出来用即可。</p>
 
       
     </div>
@@ -498,8 +427,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/16/codenote/OS/syscall/" rel="prev" title="Unix系统调用">
-                Unix系统调用 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/16/codenote/reverse/apk无法调试的问题/" rel="prev" title="apk无法调试的问题">
+                apk无法调试的问题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -575,7 +504,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -597,7 +526,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -632,7 +561,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态调试步骤"><span class="nav-number">1.</span> <span class="nav-text">动态调试步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA-dump脚本"><span class="nav-number">2.</span> <span class="nav-text">IDA dump脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#smali注入代码库"><span class="nav-number">3.</span> <span class="nav-text">smali注入代码库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Arm-nop"><span class="nav-number">4.</span> <span class="nav-text">Arm nop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apk无法调试的问题"><span class="nav-number">5.</span> <span class="nav-text">apk无法调试的问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#smali注入代码库"><span class="nav-number">1.</span> <span class="nav-text">smali注入代码库</span></a></li></ol></div>
             
 
           </div>
