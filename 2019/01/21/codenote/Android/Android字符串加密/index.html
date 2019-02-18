@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="OS,Linux,">
+  <meta name="keywords" content="Android,Java,">
 
 
 
@@ -94,26 +94,23 @@
 
 
 
-<meta name="description" content="《程序员的自我修养笔记》 1">
-<meta name="keywords" content="OS,Linux">
+<meta name="description" content="Java字符串加密学习笔记">
+<meta name="keywords" content="Android,Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="程序员的自我修养笔记">
-<meta property="og:url" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/index.html">
+<meta property="og:title" content="Android Java字符串加密">
+<meta property="og:url" content="http://yoursite.com/2019/01/21/codenote/Android/Android字符串加密/index.html">
 <meta property="og:site_name" content="amlloc&#39;s blog">
-<meta property="og:description" content="《程序员的自我修养笔记》 1">
+<meta property="og:description" content="Java字符串加密学习笔记">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1545926648771.png">
-<meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1545927294296.png">
-<meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439014195.png">
-<meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439221303.png">
-<meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439234732.png">
-<meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439338068.png">
-<meta property="og:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1546444190583.png">
-<meta property="og:updated_time" content="2019-01-02T15:50:05.084Z">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/codenote/Android/Android字符串加密/1548037571677.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/codenote/Android/Android字符串加密/1548038537351.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/codenote/Android/Android字符串加密/1548039160892.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/codenote/Android/Android字符串加密/1548044295490.png">
+<meta property="og:updated_time" content="2019-02-18T13:35:52.056Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="程序员的自我修养笔记">
-<meta name="twitter:description" content="《程序员的自我修养笔记》 1">
-<meta name="twitter:image" content="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/1545926648771.png">
+<meta name="twitter:title" content="Android Java字符串加密">
+<meta name="twitter:description" content="Java字符串加密学习笔记">
+<meta name="twitter:image" content="http://yoursite.com/2019/01/21/codenote/Android/Android字符串加密/1548037571677.png">
 
 
 
@@ -142,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/">
+  <link rel="canonical" href="http://yoursite.com/2019/01/21/codenote/Android/Android字符串加密/">
 
 
 
 
 
-  <title>程序员的自我修养笔记 | amlloc's blog</title>
+  <title>Android Java字符串加密 | amlloc's blog</title>
   
 
 
@@ -291,7 +288,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/27/codenote/OS/程序员的自我修养笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/21/codenote/Android/Android字符串加密/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="amlloc">
@@ -308,7 +305,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">程序员的自我修养笔记</h1>
+          <h1 class="post-title" itemprop="name headline">Android Java字符串加密</h1>
         
 
         <div class="post-meta">
@@ -320,8 +317,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-27T23:36:40+08:00">
-                2018-12-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-21T10:14:38+08:00">
+                2019-01-21
               </time>
             
 
@@ -380,101 +377,31 @@
       
 
       
-        <p>《程序员的自我修养笔记》 1</p>
-<a id="more"></a>
-<h3 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h3><p>程序源代码到最终可执行文件的4个步骤：</p>
-<ul>
-<li>预编译</li>
+        <p>Java字符串加密学习笔记<br><a id="more"></a></p>
+<h2 id="Java字节码"><a href="#Java字节码" class="headerlink" title="Java字节码"></a>Java字节码</h2><h3 id="字节码生成"><a href="#字节码生成" class="headerlink" title="字节码生成"></a>字节码生成</h3><ul>
+<li>Java2bitcode</li>
 </ul>
-<p>主要处理那些源代码文件中以”#”开始的预编译指令</p>
-<p><code>gcc -E hello.c -o hello.i</code></p>
+<p>由Java源代码生成字节码的过程如下图（图片来源于网络）</p>
+<p><img src="/2019/01/21/codenote/Android/Android字符串加密/1548037571677.png" alt="1548037571677"></p>
 <ul>
-<li>编译</li>
+<li>JVM执行<ul>
+<li>不是热代码直接走字节码解释器</li>
+<li>热代码：多次调用，多次执行的循环体，会被JIT优化成机器码</li>
 </ul>
-<p>对预编译生成的文件进行词法分析，语法分析，语义分析，中间语言生成，目标代码生成及优化生成汇编代码文件</p>
-<p><code>gcc -S hello.i -o hello.s</code></p>
-<ul>
-<li>汇编</li>
-</ul>
-<p>汇编器将汇编代码转换成可执行指令,输出目标文件</p>
-<p><code>as hello.s -o hello.o</code>或者<code>gcc -c hello.s -o hello.o</code>或者<code>gcc -c hello.c -o hello.o</code></p>
-<ul>
-<li>链接</li>
-</ul>
-<p><code>ld -static crt1.o crti.o crtbeginT.o -start-gruoup -lgcc -lgcc_eh -lc-end-group crtend.o crtn.o</code></p>
-<p>这里省略了各文件的路径</p>
-<p>链接过程主要有如下步骤：</p>
-<ul>
-<li>地址和空间分配</li>
-<li>符号决议</li>
-<li>重定位</li>
-</ul>
-<h3 id="第三章"><a href="#第三章" class="headerlink" title="第三章"></a>第三章</h3><h4 id="目标文件格式"><a href="#目标文件格式" class="headerlink" title="目标文件格式"></a>目标文件格式</h4><ul>
-<li>可重定位文件(Relocatable File)</li>
-<li>可执行文件(Executable File)</li>
-<li>共享目标文件(Shared Object File)</li>
-<li>核心转储文件(Core Dump File)</li>
-</ul>
-<blockquote>
-<p>在Linux下可使用file命令显示文件格式</p>
-</blockquote>
-<h4 id="目标文件与程序之间的关系"><a href="#目标文件与程序之间的关系" class="headerlink" title="目标文件与程序之间的关系"></a>目标文件与程序之间的关系</h4><p><img src="/2018/12/27/codenote/OS/程序员的自我修养笔记/1545926648771.png" alt="1545926648771"></p>
-<ul>
-<li>程序源代码编译后的机器指令被放在代码段(.code或者.text)里面</li>
-<li>全局变量和局部静态变量放在数据段(.data)</li>
-<li>未初始化全局变量和未初始化局部静态变量，或者有些编译器也会将初始化为0的变量也放置在.bss段</li>
-</ul>
-<blockquote>
-<p>查看目标文件内部的结构可以使用objdump工具，可看到对应的各个段大致结构(-h)，各个段详细内容(-x)，代码段内容(翻译成了汇编语言)(-s -d)</p>
-</blockquote>
-<h4 id="其他段内容"><a href="#其他段内容" class="headerlink" title="其他段内容"></a>其他段内容</h4><p><img src="/2018/12/27/codenote/OS/程序员的自我修养笔记/1545927294296.png" alt="1545927294296"></p>
-<ul>
-<li><p>将某个二进制文件作为目标文件的一个段</p>
-<p><code>objcopy -I binary -o elf32-i386 -B i386 image.jpg image.o</code></p>
-</li>
-<li><p>将某个变量放在特定段</p>
-<p><code>__attribute__((section(&quot;FOO&quot;))) int global = 42</code></p>
-<p><code>__attribute__((section(&quot;BAR&quot;))) void foo()</code></p>
 </li>
 </ul>
-<h3 id="第四章静态链接"><a href="#第四章静态链接" class="headerlink" title="第四章静态链接"></a>第四章静态链接</h3><h4 id="空间与地址分配"><a href="#空间与地址分配" class="headerlink" title="空间与地址分配"></a>空间与地址分配</h4><ul>
-<li><p>相似段合并</p>
-<ul>
-<li><p>空间与地址分配</p>
-<p>扫描所有输入目标文件，并获得他们各个段的长度、属性和位置，并将输入目标文件中的符号表所有的符号定义和符号引用收集起来，放到全局符号表中。于是，链接器将获取所有输入目标文件的段长度，并将他们合并，计算输出文件中各个段合并后的长度和位置，建立映射关系。</p>
-</li>
-<li><p>符号解析与重定位</p>
-<p>利用上一步的信息进行段的数据，读取段数据，重定位信息，进行符号解析与重定位、调整代码中的地址等。</p>
-</li>
+<p><img src="/2019/01/21/codenote/Android/Android字符串加密/1548038537351.png" alt="1548038537351"></p>
+<h2 id="字节码执行"><a href="#字节码执行" class="headerlink" title="字节码执行"></a>字节码执行</h2><p>方法调用在JVM中即是字节码执行，而字节码指令执行的树结构是栈帧（stack frame），也就是在虚拟机栈中的栈元素。虚拟机会给每个方法分配一个栈帧，因为虚拟机栈是LIFO(后进先出)的，所以当前线程正在活动的栈帧，也就是栈顶的栈帧，JVM规范中称之为“CurrentFrame”,这个当前栈帧对应的方法就是“CurrentMethod”。字节码的执行操作，指的就是对当前栈帧数据结构进行的操作。</p>
+<p>JVM的运行时数据区结构如下：</p>
+<p><img src="/2019/01/21/codenote/Android/Android字符串加密/1548039160892.png" alt="1548039160892"></p>
+<h2 id="ASM入门"><a href="#ASM入门" class="headerlink" title="ASM入门"></a>ASM入门</h2><p>环境：Ubuntu14.10 + AndroidStudio3.2.1</p>
+<p>插件：ASM Bytecode Outline</p>
+<h3 id="安装方法"><a href="#安装方法" class="headerlink" title="安装方法"></a>安装方法</h3><ul>
+<li><code>file-&gt;setting-&gt;Plugins-&gt;输入ASM Bytecode Outline-&gt;Search in repositories</code></li>
+<li>安装并重启</li>
 </ul>
-<p>如下图：</p>
-<p><img src="/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439014195.png" alt="1546439014195"></p>
-</li>
-</ul>
-<p>编写程序：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*a.c*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> shared;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">100</span>;</span><br><span class="line">	swap(&amp;a, &amp;shared);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* b.c */</span></span><br><span class="line"><span class="keyword">int</span> shared = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> *b)</span></span>&#123;</span><br><span class="line">	*a ^= *b  ^= *a ^=*b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><code>objdump -h a.o</code></p>
-<p><img src="/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439221303.png" alt="1546439221303"></p>
-</li>
-<li><p><code>objdump -h b.o</code></p>
-<p><img src="/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439234732.png" alt="1546439234732"></p>
-</li>
-<li><p>链接两个文件<code>ld a.o b.o -e main -o ab -lc</code></p>
-<blockquote>
-<p>在我的机器上面需要加上-lc参数才能链接成功，不然报a.c:(.text+0x4b): undefined reference to `__stack_chk_fail错误，具体原因不明，</p>
-<p>-c:                从指定的命令文件读取命令</p>
-<p>-l:                把指定的存档文件添加到要连接的文件清单</p>
-<p>得到的可执行文件不只是简单的链接过程，跟书中的内容有差异，有大神知道麻烦赐教</p>
-</blockquote>
-</li>
-<li><p><code>objdump -h ab</code></p>
-<p><img src="/2018/12/27/codenote/OS/程序员的自我修养笔记/1546439338068.png" alt="1546439338068"></p>
-<p>可以看出，合并后得到的ab文件的<code>.text</code>段和<code>.data</code>段的长度分别是9c和4，正好等于两个.o文件相应段的长度之和。</p>
-<p><img src="/2018/12/27/codenote/OS/程序员的自我修养笔记/1546444190583.png" alt="1546444190583"></p>
-</li>
-</ul>
+<p>打开Java项目后效果如下：</p>
+<p><img src="/2019/01/21/codenote/Android/Android字符串加密/1548044295490.png" alt="1548044295490"></p>
 
       
     </div>
@@ -492,9 +419,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/OS/" rel="tag"># OS</a>
+            <a href="/tags/Android/" rel="tag"># Android</a>
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -507,8 +434,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/10/others/IDE折腾笔记/" rel="next" title="IDE折腾笔记">
-                <i class="fa fa-chevron-left"></i> IDE折腾笔记
+              <a href="/2018/12/27/codenote/OS/程序员的自我修养笔记之静态链接/" rel="next" title="程序员的自我修养笔记之静态链接">
+                <i class="fa fa-chevron-left"></i> 程序员的自我修养笔记之静态链接
               </a>
             
           </div>
@@ -516,6 +443,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/18/codenote/reverse/Xposed学习记录/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -590,7 +521,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -612,7 +543,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -647,7 +578,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第二章"><span class="nav-number">1.</span> <span class="nav-text">第二章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三章"><span class="nav-number">2.</span> <span class="nav-text">第三章</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#目标文件格式"><span class="nav-number">2.1.</span> <span class="nav-text">目标文件格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目标文件与程序之间的关系"><span class="nav-number">2.2.</span> <span class="nav-text">目标文件与程序之间的关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他段内容"><span class="nav-number">2.3.</span> <span class="nav-text">其他段内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四章静态链接"><span class="nav-number">3.</span> <span class="nav-text">第四章静态链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#空间与地址分配"><span class="nav-number">3.1.</span> <span class="nav-text">空间与地址分配</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java字节码"><span class="nav-number">1.</span> <span class="nav-text">Java字节码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字节码生成"><span class="nav-number">1.1.</span> <span class="nav-text">字节码生成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字节码执行"><span class="nav-number">2.</span> <span class="nav-text">字节码执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASM入门"><span class="nav-number">3.</span> <span class="nav-text">ASM入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装方法"><span class="nav-number">3.1.</span> <span class="nav-text">安装方法</span></a></li></ol></li></ol></div>
             
 
           </div>
