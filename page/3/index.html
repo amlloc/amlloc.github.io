@@ -864,7 +864,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="amlloc">
@@ -883,7 +883,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/" itemprop="url">程序员的自我修养笔记之装载与动态链接</a></h1>
+                <a class="post-title-link" href="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/" itemprop="url">程序员的自我修养笔记之装载</a></h1>
         
 
         <div class="post-meta">
@@ -968,18 +968,18 @@
 <p>而从程序的角度看，C语言中的指针所占空间可用于计算虚拟地址空间的大小，一般情况下，C语言指针大小的位数与虚拟空间的位数相同，如32位平台下的指针为32位，4字节。</p>
 <p>以下以32为地址空间为主，64位作为扩展。</p>
 <p>默认情况下Linux系统将进程的虚拟地址空间作如下分配：</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1550220847534.png" alt="1550220847534"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1550220847534.png" alt="1550220847534"></p>
 <p>其中的操作系统使用的空间，进程是不被允许访问的，且进程并不能完全使用剩下的3GB虚拟空间，其中一部分是预留给其他用途的。</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1550220996919.png" alt="1550220996919"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1550220996919.png" alt="1550220996919"></p>
 <h5 id="PAE"><a href="#PAE" class="headerlink" title="PAE"></a>PAE</h5><p>Linux下Intel在1995年的Pentium Pro CPU便开始使用36位的物理地址，即可以访问64GB的物理内存。这时，操作系统只能有4GB的虚拟地址空间，无法全部读取完64GB的物理内存，而PAE就是为了解决这个问题出现的。</p>
 <p><strong>PAE(Physical Address Extension)</strong>是一种地址扩展方式，Inter修改了页映射的方式后，使得新的映射方式可以访问更多的物理内存。操作系统提供一个窗口映射的方法，将额外的内存映射进地址空间中。应用程序根据需要选择申请和映射。比如应用程序中的<code>0x10000000~0x20000000</code>这一段256MB的虚拟地址空间作为窗口，程序从高于4GB的物理空间中申请多个大小为256MB的物理空间，编号为A,B,C,然后根据需要将窗口映射到不同的物理空间块，用到A时将<code>0x10000000~0x20000000</code>映射到A，用到B,C时在映射过去，如此重复。在Windows下，这种内存操作方式为<strong>AWE(Address Windows Extensions)</strong>。像<strong>Linux等UNIX系统则采用mmp()系统调用来实现</strong>。</p>
 <h4 id="装载方式"><a href="#装载方式" class="headerlink" title="装载方式"></a>装载方式</h4><h5 id="覆盖装入"><a href="#覆盖装入" class="headerlink" title="覆盖装入"></a>覆盖装入</h5><p>没有发明虚拟存储之前使用得比较广泛，现已几乎被淘汰。</p>
 <p>覆盖装入的方法把挖掘内存潜力的任务交给了程序员程序员在编写程序时必须手动将程序分割成若干块，然后编写小的辅助代码管理这些模块何时驻留在内存，何时被替换。这个辅助代码被称为<strong>覆盖管理器(Overlay Manager)</strong>,比如下图</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1550223485233.png" alt="1550223485233"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1550223485233.png" alt="1550223485233"></p>
 <p>模块A与B之间相互没有调用依赖关系，因此两模块共享内存区域，当</p>
 <p>使用A时则覆盖该内存，使用B时覆盖该内存，覆盖管理器则作为常驻内存。</p>
 <p>多模块则如下，程序员需要手工将<strong>模块按照它们之间的调用依赖关系组织成树状结构</strong>。</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1550223740492.png" alt="1550223740492"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1550223740492.png" alt="1550223740492"></p>
 <p>因此覆盖管理器需要保证一下亮点。</p>
 <ul>
 <li><p>树状结构中从任何一个模块到树的根（main）都叫调用路径，当模块被调用时，这个调用路径上的模块必须在内存之中。比如C模块正在执行时，B和main都需要在内存中，确保E执行完毕后能正确返回到模块B和main。</p>
@@ -990,9 +990,9 @@
 </ul>
 <h4 id="页映射"><a href="#页映射" class="headerlink" title="页映射"></a>页映射</h4><p>页映射是虚拟存储机制的一部分，随着虚拟存储的发明而诞生。</p>
 <p>页映射将内存和所有磁盘中的数据及指令按照<strong>页(Page)</strong>为单位划分若干页，以后所有的装载和操作单位就是页。</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1550224180737.png" alt="1550224180737"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1550224180737.png" alt="1550224180737"></p>
 <p>假设程序所有的指令和数据总共32KB，那么程序被分为8页，并编号P0~P7。但16KB内存无法将32KB程序装入，此时将按照动态装入的原理进行装入过程。如果程序执行入口在P0则装载管理器发现程序的P0不在内存中，则将内存F0分配给P0，并将P0的内存扎un购入F0中。运行后使用P5，则将P4装入F1，以此类推，如下所示：</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1550224497404.png" alt="1550224497404"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1550224497404.png" alt="1550224497404"></p>
 <p>如果程序继续运行需要访问P4，则装载管理器必须选择放弃目前正在使用的4哥内存页中的其中一个来装载P4，放弃的算法有很多，如：</p>
 <ul>
 <li>FIFO先进先出，则放弃F0，P4装入F0</li>
@@ -1007,7 +1007,7 @@
 <li><p>读取可执行文件头，建立虚拟空间与可执行文件的映射关系</p>
 <p>完成虚拟空间与可执行文件的映射关系，这一步是整个装载过程中最重要的一步，也就是传统意义上的“装载”。</p>
 <p>如图，考虑最简单的例子，虚拟地址如图，文件大小为0x000e1，对齐为0x1000。由于.text段大小不到0x1000，因此需要对齐。</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1550650714552.png" alt="1550650714552"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1550650714552.png" alt="1550650714552"></p>
 <p>这种映射关系是保存在操作系统内部的一个<strong>数据结构</strong>。Linux将进程虚拟空间中的一个段叫做<strong>虚拟内存区域(VMA.Virtual Memory Area)</strong>。windows叫做<strong>虚拟段(Virtual Section)</strong>。在上面例子中，会在进程相应的数据结构中设置有一个.text段的VMA，它在虚拟空间中的地址为<code>0x08048000~0x08049000</code>对应ELF文件中偏移为0的.text，属性为只读。</p>
 </li>
 <li><p>将CPU的指令寄存器设置成可执行文件的入口地址，启动运行</p>
@@ -1015,7 +1015,7 @@
 </ul>
 <h5 id="页错误"><a href="#页错误" class="headerlink" title="页错误"></a>页错误</h5><p>上述步骤执行完后，只是通过可执行文件头部信息建立起可执行文件和进程虚存之间的映射关系，并没有将可执行文件的指令和数据装入内存。</p>
 <p>假设在上面的例子中，程序入口地址为<code>0x08048000</code>，刚好是.text段的其实地址，CPU打算执行时发现为空页面时，便认为这是个<strong>页错误（Page Fault）</strong>。CPU将控制权交给操作系统，操作系统将查询上面说到的数据结构，找到空页面所在VMA，计算出相应的页面在可执行文件中的偏移，再在物理内存中分配一个物理页面，将进程中该虚拟页与分配的物理页之间建立映射关系，再把控制权还给进程，进程从刚才页错误的位置重新开始执行，如下图所示，为可执行文件，进程虚存与物理内存之间的关系：</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1550995358009.png" alt="1550995358009"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1550995358009.png" alt="1550995358009"></p>
 <h4 id="进程虚存空间分布"><a href="#进程虚存空间分布" class="headerlink" title="进程虚存空间分布"></a>进程虚存空间分布</h4><h5 id="ELF文件链接视图和执行视图"><a href="#ELF文件链接视图和执行视图" class="headerlink" title="ELF文件链接视图和执行视图"></a>ELF文件链接视图和执行视图</h5><p>在实际场景里面，ELF文件段数量是比较多的，但由于需要进行页对齐等操作，如果以一个段进行页的分配的话，势必会造成较大的浪费。</p>
 <p>但是在操作系统的角度来看装载可执行文件（操作系统并不需要知道哪个段名称是什么，作用如何等等信息），发现并不关心可执行文件实际内容，而只是关心跟装载相关的问题，最主要的就是段的权限问题。</p>
 <p>段的权限组合基本是以下三种</p>
@@ -1026,7 +1026,7 @@
 </ul>
 <p>因此找到一个以<strong>权限种类为划分，将相同权限的段合并在一起进行映射的方案</strong>，而合并后的数据称之为<strong>Segment</strong>，如<code>.text</code>段和<code>.init</code>段合在一起看作为一个<strong>Segment</strong>，那么在装载时便可以把他们看作一个个整体进行装载，这样就可以达到明显减少页面内部碎片化的问题，从而节省空间。</p>
 <p>对比如下图，左边为按段装载，又边为合并后按Segment装载</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1550997079148.png" alt="1550997079148"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1550997079148.png" alt="1550997079148"></p>
 <p>下面编写一个例子程序：</p>
 <p><code>SectionMapping.c</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		sleep(<span class="number">1000</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1051,14 +1051,14 @@
 <li>执行视图：从Segment的角度进行划分</li>
 </ul>
 <p>可以如下图表示可执行文件的段与进程虚拟空间的映射关系：</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1550998021300.png" alt="1550998021300"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1550998021300.png" alt="1550998021300"></p>
 <p>ELF可执行文件和共享库文件有个专门的数据结构叫<strong>程序头表（Program Header Table）</strong>用来保存Segment信息，因为ELF文件不需要被装载，因此没有程序头表具体结构如下，并与<code>readelf -l</code>读出来的数据一一对应</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    Elf32_Word        p_type;</span><br><span class="line">    Elf32_Off            p_offset;</span><br><span class="line">    Elf32_Addr         p_vaddr;</span><br><span class="line">    Elf32_Addr         p_paddr;</span><br><span class="line">    Elf32_Word        p_filesz;</span><br><span class="line">    Elf32_Word        p_memsz;</span><br><span class="line">    Elf32_Word        p_flags;</span><br><span class="line">    Elf32_Word        p_align;</span><br><span class="line">&#125;Elf32_Phdr;</span><br></pre></td></tr></table></figure>
 <p>基本含义如下</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1550998603509.png" alt="1550998603509"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1550998603509.png" alt="1550998603509"></p>
 <p>其中，<code>p_memsz &gt;= p_filesz</code>但如果<code>p_memsz &lt;= p_filesz</code>则表示Segment段在内存中分配的空间大小超过文件中实际的大小，这部分多余的空间则被全部填充为”0“。这样我们构造ELF可执行文件时就不需要再额外设立BSS的Segment了，可以把数据Segment的p_memsz扩大，那些额外的部分就是BSS。数据段和BSS的区别在于，数据段从文件中初始化内容，而BSS则全部被初始化为0。因此可以看到前面的BSS其实已经被并入数据类型段里面，而没有显示出来。</p>
 <h4 id="堆和栈"><a href="#堆和栈" class="headerlink" title="堆和栈"></a>堆和栈</h4><p>查看进程虚拟空间分布如图所示：</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1550999813925.png" alt="1550999813925"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1550999813925.png" alt="1550999813925"></p>
 <p>其中意义可以见我另外一篇文章，《/proc/{pid}/maps的文件结构解析》</p>
 <p>其中，主设备号和次设备号及文件节点号都是0，表示没有映射到文件，这种VMA叫做<strong>匿名虚拟内存区域(Anonymous Virtual Memory Area)</strong>。我们目前关注Heap和Stack这两个VMA几乎在所有进程中都存在，malloc()函数内存分配就是从堆里面进行分配的，堆由系统库管理，而<code>vsyscall</code>位于内核空间，具体作用待深究，不过在名称来看猜测应该是和内核通信相关的VMA了。</p>
 <p>一个进程可主要分如下几个区域：</p>
@@ -1069,7 +1069,7 @@
 <li>栈VMA，可读可写不可执行；匿名，可向下扩展</li>
 </ul>
 <p>具体如图：</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1551000603318.png" alt="1551000603318"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1551000603318.png" alt="1551000603318"></p>
 <h4 id="Linux内核装载ELF过程"><a href="#Linux内核装载ELF过程" class="headerlink" title="Linux内核装载ELF过程"></a>Linux内核装载ELF过程</h4><ul>
 <li><p>bash进程调用<code>fork()</code>系统调用创建一个新的进程</p>
 </li>
@@ -1079,13 +1079,14 @@
 </li>
 </ul>
 <p>啊～～～这里步骤比较多且复杂，没有实际实验也看不太懂，就先直接贴图将就着看吧；</p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1551002209326.png" alt="1551002209326"></p>
-<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载与动态链接/1551002228233.png" alt="1551002228233"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1551002209326.png" alt="1551002209326"></p>
+<p><img src="/2018/02/15/codenote/OS/程序员的自我修养笔记之装载/1551002228233.png" alt="1551002228233"></p>
 <p>然后最后得到的结果就是返回地址改成被装载的ELF程序入口地址：</p>
 <ul>
 <li>静态链接：ELF文件的头文件中e_entry所指的地址</li>
 <li>动态链接：动态链接器地址</li>
 </ul>
+<p>至此，可执行文件的装载部分已介绍完毕</p>
 
           
         
