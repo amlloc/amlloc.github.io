@@ -94,13 +94,13 @@
 
 
 
-<meta name="description" content="《程序员的自我修养笔记之装载》 2">
+<meta name="description" content="《程序员的自我修养笔记之装载》 2 介绍ELF文件在Linux下的装载过程，探寻可执行文件装载的本质  什么是进程的虚拟地址空间 为什么进程要有自己独立的虚拟地址空间 几种装载方式 进程虚拟地址空间的分布情况">
 <meta name="keywords" content="OS,Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="程序员的自我修养笔记之装载">
 <meta property="og:url" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/index.html">
 <meta property="og:site_name" content="amlloc&#39;s blog">
-<meta property="og:description" content="《程序员的自我修养笔记之装载》 2">
+<meta property="og:description" content="《程序员的自我修养笔记之装载》 2 介绍ELF文件在Linux下的装载过程，探寻可执行文件装载的本质  什么是进程的虚拟地址空间 为什么进程要有自己独立的虚拟地址空间 几种装载方式 进程虚拟地址空间的分布情况">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1550220847534.png">
 <meta property="og:image" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1550220996919.png">
@@ -117,10 +117,10 @@
 <meta property="og:image" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1551000603318.png">
 <meta property="og:image" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1551002209326.png">
 <meta property="og:image" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1551002228233.png">
-<meta property="og:updated_time" content="2019-02-24T15:22:37.552Z">
+<meta property="og:updated_time" content="2019-02-24T15:35:05.268Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序员的自我修养笔记之装载">
-<meta name="twitter:description" content="《程序员的自我修养笔记之装载》 2">
+<meta name="twitter:description" content="《程序员的自我修养笔记之装载》 2 介绍ELF文件在Linux下的装载过程，探寻可执行文件装载的本质  什么是进程的虚拟地址空间 为什么进程要有自己独立的虚拟地址空间 几种装载方式 进程虚拟地址空间的分布情况">
 <meta name="twitter:image" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1550220847534.png">
 
 
@@ -389,20 +389,20 @@
 
       
         <p>《程序员的自我修养笔记之装载》 2</p>
-<a id="more"></a>
-<h3 id="可执行文件的装载与进程"><a href="#可执行文件的装载与进程" class="headerlink" title="可执行文件的装载与进程"></a>可执行文件的装载与进程</h3><p>介绍ELF文件在Linux下的装载过程，探寻可执行文件装载的本质</p>
+<p>介绍ELF文件在Linux下的装载过程，探寻可执行文件装载的本质</p>
 <ul>
 <li>什么是进程的虚拟地址空间</li>
 <li>为什么进程要有自己独立的虚拟地址空间</li>
 <li>几种装载方式</li>
 <li>进程虚拟地址空间的分布情况</li>
 </ul>
-<h4 id="进程虚拟地址空间"><a href="#进程虚拟地址空间" class="headerlink" title="进程虚拟地址空间"></a>进程虚拟地址空间</h4><p>32位硬件平台决定了虚拟地址空间的地址为0 到2^32 -1，即<code>0x00000000 ~ 0xFFFFFFFF</code>，也就是4GB的虚拟空间大小；而63位的硬件平台具有64位寻址能力，它的虚拟地址空间达到了2^64 字节，即<code>0x0000000000000000 ~ 0xFFFFFFFFFFFFFFFF</code>,总共<code>17179869184GB</code>。</p>
+<a id="more"></a>
+<h3 id="可执行文件的装载与进程"><a href="#可执行文件的装载与进程" class="headerlink" title="可执行文件的装载与进程"></a>可执行文件的装载与进程</h3><h4 id="进程虚拟地址空间"><a href="#进程虚拟地址空间" class="headerlink" title="进程虚拟地址空间"></a>进程虚拟地址空间</h4><p>32位硬件平台决定了虚拟地址空间的地址为0 到2^32 -1，即<code>0x00000000 ~ 0xFFFFFFFF</code>，也就是4GB的虚拟空间大小；而63位的硬件平台具有64位寻址能力，它的虚拟地址空间达到了2^64 字节，即<code>0x0000000000000000 ~ 0xFFFFFFFFFFFFFFFF</code>,总共<code>17179869184GB</code>。</p>
 <p>而从程序的角度看，C语言中的指针所占空间可用于计算虚拟地址空间的大小，一般情况下，C语言指针大小的位数与虚拟空间的位数相同，如32位平台下的指针为32位，4字节。</p>
 <p>以下以32为地址空间为主，64位作为扩展。</p>
 <p>默认情况下Linux系统将进程的虚拟地址空间作如下分配：</p>
 <p><img src="/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1550220847534.png" alt="1550220847534"></p>
-<p>其中的操作系统使用的空间，进程是不被允许访问的，且进程并不能完全使用剩下的3GB虚拟空间，其中一部分是预留给其他用途的。</p>
+<p>其中的操作系统使用的空间，进程是不被允许访问的，且进程并不能完全使用剩下的3GB虚拟空间，其中一部分是预留给其他用途的。32位硬件平台决定了虚拟地址空间的地址为0 到2^32 -1，即0x00000000~0xFFFFFFFF，也就是4GB的虚拟空间大小；而63位的硬件平台具有64位寻址能力，它的虚拟地址空间达到了2^64 字节，即0x0000000000000000~0xFFFFFFFFFFFFFFFF,总共<code>17179869184GB</code>。</p>
 <p><img src="/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1550220996919.png" alt="1550220996919"></p>
 <h5 id="PAE"><a href="#PAE" class="headerlink" title="PAE"></a>PAE</h5><p>Linux下Intel在1995年的Pentium Pro CPU便开始使用36位的物理地址，即可以访问64GB的物理内存。这时，操作系统只能有4GB的虚拟地址空间，无法全部读取完64GB的物理内存，而PAE就是为了解决这个问题出现的。</p>
 <p><strong>PAE(Physical Address Extension)</strong>是一种地址扩展方式，Inter修改了页映射的方式后，使得新的映射方式可以访问更多的物理内存。操作系统提供一个窗口映射的方法，将额外的内存映射进地址空间中。应用程序根据需要选择申请和映射。比如应用程序中的<code>0x10000000~0x20000000</code>这一段256MB的虚拟地址空间作为窗口，程序从高于4GB的物理空间中申请多个大小为256MB的物理空间，编号为A,B,C,然后根据需要将窗口映射到不同的物理空间块，用到A时将<code>0x10000000~0x20000000</code>映射到A，用到B,C时在映射过去，如此重复。在Windows下，这种内存操作方式为<strong>AWE(Address Windows Extensions)</strong>。像<strong>Linux等UNIX系统则采用mmp()系统调用来实现</strong>。</p>
