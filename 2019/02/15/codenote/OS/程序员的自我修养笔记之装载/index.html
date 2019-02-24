@@ -117,7 +117,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1551000603318.png">
 <meta property="og:image" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1551002209326.png">
 <meta property="og:image" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1551002228233.png">
-<meta property="og:updated_time" content="2019-02-24T15:35:05.268Z">
+<meta property="og:updated_time" content="2019-02-24T15:40:58.611Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序员的自我修养笔记之装载">
 <meta name="twitter:description" content="《程序员的自我修养笔记之装载》 2 介绍ELF文件在Linux下的装载过程，探寻可执行文件装载的本质  什么是进程的虚拟地址空间 为什么进程要有自己独立的虚拟地址空间 几种装载方式 进程虚拟地址空间的分布情况">
@@ -458,7 +458,7 @@
 <li>以只读数据段为代表的权限为只读的段</li>
 </ul>
 <p>因此找到一个以<strong>权限种类为划分，将相同权限的段合并在一起进行映射的方案</strong>，而合并后的数据称之为<strong>Segment</strong>，如<code>.text</code>段和<code>.init</code>段合在一起看作为一个<strong>Segment</strong>，那么在装载时便可以把他们看作一个个整体进行装载，这样就可以达到明显减少页面内部碎片化的问题，从而节省空间。</p>
-<p>对比如下图，左边为按段装载，又边为合并后按Segment装载</p>
+<p>对比如下图，左边为按段装载，右边为合并后按Segment装载</p>
 <p><img src="/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1550997079148.png" alt="1550997079148"></p>
 <p>下面编写一个例子程序：</p>
 <p><code>SectionMapping.c</code></p>
@@ -516,7 +516,7 @@
 <p><img src="/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1551002228233.png" alt="1551002228233"></p>
 <p>然后最后得到的结果就是返回地址改成被装载的ELF程序入口地址：</p>
 <ul>
-<li>静态链接：ELF文件的头文件中e_entry所指的地址</li>
+<li>静态链接：ELF文件的文件头中e_entry所指的地址</li>
 <li>动态链接：动态链接器地址</li>
 </ul>
 <p>至此，可执行文件的装载部分已介绍完毕</p>
