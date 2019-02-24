@@ -117,7 +117,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1551000603318.png">
 <meta property="og:image" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1551002209326.png">
 <meta property="og:image" content="http://yoursite.com/2019/02/15/codenote/OS/程序员的自我修养笔记之装载/1551002228233.png">
-<meta property="og:updated_time" content="2019-02-24T10:10:44.854Z">
+<meta property="og:updated_time" content="2019-02-24T15:22:37.552Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序员的自我修养笔记之装载">
 <meta name="twitter:description" content="《程序员的自我修养笔记之装载》 2">
@@ -397,7 +397,7 @@
 <li>几种装载方式</li>
 <li>进程虚拟地址空间的分布情况</li>
 </ul>
-<h4 id="进程虚拟地址空间"><a href="#进程虚拟地址空间" class="headerlink" title="进程虚拟地址空间"></a>进程虚拟地址空间</h4><p>32位硬件平台决定了虚拟地址空间的地址为0 到2^32 -1，即0x00000000~0xFFFFFFFF，也就是4GB的虚拟空间大小；而63位的硬件平台具有64位寻址能力，它的虚拟地址空间达到了2^64 字节，即0x0000000000000000~0xFFFFFFFFFFFFFFFF,总共<code>17179869184GB</code>。</p>
+<h4 id="进程虚拟地址空间"><a href="#进程虚拟地址空间" class="headerlink" title="进程虚拟地址空间"></a>进程虚拟地址空间</h4><p>32位硬件平台决定了虚拟地址空间的地址为0 到2^32 -1，即<code>0x00000000 ~ 0xFFFFFFFF</code>，也就是4GB的虚拟空间大小；而63位的硬件平台具有64位寻址能力，它的虚拟地址空间达到了2^64 字节，即<code>0x0000000000000000 ~ 0xFFFFFFFFFFFFFFFF</code>,总共<code>17179869184GB</code>。</p>
 <p>而从程序的角度看，C语言中的指针所占空间可用于计算虚拟地址空间的大小，一般情况下，C语言指针大小的位数与虚拟空间的位数相同，如32位平台下的指针为32位，4字节。</p>
 <p>以下以32为地址空间为主，64位作为扩展。</p>
 <p>默认情况下Linux系统将进程的虚拟地址空间作如下分配：</p>
