@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="OS,Linux,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/w-16x16.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="《程序员的自我修养笔记之动态链接》 3 动态链接原理">
+<meta name="keywords" content="OS,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程序员的自我修养笔记之动态链接">
+<meta property="og:url" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/index.html">
+<meta property="og:site_name" content="amlloc&#39;s blog">
+<meta property="og:description" content="《程序员的自我修养笔记之动态链接》 3 动态链接原理">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552206133471.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552206531897.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552208099923.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552209698461.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552212257328.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552216705631.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552217637457.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552217405502.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552217466008.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552218595254.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552218636662.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552218716458.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552219020428.png">
+<meta property="og:updated_time" content="2019-03-10T12:02:30.281Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="程序员的自我修养笔记之动态链接">
+<meta name="twitter:description" content="《程序员的自我修养笔记之动态链接》 3 动态链接原理">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552206133471.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/">
+
+
+
+
+
+  <title>程序员的自我修养笔记之动态链接 | amlloc's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">amlloc's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Just a Space</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">程序员的自我修养笔记之动态链接</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-04T18:53:12+08:00">
+                2019-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>《程序员的自我修养笔记之动态链接》 3</p>
+<p>动态链接原理</p>
+<a id="more"></a>
+<h4 id="动态链接产生的原因"><a href="#动态链接产生的原因" class="headerlink" title="动态链接产生的原因"></a>动态链接产生的原因</h4><ul>
+<li>节省内存和磁盘空间</li>
+<li>便于程序的开发，发布和更新</li>
+<li>程序可扩展性和兼容性，可被人们用来制作程序插件</li>
+</ul>
+<h4 id="动态链接的基本实现"><a href="#动态链接的基本实现" class="headerlink" title="动态链接的基本实现"></a>动态链接的基本实现</h4><h5 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h5><p>把程序按照模块分拆开来形成各个相对独立的部分，在程序运行时将它们链接在一起形成一个完整的程序，静态链接则把所有程序模块都链接成一个单独的可执行文件。</p>
+<h5 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h5><p>Linux系统中，ELF动态链接万剑被称为<strong>动态共享对象(DSO，Dynamic Shared Objects)</strong>，简称<strong>共享对象</strong>，它们们一般都是以“.so”为扩展名。Windows中动态链接文件被称为<strong>动态链接库（Dynamical Linking Library）</strong>，它通常就是平时见到的以”.dll”为扩展名的文件</p>
+<h5 id="动态链接器"><a href="#动态链接器" class="headerlink" title="动态链接器"></a>动态链接器</h5><p>程序与so文件之间真正的链接工作由动态链接器完成，而不是ld完成。</p>
+<h4 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h4><p>Program1.c<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Lib.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	foobar(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Program2.c<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Lib.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	foobar(<span class="number">2</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Lib.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foobar</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Printing from Lib.so %d \n"</span>, i );</span><br><span class="line">sleep(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Lib.h<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> LIB_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIB_H</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foobar</span><span class="params">(<span class="keyword">int</span> i)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></p>
+<p><code>gcc -fPIC -shared -o Lib.so Lib.c</code></p>
+<p><code>gcc -o Program1 Program1.c ./Lib.so</code></p>
+<p><code>gcc -o Program2 Program2.c ./Lib.so</code></p>
+<p>可以从图中看到相应动态链接库在进程中的内存映射</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552206133471.png" alt="1552206133471"></p>
+<p><code>readelf -l Lib.so</code></p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552206531897.png" alt="1552206531897"></p>
+<p>可以看到动态链接模块的装载地址从<code>0x0</code>开始，这是因为<strong>共享对象最终装载地址在编译时是不确定的</strong>，而是装载器根据当前地址空间的空闲情况，动态分配一块足够大的虚拟地址空间给到相应的共享对象。</p>
+<h4 id="地址无关代码"><a href="#地址无关代码" class="headerlink" title="地址无关代码"></a>地址无关代码</h4><p>为了解决静态链接会发生装载的模块目标地址产生冲突的问题(也就是模块A与模块C目标被分配到了相同地址)的问题，提出<strong>装载时重定位</strong>和<strong>地址无关代码</strong></p>
+<ul>
+<li><p>装载时重定位</p>
+<p><code>gcc  -shared -o Lib.so Lib.c</code></p>
+<p>当模块在装载时，装载地址确定，也就表示目标地址确定，系统只要对程序中所有的绝对地址引用进行重定位即可。但缺点在于，由于指令部分也跟着被重定位，指令无法在多个进程内共同使用这样就失去了动态链接节省内存的一大优势。</p>
+</li>
+<li><p>地址无关代码（PIC）</p>
+<p><code>gcc -fPIC -shared -o Lib.so Lib.c</code></p>
+<ul>
+<li>目的：保证程序模块中指令部分在装载时不需要因为装载地址的改变而改变</li>
+<li>做法：分离指令中需要被修改的部分，并将其与数据部分放在一起，这样指令部分就可以保持不变，而数据部分在每个进程里都拥有一个副本</li>
+</ul>
+<p>这样我们就可以知道，模块引用分如下四个类型</p>
+<ul>
+<li>模块内部的函数调用、跳转等</li>
+<li>模块内部的数据访问，比如模块中定义的全局变量，静态变量g</li>
+<li>模块外部的函数调用、跳转等</li>
+<li>模块外部的数据访问，如其他模块中的全局变量</li>
+</ul>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552208099923.png" alt="1552208099923"></p>
+</li>
+</ul>
+<h5 id="类型一-模块内调用或者跳转"><a href="#类型一-模块内调用或者跳转" class="headerlink" title="类型一 模块内调用或者跳转"></a>类型一 模块内调用或者跳转</h5><p>使用相对地址调用或者基于寄存器的相对调用</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552209698461.png" alt="1552209698461"></p>
+<p>其中<code>0xffffffcc</code>是十进制<code>-52</code>的补码，也就是说，此条指令的下一条指令地址<code>799</code>再减去<code>(-52)</code>得到<code>foo()</code>函数的地址。</p>
+<h5 id="类型二-模块内数据访问"><a href="#类型二-模块内数据访问" class="headerlink" title="类型二 模块内数据访问"></a>类型二 模块内数据访问</h5><p>由于三级流水的工作原理，rip寄存器地址指向的是下一条指令所在地址，计算方式实质上是以相对地址寻址的方式进行。</p>
+<h5 id=""><a href="#" class="headerlink" title=""></a><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552212257328.png" alt="1552212257328"></h5><h5 id="类型三-模块间数据访问"><a href="#类型三-模块间数据访问" class="headerlink" title="类型三 模块间数据访问"></a>类型三 模块间数据访问</h5><p>如上图b变量，所在地址值为<code>0x08102000</code>，而貌似并不经过<code>.got</code>表。和书上不一样，但运行后的确能得到<code>so</code>里面的b值，然后<code>dumpobj -R</code>查看需要动态重定位的部分，得到如下数据：</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552216705631.png" alt="1552216705631"></p>
+<p>这与书中一样，但可以肯定的是，这个信息告诉了操作系统，这个数据可以从别的文件中的数据进行初始化。</p>
+<p>于是作一个猜想，如果多个模块中具有相同符号的<code>extern</code>变量会发生什么呢？</p>
+<p>编写第三个模块<code>fpic3.so</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> b = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>如果不进行链接，则结果b的值为0：</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552217637457.png" alt="1552217637457"></p>
+<p>然后链接顺序为先链接<code>fpic2.so</code>再链接<code>fpic3.co</code>，得到结果是拿到<code>fpic3.so</code>里面的b值：</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552217405502.png" alt="1552217405502">改变链接顺序，则拿到的是<code>fpic2.so</code>里面的b值：</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552217466008.png" alt="1552217466008"></p>
+<p>这里可以得出一个结论，<strong>如果标记为<code>extern</code>的变量，他会告诉操作系统，这个值可以在其他模块中寻找对应的值进行初始化，其值为最后一个链接的模块中对应的值，如果没有发现，则为0，这样也解决了多个共享模块有相同全局符号变量的问题。</strong></p>
+<h5 id="类型四-模块中调用跳转"><a href="#类型四-模块中调用跳转" class="headerlink" title="类型四 模块中调用跳转"></a>类型四 模块中调用跳转</h5><p>这种情况要复杂得多，这里出现两个概念：<strong>GOT表</strong>和<strong>plt表</strong></p>
+<ul>
+<li>GOT表： Global Offset Table，全局偏移表</li>
+<li>PLT表： Procedure Linkage Table，程序联动表，由一个个小段代码组成，这个是延迟绑定技术中不可或缺的部分</li>
+</ul>
+<p><code>foo()</code>函数调用<code>ext()</code>函数，首先跳转到plt表中的ext项：<code>ext@plt</code></p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552218595254.png" alt="1552218595254"></p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552218636662.png" alt="1552218636662"></p>
+<p>这里可以看到，<code>ext@plt</code>其实也是跳转到某个地方，也就是<code>0x200fd0</code>处：</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552218716458.png" alt="1552218716458"></p>
+<p>发现这个地址位于<code>.got</code>表中位置所在值被初始化为<code>0x066060000</code>，具体含义目前未知。装载时这里的值会被改写为<code>ext()</code>的地址，操作系统根据这个地址进行跳转，原理如下</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552219020428.png" alt="1552219020428"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/26/codenote/OS/inotify监控/" rel="next" title="inotify监控">
+                <i class="fa fa-chevron-left"></i> inotify监控
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="amlloc">
+          <p class="site-author-name" itemprop="name">amlloc</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态链接产生的原因"><span class="nav-number">1.</span> <span class="nav-text">动态链接产生的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态链接的基本实现"><span class="nav-number">2.</span> <span class="nav-text">动态链接的基本实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本思想"><span class="nav-number">2.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基本概念"><span class="nav-number">2.2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动态链接器"><span class="nav-number">2.3.</span> <span class="nav-text">动态链接器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单例子"><span class="nav-number">3.</span> <span class="nav-text">简单例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#地址无关代码"><span class="nav-number">4.</span> <span class="nav-text">地址无关代码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#类型一-模块内调用或者跳转"><span class="nav-number">4.1.</span> <span class="nav-text">类型一 模块内调用或者跳转</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类型二-模块内数据访问"><span class="nav-number">4.2.</span> <span class="nav-text">类型二 模块内数据访问</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#"><span class="nav-number">4.3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类型三-模块间数据访问"><span class="nav-number">4.4.</span> <span class="nav-text">类型三 模块间数据访问</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类型四-模块中调用跳转"><span class="nav-number">4.5.</span> <span class="nav-text">类型四 模块中调用跳转</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">amlloc</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
