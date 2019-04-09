@@ -115,7 +115,24 @@
 <meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552218636662.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552218716458.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552219020428.png">
-<meta property="og:updated_time" content="2019-03-10T12:23:03.092Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552218636662.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552547621402.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552547969352.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552548118348.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552548182289.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552548911557.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552552579951.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552554182156.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552554507104.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552554826270.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552558581724.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552558604147.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552558628883.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1553754656254.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1553754679210.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1553756361161.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552208099923.png">
+<meta property="og:updated_time" content="2019-04-09T14:11:12.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序员的自我修养笔记之动态链接">
 <meta name="twitter:description" content="《程序员的自我修养笔记之动态链接》 3 动态链接原理">
@@ -445,11 +462,11 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> b = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
 <p>如果不进行链接，则结果b的值为0：</p>
 <p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552217637457.png" alt="1552217637457"></p>
-<p>然后链接顺序为先链接<code>fpic2.so</code>再链接<code>fpic3.co</code>，得到结果是拿到<code>fpic3.so</code>里面的b值：</p>
+<p>然后链接顺序为先链接<code>fpic3.so</code>再链接<code>fpic2.co</code>，得到结果是拿到<code>fpic3.so</code>里面的b值：</p>
 <p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552217405502.png" alt="1552217405502">改变链接顺序，则拿到的是<code>fpic2.so</code>里面的b值：</p>
 <p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552217466008.png" alt="1552217466008"></p>
-<p>这里可以得出一个结论，<strong>如果标记为<code>extern</code>的变量，他会告诉操作系统，这个值可以在其他模块中寻找对应的值进行初始化，其值为最后一个链接的模块中对应的值，如果没有发现，则为0，这样也解决了多个共享模块有相同全局符号变量的问题。</strong></p>
-<h5 id="类型四-模块中调用跳转"><a href="#类型四-模块中调用跳转" class="headerlink" title="类型四 模块中调用跳转"></a>类型四 模块中调用跳转</h5><p>这种情况要复杂得多，这里出现两个概念：<strong>GOT表</strong>和<strong>plt表</strong></p>
+<p>这里可以得出一个结论，<strong>如果标记为<code>extern</code>的变量，他会告诉操作系统，这个值可以在其他模块中寻找对应的值进行初始化，其值为第一个链接的模块中对应的值，如果没有发现，则为0，这样也解决了多个共享模块有相同全局符号变量的问题。</strong></p>
+<h5 id="类型四-模块间调用跳转"><a href="#类型四-模块间调用跳转" class="headerlink" title="类型四 模块间调用跳转"></a>类型四 模块间调用跳转</h5><p>这种情况要复杂得多，这里出现两个概念：<strong>GOT表</strong>和<strong>plt表</strong></p>
 <ul>
 <li>GOT表： Global Offset Table，全局偏移表</li>
 <li>PLT表： Procedure Linkage Table，程序联动表，由一个个小段代码组成，这个是延迟绑定技术中不可或缺的部分</li>
@@ -461,6 +478,109 @@
 <p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552218716458.png" alt="1552218716458"></p>
 <p>发现这个地址位于<code>.got</code>表中位置所在值被初始化为<code>0x066060000</code>，具体含义目前未知。装载时这里的值会被改写为<code>ext()</code>的地址，操作系统根据这个地址进行跳转，原理如下</p>
 <p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552219020428.png" alt="1552219020428"></p>
+<h4 id="延迟绑定-PLT"><a href="#延迟绑定-PLT" class="headerlink" title="延迟绑定(PLT)"></a>延迟绑定(PLT)</h4><p>动态链接性能之所以比静态链接较慢，有如下几点原因</p>
+<ul>
+<li>对全局和静态的数据访问需要进行复杂的GOT定位，然后间接寻址</li>
+<li>对于模块间的调用则需要先定位后进行间接跳转</li>
+<li>动态链接的链接工作需要在运行时完成，寻找并装载所需要的共享对象，然后进行符号查找地址重定位等</li>
+</ul>
+<p>#####　延迟绑定的实现</p>
+<p>为了尽可能解决动态链接的性能问题，ELF采用<strong>延迟绑定（Lazy Binding）</strong>的做法，基本思想就是当<strong>函数第一次被用到时才进行绑定</strong>，如果没有用到，则不进行绑定。</p>
+<p>ELF使用<strong>PLT</strong>的方法来实现。举例子，<code>liba.so</code>需要调用<code>libc.so</code>的<code>bar()</code>函数，那么第一次调用时，需要动态链接器中的某个函数完成地址绑定工作，设此函数为<code>lookup()</code>，那么这个函数的参数应该至少是这样的<code>lookup(module, function)</code>，来识别哪个模块中的哪个函数进行绑定。在<code>Glibc</code>中，<code>lookup()</code>函数真正的名字叫做<code>_dl_runtime_resolve()</code>。</p>
+<p>当调用某个外部模块的函数时，通常的做法应该是通过GOT中相应的项进行间接跳转。PLT为了实现延迟绑定，增加了一层间接跳转。</p>
+<p>如上一节<strong>模块间跳转</strong>所述</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552218636662.png" alt="1552218636662"></p>
+<p>在我的机器上面，实际上是只有一个参数的，然后一句句来看。</p>
+<p><strong>TODO</strong></p>
+<h4 id="动态链接相关结构"><a href="#动态链接相关结构" class="headerlink" title="动态链接相关结构"></a>动态链接相关结构</h4><h5 id="interp段"><a href="#interp段" class="headerlink" title=".interp段"></a><code>.interp</code>段</h5><p>存储声明此ELF文件链接时所需要的动态链接器所在路径，这个位置由ELF文件自己决定</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552547621402.png" alt="1552547621402"></p>
+<h5 id="dynamic段"><a href="#dynamic段" class="headerlink" title=".dynamic段"></a><code>.dynamic</code>段</h5><p>保存了ELF文件动态链接器所需要的基本信息，比如依赖哪些共享对象，动态链接表符号表未知，重定位表位置等。</p>
+<p>其结构定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    Elf32_Sword d_tag;</span><br><span class="line">    <span class="keyword">union</span>&#123;</span><br><span class="line">        Elf32_Word d_val;</span><br><span class="line">        Elf32_Addr d_ptr;</span><br><span class="line">    &#125; d_un;</span><br><span class="line">&#125; Elf32_Dyn;</span><br></pre></td></tr></table></figure>
+<p>由一个类型加上一个附加的数值或者指针，对于不同类型，后面的数值或者指针有着不同的含义，如下是常见类型值：</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552547969352.png" alt="1552547969352"></p>
+<p><code>readelf -d Lib.so</code></p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552548118348.png" alt="1552548118348"></p>
+<p>查看依赖库</p>
+<p><code>ldd Program1</code></p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552548182289.png" alt="1552548182289"></p>
+<h5 id="动态符号表-dynsym"><a href="#动态符号表-dynsym" class="headerlink" title="动态符号表(.dynsym)"></a>动态符号表(.dynsym)</h5><p><code>.dynsym</code>表只定义了动态链接相关的符号，对于模块内部的符号，比如模块内部的私有变量则不进行保存。而动态链接的模块经常同时拥有“.dynsym”和”.symtab”两个表，且”.symtab”保存了所有符号，包括“.dynsym”中的符号。为加快符号查找过程，往往还有辅助的符号<strong>哈希表(.hash)</strong></p>
+<p><code>.dynstr</code>是动态符号字符串表，用于辅助动态链接。</p>
+<p>查看动态符号表</p>
+<p><code>readelf -s Lib.so</code></p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552548911557.png" alt="1552548911557"></p>
+<p>#####　动态链接重定位表</p>
+<p>PIC模式编译的可执行文件或者共享对象，虽然代码段不需要重定位，但是数据段还包含了绝对地址的引用，这部分是从代码段中分离出来，变成GOT，而GOT是数据段的一部分，除了GOT以外，数据段可能还包含对绝对地址的引用。</p>
+<h5 id="动态链接重定位相关结构"><a href="#动态链接重定位相关结构" class="headerlink" title="动态链接重定位相关结构"></a>动态链接重定位相关结构</h5><ul>
+<li>.rel.dyn 是对数据引用的修正，修正位置为“.got”和数据段</li>
+<li>.rel.plt是对函数引用的修正，修正位置为“.got.plt”</li>
+</ul>
+<p><code>readelf -r Lib.so</code></p>
+<p>首先是在PIC模式下编译出来的so文件</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552552579951.png" alt="1552552579951"></p>
+<p><code>printf</code>和<code>sleep</code>符号位于.rela.plt中。</p>
+<p>而偏移是位于<code>.got.plt</code>表中的:</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552554182156.png" alt="1552554182156"></p>
+<p>这个时候我们就可以发现前面还有三项未知，书中称在32位下，是这样的</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552554507104.png" alt="1552554507104"></p>
+<p>实际的PLT基本结构代码如下：</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552554826270.png" alt="1552554826270"></p>
+<p>PLT在ELF文件中以独立的段存放，通常叫做“.plt”，因为本身是地址无关的代码，所以可以跟代码段等一起合并成一个可读可执行的“Segment”被装载入内存。</p>
+<p>但我的64位机器上是明显对不上的，这里留个坑，先作个mark。</p>
+<p>当动态链接器需要进行重定位时，首先查找<code>printf</code>的地址，然后将地址填入对应的<code>.got.plt</code>的位置，从而实现地址的重定位。</p>
+<p>类似的<code>R_X86_64_GLOB_DAT</code>是对<code>.got</code>的重定位，你跟过去发现地址就是落在了<code>.got</code>表中。</p>
+<p>而最后一个类型是<code>R_X86_64_RELATIVE</code>，这个类型实际是<strong>基址重置(Rebasing)</strong>，共享对象的数据段无法做到地址无关，但他可能会包含绝对地址的引用。如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> a;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span>* p = &amp;a;</span><br></pre></td></tr></table></figure>
+<p>编译时共享对象地址从0开始，假设该静态变量a相对于起始地址的偏移为B，则p的值为B。装载之后，如果共享对象基址为A，则p的值应该是<code>A + B</code></p>
+<p>总结起来就是两种重定位方式：</p>
+<ul>
+<li>装载时，函数符号具体地址根据<code>plt</code>的指引，直接填充到<code>.got</code>的对应位置。</li>
+<li>装载时，绝对地址的引用具体地址根据<code>plt</code>的指引，以A+B的形式填充到<code>.data</code>的对应位置。</li>
+</ul>
+<p>然后是非PIC方式编译的so。</p>
+<p>emmm本机器上面好像不允许这么干了</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552558581724.png" alt="1552558581724"></p>
+<p>书上的内容就将就着看了吧</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552558604147.png" alt="1552558604147"></p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552558628883.png" alt="1552558628883"></p>
+<h5 id="动态链接时进程堆栈初始化信息"><a href="#动态链接时进程堆栈初始化信息" class="headerlink" title="动态链接时进程堆栈初始化信息"></a>动态链接时进程堆栈初始化信息</h5><p>进程初始化的时候，堆栈里面保存了关于进程执行环境和命令行参数等信息。不仅如此，堆栈里面还保存了动态链接器所需要的一些<strong>辅助信息数组</strong>。辅助信息的格式也是一种结构数组，它的结构被定义在”elf.h”：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    <span class="keyword">uint32_t</span> a_type;</span><br><span class="line">    <span class="keyword">union</span>&#123;</span><br><span class="line">        <span class="keyword">uint32_t</span> a_val;<span class="comment">//为什么需要union包起来的原因可以忽略，历史遗留</span></span><br><span class="line">    &#125;a_un;</span><br><span class="line">&#125;Elf32_auxv_t;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1553754656254.png" alt="1553754656254"></p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1553754679210.png" alt="1553754679210"></p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1553756361161.png" alt="1553756361161"></p>
+<h4 id="动态链接的步骤和实现"><a href="#动态链接的步骤和实现" class="headerlink" title="动态链接的步骤和实现"></a>动态链接的步骤和实现</h4><h5 id="动态链接器自举"><a href="#动态链接器自举" class="headerlink" title="动态链接器自举"></a>动态链接器自举</h5><p>由于动态链接器本身也是一个共享对象，因此它的重定位工作由谁来完成，是否可以依赖其他共享对象都是一个需要解决的问题，这类似于“鸡生蛋，蛋生鸡”的问题。</p>
+<p>为了解决这个问题，动态链接器本身需要满足以下条件：</p>
+<ul>
+<li>动态链接器本身不可以依赖其他任何共享对象</li>
+<li>动态链接器需要的全局和静态变量的重定位工作由它自己本身完成</li>
+</ul>
+<p>对于第一个问题，我们可以人为地控制，但第二个问题则需要我们用一段精巧的代码，完成这项艰巨的工作，又同时不能用到全局变量、静态变量以及调用函数（因为PIC模式中模块内部的函数调用跟模块外部的函数调用用法一致）。这中具有一定限制条件的启动代码往往称为<strong>自举（Bootstrap）</strong></p>
+<ul>
+<li>动态链接器的入口就是自举代码的入口，操作系统将进程控制权交给动态链接器时，动态链接器的自举代码就开始执行</li>
+<li>自举代码首先会找到自己的GOT，第一个保存的就是<code>.dynamic</code>段的偏移地址，进而找到动态链接器本身的<code>.dynamic</code>。</li>
+<li>通过<code>.dynamic</code>中的信息，自举代码就可以获得重定位表和符号表等，从而得到动态链接器本身的重定位入口，先将它们全部进行重定位。此时动态链接器代码才可以开始使用自己的全局变量和静态变量以及调用函数</li>
+<li>自此，动态链接器才开始可以使用全局变量和静态变量，调用函数</li>
+</ul>
+<h5 id="装载共享对象"><a href="#装载共享对象" class="headerlink" title="装载共享对象"></a>装载共享对象</h5><p>完成自举后</p>
+<ul>
+<li>动态链接器将可执行文件和链接器本身的符号表都合并到一个符号表中，我们可以称它为<strong>全局符号表</strong></li>
+<li>链接器开始依据<code>.dynamic</code>段中<code>DT_NEEDED</code>类型数据寻找可执行文件所依赖的共享对象</li>
+<li>将共享对象的名字放入到装载集合当中</li>
+<li>链接器开始从集合中取出一个所需要的共享对象的名字，找到文件并读取相应的ELF文件头和<code>.dynamic</code>段，然后将它相应的代码段和数据段映射到进程空间中</li>
+<li>如果此ELF文件还依赖于其他共享对象。那么将以来的共享对象的名字放到装载集合当中，直到所有以来的共享对象都被装载进来</li>
+</ul>
+<p>如果把依赖关系看成一个图的化，链接器可能使用深度优先或者广度优先搜索算法，比较常见的是广度优先。</p>
+<h6 id="符号的优先级"><a href="#符号的优先级" class="headerlink" title="符号的优先级"></a>符号的优先级</h6><p>这个问题在<strong>地址无关代码</strong>一节当中关于模块见数据访问这个部分有提到，而这里是上升到了符号优先级的概念</p>
+<p>具体就是<strong>当一个符号需要被加入全局符号表时，如果相同的符号名已经存在，则后加入的符号会被忽略</strong></p>
+<h6 id="全局符号介入与地址无关代码"><a href="#全局符号介入与地址无关代码" class="headerlink" title="全局符号介入与地址无关代码"></a>全局符号介入与地址无关代码</h6><p>还是前面关于<strong>地址无关代码</strong>一节中关于第一类 模块内部调用或跳转的处理时，如果结合全局符号介入，这个问题就会变得比较复杂.以前面的<code>pic.c</code>为例：</p>
+<p><img src="/2019/03/04/codenote/OS/程序员的自我修养笔记之动态链接/1552208099923.png" alt="1552208099923"></p>
+<p>因为<code>bar()</code>函数会被全局符号介入，因此当<code>foo()</code>函数调用<code>bar()</code>时，如果还是以相对地址调用的话，且由于全局符号的介入被其他模块中的同名函数覆盖，则相对地址部分就需要进行重定位了，这又与共享对象地址无关性相矛盾。因此<code>bar()</code>函数的调用只能当作模块外部符号处理，当<code>bar()</code>函数被覆盖，动态链接器只需要重定位<code>.got.plt</code>，不影响共享对象的代码段。</p>
+<p>因此，为提高模块调用效率，可以把<code>bar()</code>变成编译单元的私有函数，也就是使用<code>static</code>关键字定义<code>bar()</code>函数，此时编译器就要确定<code>bar()</code>函数不被其他模块覆盖，就可以使用第一类的方法了。即模块内部调用指令。</p>
+<h5 id="重定位和初始化"><a href="#重定位和初始化" class="headerlink" title="重定位和初始化"></a>重定位和初始化</h5><p>上述步骤完成之后，链接器开始重新遍历可执行文件和每一个共享对象的重定位表，并根据GOT/PLT进行重定位修正。</p>
+<p>重定位完成后，如果某个共享对象有<code>.init</code>段，则动态链接器会执行<code>.init</code>段的代码，用以实现共享对象特有的初始化过程。<code>.finit</code>段依次类推。</p>
+<p>但是，如果可执行文件也有<code>.init</code>段，动态链接器不会执行它，因为这<code>.init</code>和<code>.finit</code>段由程序初始化部分代码负责执行。</p>
+<p>完成这重定位和初始化之后，所有的准备工作就宣告完成了，此时动态链接器将进程的控制权交给程序的入口并开始执行。</p>
+<h4 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h4><p>这部分主要是介绍Linux下动态链接的实现原理，这个与Android平台相比还是有一定区别的，特别是Linker部分，我也做过，网上也有很多关于Android linker源码的分析。好了，动态链接器部分也学完了，接下来就是Android相关实战了。</p>
 
       
     </div>
@@ -502,6 +622,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/01/others/clang_llvm_vscode配置记录/" rel="prev" title="clang + llvm + vscode 配置记录">
+                clang + llvm + vscode 配置记录 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -576,7 +700,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -633,7 +757,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态链接产生的原因"><span class="nav-number">1.</span> <span class="nav-text">动态链接产生的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态链接的基本实现"><span class="nav-number">2.</span> <span class="nav-text">动态链接的基本实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本思想"><span class="nav-number">2.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基本概念"><span class="nav-number">2.2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动态链接器"><span class="nav-number">2.3.</span> <span class="nav-text">动态链接器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单例子"><span class="nav-number">3.</span> <span class="nav-text">简单例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#地址无关代码"><span class="nav-number">4.</span> <span class="nav-text">地址无关代码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#类型一-模块内调用或者跳转"><span class="nav-number">4.1.</span> <span class="nav-text">类型一 模块内调用或者跳转</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类型二-模块内数据访问"><span class="nav-number">4.2.</span> <span class="nav-text">类型二 模块内数据访问</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类型三-模块间数据访问"><span class="nav-number">4.3.</span> <span class="nav-text">类型三 模块间数据访问</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类型四-模块中调用跳转"><span class="nav-number">4.4.</span> <span class="nav-text">类型四 模块中调用跳转</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态链接产生的原因"><span class="nav-number">1.</span> <span class="nav-text">动态链接产生的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态链接的基本实现"><span class="nav-number">2.</span> <span class="nav-text">动态链接的基本实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本思想"><span class="nav-number">2.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基本概念"><span class="nav-number">2.2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动态链接器"><span class="nav-number">2.3.</span> <span class="nav-text">动态链接器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单例子"><span class="nav-number">3.</span> <span class="nav-text">简单例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#地址无关代码"><span class="nav-number">4.</span> <span class="nav-text">地址无关代码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#类型一-模块内调用或者跳转"><span class="nav-number">4.1.</span> <span class="nav-text">类型一 模块内调用或者跳转</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类型二-模块内数据访问"><span class="nav-number">4.2.</span> <span class="nav-text">类型二 模块内数据访问</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类型三-模块间数据访问"><span class="nav-number">4.3.</span> <span class="nav-text">类型三 模块间数据访问</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类型四-模块间调用跳转"><span class="nav-number">4.4.</span> <span class="nav-text">类型四 模块间调用跳转</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟绑定-PLT"><span class="nav-number">5.</span> <span class="nav-text">延迟绑定(PLT)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态链接相关结构"><span class="nav-number">6.</span> <span class="nav-text">动态链接相关结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#interp段"><span class="nav-number">6.1.</span> <span class="nav-text">.interp段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dynamic段"><span class="nav-number">6.2.</span> <span class="nav-text">.dynamic段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动态符号表-dynsym"><span class="nav-number">6.3.</span> <span class="nav-text">动态符号表(.dynsym)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动态链接重定位相关结构"><span class="nav-number">6.4.</span> <span class="nav-text">动态链接重定位相关结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动态链接时进程堆栈初始化信息"><span class="nav-number">6.5.</span> <span class="nav-text">动态链接时进程堆栈初始化信息</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态链接的步骤和实现"><span class="nav-number">7.</span> <span class="nav-text">动态链接的步骤和实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#动态链接器自举"><span class="nav-number">7.1.</span> <span class="nav-text">动态链接器自举</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#装载共享对象"><span class="nav-number">7.2.</span> <span class="nav-text">装载共享对象</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#符号的优先级"><span class="nav-number">7.2.1.</span> <span class="nav-text">符号的优先级</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#全局符号介入与地址无关代码"><span class="nav-number">7.2.2.</span> <span class="nav-text">全局符号介入与地址无关代码</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#重定位和初始化"><span class="nav-number">7.3.</span> <span class="nav-text">重定位和初始化</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结语"><span class="nav-number">8.</span> <span class="nav-text">结语</span></a></li></ol></div>
             
 
           </div>
