@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Android, smali, reverse,">
 
 
 
@@ -94,13 +94,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="amlloc&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/tags/填坑记录/page/2/index.html">
+<meta name="description" content="bakesmali源码编译及其解析笔记">
+<meta name="keywords" content="Android, smali, reverse">
+<meta property="og:type" content="article">
+<meta property="og:title" content="baksmali源码解析">
+<meta property="og:url" content="http://yoursite.com/2019/04/21/codenote/reverse/baksmali源码解析/index.html">
 <meta property="og:site_name" content="amlloc&#39;s blog">
+<meta property="og:description" content="bakesmali源码编译及其解析笔记">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/codenote/reverse/baksmali源码解析/1555840082723.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/codenote/reverse/baksmali源码解析/1555840720906.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/codenote/reverse/baksmali源码解析/1555841916679.png">
+<meta property="og:updated_time" content="2019-04-21T10:23:49.907Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="amlloc&#39;s blog">
+<meta name="twitter:title" content="baksmali源码解析">
+<meta name="twitter:description" content="bakesmali源码编译及其解析笔记">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/21/codenote/reverse/baksmali源码解析/1555840082723.png">
 
 
 
@@ -129,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/填坑记录/page/2/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/21/codenote/reverse/baksmali源码解析/">
 
 
 
 
 
-  <title>Tag: 填坑记录 | amlloc's blog</title>
+  <title>baksmali源码解析 | amlloc's blog</title>
   
 
 
@@ -160,7 +169,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -264,108 +273,207 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>填坑记录<small>Tag</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/21/codenote/reverse/baksmali源码解析/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amlloc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amlloc's blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/09/16/codenote/reverse/IDA使用调试集锦/" itemprop="url">
-              
-                <span itemprop="name">IDA使用调试集锦</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">baksmali源码解析</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-16T22:36:24+08:00" content="2018-09-16">
-          09-16
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-21T17:37:55+08:00">
+                2019-04-21
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/codenote/" itemprop="url" rel="index">
+                    <span itemprop="name">codenote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/16/codenote/reverse/smali注入代码库/" itemprop="url">
-              
-                <span itemprop="name">smali注入代码库</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-16T22:36:24+08:00" content="2018-09-16">
-          09-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/16/codenote/git/git日常填坑记录/" itemprop="url">
-              
-                <span itemprop="name">git日常填坑记录</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-16T22:35:07+08:00" content="2018-09-16">
-          09-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <p>bakesmali源码编译及其解析笔记</p>
+<a id="more"></a>
+<h2 id="源码编译"><a href="#源码编译" class="headerlink" title="源码编译"></a>源码编译</h2><ul>
+<li><p>源码clone:</p>
+<p><code>git clone git@github.com:JesusFreke/smali.git</code></p>
+</li>
+<li><p>导入idea中，并编译，发现出现如下错误</p>
+<p><img src="/2019/04/21/codenote/reverse/baksmali源码解析/1555840082723.png" alt="1555840082723"></p>
+</li>
+<li><p>此时应该下载如下工具进行转化：</p>
+<ol>
+<li><p><a href="https://www.antlr3.org/download/" target="_blank" rel="noopener">antlr-3.5.2-complete.jar</a>，注意，必须使用antlr3版本的</p>
+<p>一个开源的词法分析器的jar包，主要用于生成smali和baksmali的语法解释器</p>
+</li>
+<li><p><a href="https://jflex.de/download.html" target="_blank" rel="noopener">jflex-1.7.0.tar.gz</a>,其中我们需要用到的jflex-full-1.7.0.jar文件在解压缩包下面的<code>lib</code>目录下</p>
+</li>
+</ol>
+<p>接下来就是利用这两个jar包分别对三个文件进行转换:</p>
+<ul>
+<li><p><code>java -jar antlr-3.5.2-complete.jar &#39;/home/amlloc/Projects/github/smali/smali/src/main/antlr/smaliTreeWalker.g&#39;</code></p>
+</li>
+<li><p><code>java -jar antlr-3.5.2-complete.jar &#39;/home/amlloc/Projects/github/smali/smali/src/main/antlr/smaliParser.g&#39;</code></p>
+</li>
+<li><code>java -jar jflex-full-1.7.0.jar &#39;/home/amlloc/Projects/github/smali/smali/src/main/jflex/smaliLexer.jflex&#39;</code></li>
+</ul>
+<p>之后得到三个java源文件(标红的三个文件):</p>
+<p><img src="/2019/04/21/codenote/reverse/baksmali源码解析/1555840720906.png" alt="1555840720906"></p>
+</li>
+<li><p>将这三个文件移动到<code>org/jf/smali</code>文件夹下，然后进行编译，依旧报错</p>
+<p><img src="/2019/04/21/codenote/reverse/baksmali源码解析/1555841916679.png" alt="1555841916679"></p>
+<p>发现提示涉及的文件夹下有关键.g文件，<code>smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g</code></p>
+<p>如法炮制，</p>
+<p><code>java -jar antlr-3.5.2-complete.jar &#39;/home/amlloc/Projects/github/smali/smali/src/test/antlr/org/jf/smali/expectedTokensTestGrammar.g&#39;</code></p>
+</li>
+<li><p>编译成功</p>
+</li>
+</ul>
+<p>参考文献:</p>
+<p><a href="https://blog.51cto.com/sunzeduo/1540085" target="_blank" rel="noopener">https://blog.51cto.com/sunzeduo/1540085</a></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-smali-reverse/" rel="tag"># Android, smali, reverse</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/01/others/clang_llvm_vscode配置记录/" rel="next" title="clang + llvm + vscode 配置记录">
+                <i class="fa fa-chevron-left"></i> clang + llvm + vscode 配置记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/tags/填坑记录/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/tags/填坑记录/">1</a><span class="page-number current">2</span>
-  </nav>
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -373,6 +481,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -393,8 +505,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="amlloc">
           <p class="site-author-name" itemprop="name">amlloc</p>
@@ -454,6 +575,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#源码编译"><span class="nav-number">1.</span> <span class="nav-text">源码编译</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -567,10 +704,10 @@
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 
