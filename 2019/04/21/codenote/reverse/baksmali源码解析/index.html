@@ -105,7 +105,8 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/21/codenote/reverse/baksmali源码解析/1555840082723.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/21/codenote/reverse/baksmali源码解析/1555840720906.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/21/codenote/reverse/baksmali源码解析/1555841916679.png">
-<meta property="og:updated_time" content="2019-04-21T10:23:49.907Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/codenote/reverse/baksmali源码解析/1555949931897.png">
+<meta property="og:updated_time" content="2019-04-22T16:39:30.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="baksmali源码解析">
 <meta name="twitter:description" content="bakesmali源码编译及其解析笔记">
@@ -413,6 +414,37 @@
 <li><p>编译成功</p>
 </li>
 </ul>
+<h2 id="baksmali代码框架"><a href="#baksmali代码框架" class="headerlink" title="baksmali代码框架"></a>baksmali代码框架</h2><p>apktool工具实际上就是利用baksmali和smali文件进行dex文件的转换的</p>
+<p>其中baksmali的作用是将dex文件转换成smali文件，而smali项目是将smali文件重新编译回dex文件</p>
+<p>命令如下：</p>
+<p><code>java -jar baksmali.jar classes.dex -o smalidir</code></p>
+<p><code>java -jar smali.jar</code> smalidir -o classes.dex</p>
+<p>下图就可看到smali和baksmali项目的文件夹</p>
+<p><img src="/2019/04/21/codenote/reverse/baksmali源码解析/1555949931897.png" alt="1555949931897"></p>
+<ul>
+<li><p>baksmali</p>
+<p>实现dex2smali，重点分析</p>
+</li>
+<li><p>deodexerant</p>
+<p>一个C文件，主要是查看<code>libdvm</code>中的<code>dvmGetInlineOpsTable</code>这个导出表，这里不作解析，可以使用ndk工具进行编译具体源码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Copyright 2011, Google Inc.</span></span><br><span class="line"><span class="comment"> * All rights reserved.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">InlineOperation</span> &#123;</span></span><br><span class="line">    <span class="keyword">void</span> *          func;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>*     classDescriptor;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>*     methodName;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>*     methodSignature;</span><br><span class="line">&#125; InlineOperation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">const</span> InlineOperation* (*dvmGetInlineOpsTablePtr)();</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span> <span class="params">(*dvmGetInlineOpsTableLengthPtr)</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">void</span> *libdvm = dlopen(<span class="string">"libdvm.so"</span>, RTLD_LAZY);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (libdvm == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Failed to load libdvm: %s\n"</span>, dlerror());</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	dvmGetInlineOpsTablePtr dvmGetInlineOpsTable = dlsym(libdvm, <span class="string">"dvmGetInlineOpsTable"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (dvmGetInlineOpsTable == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="comment">// clear the error, and retry with the c++ mangled name</span></span><br><span class="line">		dlerror();</span><br><span class="line">		dvmGetInlineOpsTable = dlsym(libdvm, <span class="string">"_Z20dvmGetInlineOpsTablev"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (dvmGetInlineOpsTable == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Failed to load dvmGetInlineOpsTable: %s\n"</span>, dlerror());</span><br><span class="line">		dlclose(libdvm);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	dvmGetInlineOpsTableLengthPtr dvmGetInlineOpsTableLength = dlsym(libdvm, <span class="string">"dvmGetInlineOpsTableLength"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (dvmGetInlineOpsTableLength == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="comment">// clear the error, and retry with the c++ mangled name</span></span><br><span class="line">		dlerror();</span><br><span class="line">		dvmGetInlineOpsTableLength = dlsym(libdvm, <span class="string">"_Z26dvmGetInlineOpsTableLengthv"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (dvmGetInlineOpsTableLength == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Failed to load dvmGetInlineOpsTableLength: %s\n"</span>, dlerror());</span><br><span class="line">		dlclose(libdvm);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">const</span> InlineOperation *inlineTable = dvmGetInlineOpsTable();</span><br><span class="line">	<span class="keyword">int</span> length = dvmGetInlineOpsTableLength();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;length; i++) &#123;</span><br><span class="line">		InlineOperation *item = &amp;inlineTable[i];</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%s-&gt;%s%s\n"</span>, item-&gt;classDescriptor, item-&gt;methodName, item-&gt;methodSignature);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	dlclose(libdvm);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>dexlib2</p>
+<p>dex和smali真正起到关键作用的项目，不管是smali还是baksmali都需要用到这个库中的方法和接口，才能解析和生成相应的smali文件</p>
+</li>
+<li><p>example</p>
+<p>具备代表性质的smali文件</p>
+</li>
+<li><p>smali</p>
+<p>将smali文件转成dex文件的项目</p>
+</li>
+<li><p>smali-integration-tests</p>
+<p>整合测试的一个文件夹，里面也是一些smali文件，跟源码无关</p>
+</li>
+<li><p>util</p>
+<p>辅助工具类</p>
+</li>
+</ul>
 <p>参考文献:</p>
 <p><a href="https://blog.51cto.com/sunzeduo/1540085" target="_blank" rel="noopener">https://blog.51cto.com/sunzeduo/1540085</a></p>
 
@@ -454,6 +486,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/24/codenote/reverse/gdb使用记录/" rel="prev" title="gdb工具使用记录">
+                gdb工具使用记录 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -528,7 +564,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -585,7 +621,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#源码编译"><span class="nav-number">1.</span> <span class="nav-text">源码编译</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#源码编译"><span class="nav-number">1.</span> <span class="nav-text">源码编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#baksmali代码框架"><span class="nav-number">2.</span> <span class="nav-text">baksmali代码框架</span></a></li></ol></div>
             
 
           </div>
