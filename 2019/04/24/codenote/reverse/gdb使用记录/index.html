@@ -110,7 +110,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/24/codenote/reverse/gdb使用记录/1556099789950.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/24/codenote/reverse/gdb使用记录/1556099482816.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/24/codenote/reverse/gdb使用记录/1556099699807.png">
-<meta property="og:updated_time" content="2019-04-25T16:12:16.162Z">
+<meta property="og:updated_time" content="2019-07-15T13:45:12.784Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gdb工具使用记录">
 <meta name="twitter:description" content="gdb dump及调试记录，这个工具很少用，但有时又得用一下，所以记录在此，以防遗忘">
@@ -399,6 +399,7 @@
 <h3 id="开始gdb-dump"><a href="#开始gdb-dump" class="headerlink" title="开始gdb dump"></a>开始gdb dump</h3><p>首先获取要调试的app进程号：13135</p>
 <p><img src="/2019/04/24/codenote/reverse/gdb使用记录/1556093948556.png" alt="1556093948556"></p>
 <p>启动gdbserver附加到目标进程,其中remote表示远程连接端口</p>
+<p><code>./gdbserver remote:12345 --attach {pid}</code></p>
 <p><img src="/2019/04/24/codenote/reverse/gdb使用记录/1556095166563.png" alt="1556095166563"></p>
 <p>adb端口映射：</p>
 <p><code>adb forward tcp:12345 tcp:12345</code></p>
@@ -458,6 +459,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/24/codenote/reverse/Dex文件结构解析/" rel="prev" title="Dex文件结构解析">
+                Dex文件结构解析 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -532,7 +537,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -554,7 +559,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
