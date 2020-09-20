@@ -102,10 +102,12 @@
 <meta property="og:site_name" content="amlloc&#39;s blog">
 <meta property="og:description" content="DexFile文件结构">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-15T13:45:12.784Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/24/codenote/reverse/Dex文件结构解析/image-20200529011331721.png">
+<meta property="og:updated_time" content="2020-09-20T02:30:55.896Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dex文件结构解析">
 <meta name="twitter:description" content="DexFile文件结构">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/24/codenote/reverse/Dex文件结构解析/image-20200529011331721.png">
 
 
 
@@ -374,7 +376,22 @@
       
         <p>DexFile文件结构</p>
 <a id="more"></a>
-<h2 id="DexFile-h文件"><a href="#DexFile-h文件" class="headerlink" title="DexFile.h文件"></a>DexFile.h文件</h2>
+<h2 id="DexFile-h文件"><a href="#DexFile-h文件" class="headerlink" title="DexFile.h文件"></a>DexFile.h文件</h2><h3 id="LEB128类型数据"><a href="#LEB128类型数据" class="headerlink" title="LEB128类型数据"></a>LEB128类型数据</h3><p><code>DexClass.h</code>文件中引用了<code>Leb128.h</code>，所以u4字节都以LEB128类型的规则去计算大小.。</p>
+<blockquote>
+<p>逐字节读取数据，如果大于0x7f（即第一个bit为1)，则表示还需要读下一个字节，如果小于0x7f(即第一个bit为0)，则表示这个字节为最后一个字节，不需要继续往下读。</p>
+<ul>
+<li>因为高位被用于表示是否读下一位字节，所以如果要表示大数，原本4位byte就可以表示的数字使用uleb128格式却要使用5个byte，但在dexfile程序中使用的整形却一般都不会大于100。</li>
+<li>一个uleb128编码的整形值，是以字节中最高位是否为0来表示字节流有没有结束的。</li>
+</ul>
+</blockquote>
+<p>源码中计算大小如下：</p>
+<p><img src="/2019/04/24/codenote/reverse/Dex文件结构解析/image-20200529011331721.png" alt="image-20200529011331721"></p>
+<p>搬运的python代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readUnsignedLeb128</span><span class="params">(self, hex_value)</span>:</span></span><br><span class="line">    byte_count = len(hex_value) / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    index = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(byte_count):</span><br><span class="line">        v1 = int(hex_value[i * <span class="number">2</span> : i * <span class="number">2</span> + <span class="number">2</span>], <span class="number">16</span>)</span><br><span class="line">        <span class="keyword">if</span> v1 &gt; <span class="number">0</span>:</span><br><span class="line">            index = index</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    </span><br><span class="line">    result = <span class="number">0</span></span><br><span class="line">    hex_value = hex_value[index * <span class="number">2</span>:]</span><br><span class="line">    byte_count = len(hex_value) / <span class="number">2</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(byte_count):</span><br><span class="line">        cur = int(hex_value[i * <span class="number">2</span>:i * <span class="number">2</span> + <span class="number">2</span>], <span class="number">16</span>)</span><br><span class="line">        <span class="keyword">if</span> cur &gt; <span class="number">0x7f</span>:</span><br><span class="line">            result = result | ((cur &amp; <span class="number">0x7f</span>) &lt;&lt;(<span class="number">7</span> * i))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            result = result | ((cur &amp; <span class="number">0x7f</span>) &lt;&lt; (<span class="number">7</span> * i))</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<p>参考：</p>
+<p><a href="https://shuwoom.com/?p=179" target="_blank" rel="noopener">shuwoom的博客</a></p>
+<p><a href="https://blog.csdn.net/Roland_Sun/article/details/46708061" target="_blank" rel="noopener">https://blog.csdn.net/Roland_Sun/article/details/46708061</a></p>
+
       
     </div>
     
@@ -493,7 +510,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -550,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DexFile-h文件"><span class="nav-number">1.</span> <span class="nav-text">DexFile.h文件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DexFile-h文件"><span class="nav-number">1.</span> <span class="nav-text">DexFile.h文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LEB128类型数据"><span class="nav-number">1.1.</span> <span class="nav-text">LEB128类型数据</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -573,7 +590,7 @@
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

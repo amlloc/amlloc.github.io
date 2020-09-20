@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/09/16/codenote/Android/Android刷机脚本/1546841186489.png">
 <meta property="og:image" content="http://yoursite.com/2018/09/16/codenote/Android/Android刷机脚本/1546841519946.png">
-<meta property="og:updated_time" content="2019-01-14T14:58:50.822Z">
+<meta property="og:updated_time" content="2020-09-20T02:30:55.896Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android刷机脚本">
 <meta name="twitter:description" content="当官方脚本失效时使用这里的方法脚本">
@@ -387,6 +387,12 @@
 <li>刷机脚本</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Copyright 2012 The Android Open Source Project</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Licensed under the Apache License, Version 2.0 (the <span class="string">"License"</span>);</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> you may not use this file except <span class="keyword">in</span> compliance with the License.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> You may obtain a copy of the License at</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">      http://www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Unless required by applicable law or agreed to <span class="keyword">in</span> writing, software</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> distributed under the License is distributed on an <span class="string">"AS IS"</span> BASIS,</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> See the License <span class="keyword">for</span> the specific language governing permissions and</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> limitations under the License.</span></span><br><span class="line"></span><br><span class="line">fastboot flash bootloader bootloader-hammerhead-hhz11k.img</span><br><span class="line">fastboot reboot-bootloader</span><br><span class="line">sleep 5</span><br><span class="line">fastboot flash radio radio-hammerhead-m8974a-2.0.50.1.16.img</span><br><span class="line">fastboot reboot-bootloader</span><br><span class="line">sleep 5</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">官方刷机</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> fastboot -w update image-hammerhead-ktu84p.zip</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="keyword">done</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">*********** 如果官方刷机方式失败，可以尝试下面的方法 *******<span class="comment">#</span></span></span><br><span class="line">fastboot flash recovery recovery.img</span><br><span class="line">fastboot reboot-bootloader</span><br><span class="line">sleep 5</span><br><span class="line"></span><br><span class="line">fastboot flash boot boot.img</span><br><span class="line">fastboot reboot-bootloader</span><br><span class="line">sleep 5</span><br><span class="line"></span><br><span class="line">fastboot flash system system.img</span><br><span class="line">fastboot reboot-bootloader</span><br><span class="line">sleep 5</span><br><span class="line"></span><br><span class="line">fastboot flash cache cache.img</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="keyword">if</span> you update the user date</span></span><br><span class="line">fastboot flash userdata userdata.img</span><br><span class="line"></span><br><span class="line">echo 刷机成功</span><br><span class="line"></span><br><span class="line">fastboot reboot</span><br><span class="line">exit</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">*********** <span class="keyword">done</span> *******</span></span><br></pre></td></tr></table></figure>
+<h2 id="Android-8-0-user版本降级到Android-7-1-1-userdebuger版本"><a href="#Android-8-0-user版本降级到Android-7-1-1-userdebuger版本" class="headerlink" title="Android 8.0 user版本降级到Android 7.1.1 userdebuger版本"></a>Android 8.0 user版本降级到Android 7.1.1 userdebuger版本</h2><ol>
+<li>先刷官方包，尤其不要忘记刷vendor.img</li>
+<li>刷完后再说编译出来的几个img即可；</li>
+</ol>
+<p>具体原理不明，控制变量法判断编译出来的img没有vendor.img，而高版本vendor 不对低版本兼容</p>
+
       
     </div>
     
@@ -418,8 +424,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/16/codenote/Android/adb命令总结/" rel="next" title="adb命令总结">
-                <i class="fa fa-chevron-left"></i> adb命令总结
+              <a href="/2018/09/16/codenote/Android/在AndroidStudio下cmake编译静态链接库的方法/" rel="next" title="在Android Studio下使用cmake编译出静态链接库的方法">
+                <i class="fa fa-chevron-left"></i> 在Android Studio下使用cmake编译出静态链接库的方法
               </a>
             
           </div>
@@ -428,8 +434,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/16/codenote/Android/AndroidStudio运行错误集合/" rel="prev" title="AndroidStudio运行错误集合">
-                AndroidStudio运行错误集合 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/16/codenote/Android/给AndroidStudio项目添加依赖/" rel="prev" title="给AndroidStudio项目添加依赖">
+                给AndroidStudio项目添加依赖 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -505,7 +511,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -562,7 +568,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android刷机脚本"><span class="nav-number">1.</span> <span class="nav-text">Android刷机脚本</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android刷机脚本"><span class="nav-number">1.</span> <span class="nav-text">Android刷机脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-8-0-user版本降级到Android-7-1-1-userdebuger版本"><span class="nav-number">2.</span> <span class="nav-text">Android 8.0 user版本降级到Android 7.1.1 userdebuger版本</span></a></li></ol></div>
             
 
           </div>
@@ -585,7 +591,7 @@
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
