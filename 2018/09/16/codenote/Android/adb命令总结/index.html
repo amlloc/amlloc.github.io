@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="amlloc&#39;s blog">
 <meta property="og:description" content="adb的命令总结">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-14T14:59:22.991Z">
+<meta property="og:updated_time" content="2021-01-24T12:38:36.313Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="adb命令总结">
 <meta name="twitter:description" content="adb的命令总结">
@@ -405,6 +405,8 @@
 <li><p>可以同时设置多个过滤器</p>
 <p><code>adb logcat WifiHW:D dalvikvm:I *:S</code></p>
 </li>
+<li><p>输出指定包名的日志</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb logcat | grep -F "`adb shell ps | grep com.amlloc.test | cut -c10-15`"</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
@@ -442,8 +444,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/16/codenote/OS/syscall/" rel="next" title="Unix系统调用">
-                <i class="fa fa-chevron-left"></i> Unix系统调用
+              <a href="/2018/09/16/codenote/Android/maps解读/" rel="next" title="/proc/{pid}/maps解读">
+                <i class="fa fa-chevron-left"></i> /proc/{pid}/maps解读
               </a>
             
           </div>
@@ -452,8 +454,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/16/codenote/Android/AndroidStudio运行错误集合/" rel="prev" title="AndroidStudio运行错误集合">
-                AndroidStudio运行错误集合 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/16/codenote/Android/Android刷机脚本/" rel="prev" title="Android刷机脚本">
+                Android刷机脚本 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -529,7 +531,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -609,7 +611,7 @@
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

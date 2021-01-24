@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="amlloc&#39;s blog">
 <meta property="og:description" content="使用git的零零碎碎">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-15T13:45:12.783Z">
+<meta property="og:updated_time" content="2021-01-24T12:38:36.313Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git日常填坑记录">
 <meta name="twitter:description" content="使用git的零零碎碎">
@@ -472,7 +472,7 @@
 </ul>
 <h3 id="git-branch"><a href="#git-branch" class="headerlink" title="git branch"></a>git branch</h3><ul>
 <li><p>查看本地+远程分支</p>
-<p><code>git branch -va</code></p>
+<p><code>git branch -a</code></p>
 </li>
 </ul>
 <h3 id="gitignore"><a href="#gitignore" class="headerlink" title=".gitignore"></a>.gitignore</h3><ul>
@@ -522,6 +522,34 @@
 </ul>
 <p>  注意事项： 命令里的单引号’以及<code>要注意区分！ 前后两个是单引号&#39; 当中两个是</code></p>
 <p>   举例： repo forall -c ‘commitID=<code>git log --before &quot;2017-04-15 07:00&quot; -1 --pretty=format:&quot;%H&quot;</code>; git reset –hard $commitID’</p>
+<h2 id="新建空分支"><a href="#新建空分支" class="headerlink" title="新建空分支"></a>新建空分支</h2><ul>
+<li><p><strong>使用 git checkout的–orphan参数:</strong></p>
+<p><code>git checkout --orphan 2.0.2</code></p>
+</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>该命令会生成一个叫2.0.2的分支，该分支会包含父分支的所有文件。但新的分支不会指向任何以前的提交，就是它没有历史，如果你提交当前内容，那么这次提交就是这个分支的首次提交。</p>
+</blockquote>
+</blockquote>
+<ul>
+<li><p><strong>删除所有文件：</strong></p>
+<p><code>git rm -rf .</code></p>
+</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>用git命令把当前内容全部删除</p>
+</blockquote>
+</blockquote>
+<ul>
+<li><p><strong>提交文件</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">echo '# new branch' &gt;&gt; README.md</span><br><span class="line"></span><br><span class="line">git add README.md</span><br><span class="line"></span><br><span class="line">git commit -m 'new branch'</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>推送代码</strong></p>
+</li>
+</ul>
+<p>​       <code>git push origin 2.0.2</code></p>
 
       
     </div>
@@ -641,7 +669,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -698,7 +726,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#每次将代码push到github时都需要输入用户和密码环境"><span class="nav-number">1.</span> <span class="nav-text">每次将代码push到github时都需要输入用户和密码环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-log-git-lg"><span class="nav-number">2.</span> <span class="nav-text">git log (git lg)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-push"><span class="nav-number">3.</span> <span class="nav-text">git push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-merge"><span class="nav-number">4.</span> <span class="nav-text">git merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-checkout-git-co"><span class="nav-number">5.</span> <span class="nav-text">git checkout(git co)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-add"><span class="nav-number">6.</span> <span class="nav-text">git add </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit-git-ci"><span class="nav-number">7.</span> <span class="nav-text">git commit(git ci)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-status-git-st"><span class="nav-number">8.</span> <span class="nav-text">git status( git st)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-reset"><span class="nav-number">9.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-tag"><span class="nav-number">10.</span> <span class="nav-text">git tag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-config"><span class="nav-number">11.</span> <span class="nav-text">git config</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitconfig"><span class="nav-number">12.</span> <span class="nav-text">~/.gitconfig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-branch"><span class="nav-number">13.</span> <span class="nav-text">git branch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitignore"><span class="nav-number">14.</span> <span class="nav-text">.gitignore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-branch-git-br"><span class="nav-number">15.</span> <span class="nav-text">git branch(git br)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-stash"><span class="nav-number">16.</span> <span class="nav-text">git stash</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#repo"><span class="nav-number"></span> <span class="nav-text">repo</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#每次将代码push到github时都需要输入用户和密码环境"><span class="nav-number">1.</span> <span class="nav-text">每次将代码push到github时都需要输入用户和密码环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-log-git-lg"><span class="nav-number">2.</span> <span class="nav-text">git log (git lg)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-push"><span class="nav-number">3.</span> <span class="nav-text">git push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-merge"><span class="nav-number">4.</span> <span class="nav-text">git merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-checkout-git-co"><span class="nav-number">5.</span> <span class="nav-text">git checkout(git co)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-add"><span class="nav-number">6.</span> <span class="nav-text">git add </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit-git-ci"><span class="nav-number">7.</span> <span class="nav-text">git commit(git ci)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-status-git-st"><span class="nav-number">8.</span> <span class="nav-text">git status( git st)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-reset"><span class="nav-number">9.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-tag"><span class="nav-number">10.</span> <span class="nav-text">git tag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-config"><span class="nav-number">11.</span> <span class="nav-text">git config</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitconfig"><span class="nav-number">12.</span> <span class="nav-text">~/.gitconfig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-branch"><span class="nav-number">13.</span> <span class="nav-text">git branch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitignore"><span class="nav-number">14.</span> <span class="nav-text">.gitignore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-branch-git-br"><span class="nav-number">15.</span> <span class="nav-text">git branch(git br)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-stash"><span class="nav-number">16.</span> <span class="nav-text">git stash</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#repo"><span class="nav-number"></span> <span class="nav-text">repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新建空分支"><span class="nav-number"></span> <span class="nav-text">新建空分支</span></a></li></div>
             
 
           </div>
@@ -721,7 +749,7 @@
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
